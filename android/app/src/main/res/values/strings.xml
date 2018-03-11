@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">InvestArenaMobile</string>
+    <string name="facebook_app_id">217626012123623</string>
+    <string name="fb_login_protocol_scheme">fb217626012123623</string>
+</resources>

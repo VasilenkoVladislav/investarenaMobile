@@ -1,0 +1,23 @@
+{
+  "production": {
+    "apiPrefix": "http://localhost:3000/"
+  },
+  "development": {
+    "apiPrefix": "http://localhost:3000/"
+  },
+  "test": {
+    "apiPrefix": "http://localhost:3000/"
+  },
+  "apiPrefix": "https://api.socialtrading.uat.pp.ua/",
+  "versionApi": "api/v3/",
+
+  "authentication":{
+    "authScope": "auth/",
+    "signIn": "auth/sign_in/",
+    "signOut": "auth/sign_out/",
+    "validateToken": "auth/validate_token/",
+    "registration": "auth/",
+    "oAuthSignIn": "auth/sign_in_social/"
+  }
+}
+
