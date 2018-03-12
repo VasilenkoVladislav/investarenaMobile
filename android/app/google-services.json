@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "458481598101",
+    "project_id": "investarenamobile-74e87"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:458481598101:android:d0cc17c415dcb8af",
+        "android_client_info": {
+          "package_name": "com.investarenamobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "458481598101-96tr56qjegir86pdcu2lfk3q7sb2pl4m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.investarenamobile",
+            "certificate_hash": "8c5f772ea4008f3a92914d199851733e29a04334"
+          }
+        },
+        {
+          "client_id": "458481598101-78o4c3d1hm076ml4o0ql776t8r9vr1n7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNEbtdSjLfB5HLibpK7tcQrpMcjO2FAxY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

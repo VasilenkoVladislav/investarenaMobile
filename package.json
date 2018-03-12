@@ -12,6 +12,7 @@
     "react-native": "0.54.1",
     "react-native-elements": "1.0.0-beta2",
     "react-native-fbsdk": "0.7.0",
+    "react-native-google-signin": "^0.12.0",
     "react-native-vector-icons": "4.5.0",
     "react-navigation": "1.4.0",
     "react-navigation-redux-helpers": "1.0.3",
