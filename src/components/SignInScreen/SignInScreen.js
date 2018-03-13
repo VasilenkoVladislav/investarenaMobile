@@ -123,7 +123,7 @@ class SignInScreen extends Component {
                                       color='white'/>
                             </TouchableOpacity>
                             <TouchableOpacity style={styles.socialIconGoogleWrap}
-                                      onPress={() => this.props.oAuthSignIn('googlea')}>
+                                      onPress={() => this.props.oAuthSignIn('google')}>
                                 <Icon name='google-plus'
                                       type='font-awesome'
                                       size={25}

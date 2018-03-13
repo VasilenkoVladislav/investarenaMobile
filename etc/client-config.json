@@ -18,6 +18,12 @@
     "validateToken": "auth/validate_token/",
     "registration": "auth/",
     "oAuthSignIn": "auth/sign_in_social/"
+  },
+
+  "posts":{
+    "posts": "/posts/",
+    "getNextPosts": "/posts/get_posts/",
+    "decline": "/decline_collaborator"
   }
 }
 
