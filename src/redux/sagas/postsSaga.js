@@ -1,4 +1,5 @@
-import { GET_POSTS_REQUEST,
+import { GET_NEXT_POSTS_REQUEST,
+    GET_REFRESH_POSTS_REQUEST,
     CREATE_POST_REQUEST,
     UPDATE_POST_REQUEST,
     DELETE_POST_REQUEST } from '../constansActions';
@@ -14,10 +15,13 @@ import { put, call, takeEvery, select } from 'redux-saga/effects';
 import api from '../../configApi/apiResources';
 import { getHeadersState } from '../selectors/entities/headersSelectors';
 import { updateHeaders } from '../actions/entities/headersActions';
+import { getLastPostCreatedAtState } from '../selectors/entities/postsSelectors';
 
 export function * getPosts () {
     const headersForRequest = yield select(getHeadersState);
-    const { data, headers } = yield call(api.posts.getPosts, headersForRequest);
+    const lastCreateAt = yield select(getLastPostCreatedAtState);
+    const params = { last_created_at: lastCreateAt };
+    const { data, headers } = yield call(api.posts.getPosts, params, headersForRequest);
     if (data && headers) {
         yield put(updateHeaders(headers));
         yield put(getPostsSuccess(data));
@@ -59,8 +63,12 @@ export function * deletePost ({payload}) {
     }
 }
 
-export function * watchGetPosts () {
-    yield takeEvery(GET_POSTS_REQUEST, getPosts);
+export function * watchGetNextPosts () {
+    yield takeEvery(GET_NEXT_POSTS_REQUEST, getPosts);
+}
+
+export function * watchGetRefreshPosts () {
+    yield takeEvery(GET_REFRESH_POSTS_REQUEST, getPosts);
 }
 
 export function * watchCreatePost () {
@@ -76,7 +84,8 @@ export function * watchDeletePost () {
 }
 
 export const postsSagas = [
-    watchGetPosts(),
+    watchGetNextPosts(),
+    watchGetRefreshPosts(),
     watchCreatePost(),
     watchUpdatePost(),
     watchDeletePost()

@@ -1,6 +1,7 @@
-import { GET_POSTS_REQUEST,
+import { GET_NEXT_POSTS_REQUEST,
     GET_POSTS_SUCCESS,
     GET_POSTS_ERROR,
+    GET_REFRESH_POSTS_REQUEST,
     CREATE_POST_REQUEST,
     CREATE_POST_SUCCESS,
     CREATE_POST_ERROR,
@@ -11,10 +12,13 @@ import { GET_POSTS_REQUEST,
     DELETE_POST_SUCCESS,
     DELETE_POST_ERROR } from '../../constansActions';
 
-export function getPostsRequest () {
-    return { type: GET_POSTS_REQUEST };
+export function getNextPostsRequest () {
+    return { type: GET_NEXT_POSTS_REQUEST };
 }
 
+export function getRefreshPostsRequest () {
+    return { type: GET_REFRESH_POSTS_REQUEST };
+}
 export function getPostsSuccess (data) {
     return { type: GET_POSTS_SUCCESS, payload: data };
 }

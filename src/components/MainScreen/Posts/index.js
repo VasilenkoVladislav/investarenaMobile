@@ -1,17 +1,20 @@
 import { connect } from 'react-redux';
-import { getPostsRequest } from '../../../redux/actions/entities/postsActions';
-import { getPostsEntitiesState } from '../../../redux/selectors/entities/postsSelectors';
+import { getNextPostsRequest, getRefreshPostsRequest } from '../../../redux/actions/entities/postsActions';
+import { getPostsEntitiesState, getPostHasMoreState, getPostsIsLoadingState } from '../../../redux/selectors/entities/postsSelectors';
 import Posts from './Posts';
 
 function mapStateToProps (state) {
     return {
-        posts: getPostsEntitiesState(state)
+        posts: getPostsEntitiesState(state),
+        isLoading: getPostsIsLoadingState(state),
+        hasMore: getPostHasMoreState(state)
     };
 }
 
 function mapDispatchToProps (dispatch) {
     return {
-        getPosts: () => dispatch(getPostsRequest())
+        getRefreshPosts: () => dispatch(getRefreshPostsRequest()),
+        getNextPosts: () => dispatch(getNextPostsRequest())
     };
 }
 

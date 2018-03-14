@@ -1,5 +1,5 @@
 import Base from './Base';
-import config from 'configApi/config';
+import config from '../configApi/config';
 
 export default class Posts extends Base {
     getPosts = async (params, headers) => {

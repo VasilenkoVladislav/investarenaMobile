@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Image, Text, TouchableOpacity } from 'react-native';
+import { View, Image, Text, TouchableOpacity, StatusBar } from 'react-native';
 import { Input, Button } from 'react-native-elements'
 import PropTypes from 'prop-types';
 import { images } from '../../resources/images';
@@ -36,6 +36,7 @@ class SignInScreen extends Component {
     render () {
         return (
             <View style={styles.container}>
+                <StatusBar backgroundColor="#16254c"/>
                 <View style={styles.loginContainer}>
                     <View style={styles.logoContainer}>
                         <Image style={styles.logo} source={images.investArenaLogo}/>

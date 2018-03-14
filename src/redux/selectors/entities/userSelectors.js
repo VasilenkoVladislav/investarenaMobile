@@ -8,6 +8,11 @@ export const getCurrentUserInfoState = createSelector(
     (user) => user.info
 );
 
+export const getCurrentNameState = createSelector(
+    [getCurrentUserInfoState],
+    (info) => info.name
+);
+
 export const getUserIsSignInState = createSelector(
     [ getUserState ],
     (user) => user.isSignIn

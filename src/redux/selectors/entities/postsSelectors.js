@@ -1,5 +1,5 @@
+import _ from 'lodash';
 import { createSelector } from 'reselect';
-
 // selector
 const getPosts = (state) => state.entities.posts;
 
@@ -14,3 +14,18 @@ export const getPostByIdState = createSelector(
     (state, props) => props.postId,
     (posts, postId) => posts.entities[postId]
 );
+
+export const getPostHasMoreState = createSelector(
+    getPosts,
+    (posts) => posts.hasMore
+);
+
+export const getPostsIsLoadingState = createSelector(
+    getPosts,
+    (posts) => posts.isLoading
+);
+
+export const getLastPostCreatedAtState = (state) => {
+    const lastPost = _.last(getPostsEntitiesState(state));
+    return lastPost ? lastPost.created_at : '';
+};

@@ -6,15 +6,15 @@ import { delay } from 'redux-saga';
 import { getItemAsyncStorage } from '../utils/asyncStorageHelper';
 import { getHeadersState } from '../selectors/entities/headersSelectors';
 import { oAuth } from '../../oAuth';
-import { updateHeadersClient } from './headersSaga';
+import { updateHeaders } from '../actions/entities/headersActions';
 import { replace } from '../actions/nav';
 
 export function * validateToken () {
-    const { result } = yield call(getItemAsyncStorage, 'authHeaders', false);
+    const { result } = yield call(getItemAsyncStorage, 'authHeaders', true);
     if (result) {
         const { data, headers } = yield call(api.authentications.validateToken, result);
         if (data && headers) {
-            yield call(updateHeadersClient, headers);
+            yield put(updateHeaders(headers));
             yield put(signInSuccess(data));
             yield put(replace('Main'))
         } else {
@@ -32,7 +32,7 @@ export function * oAuthSignIn ({payload}) {
     if (accessToken) {
         const { data, headers } = yield call(api.authentications.oAuthSignIn, payload, { access_token: accessToken });
         if (data && headers) {
-            yield call(updateHeadersClient, headers);
+            yield put(updateHeaders(headers));
             yield put(signInSuccess(data));
             yield put(replace('Main'))
         } else {
@@ -46,7 +46,7 @@ export function * signIn ({payload}) {
     const { email, password } = payload;
     const { data, headers } = yield call(api.authentications.signIn, email, password);
     if (data && headers) {
-        yield call(updateHeadersClient, headers);
+        yield put(updateHeaders(headers));
         yield put(signInSuccess(data));
         yield put(replace('Main'))
     } else {

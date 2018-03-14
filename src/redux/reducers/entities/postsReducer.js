@@ -1,4 +1,5 @@
-import { GET_POSTS_REQUEST,
+import { GET_NEXT_POSTS_REQUEST,
+    GET_REFRESH_POSTS_REQUEST,
     GET_POSTS_SUCCESS,
     GET_POSTS_ERROR,
     CREATE_POST_SUCCESS,
@@ -16,13 +17,19 @@ const initialState = {
 
 export default function (state = initialState, action) {
     switch (action.type) {
-        case GET_POSTS_REQUEST:
+        case GET_NEXT_POSTS_REQUEST:
             return { ...state, isLoading: true };
+        case GET_REFRESH_POSTS_REQUEST:
+            return { entities: {}, allIds: [], isLoading: true, hasMore: false };
         case GET_POSTS_SUCCESS:
             return { ...state,
-                entities: {...state.entities, ...action.payload.post },
-                allIds: [..._.map(action.payload.post, 'id'), ...state.allIds],
-                isLoading: false
+                entities: action.payload.posts.reduce((result, item) => {
+                        state.entities[item.id] = item;
+                        return state.entities;
+                    }, state.entities),
+                allIds: [...state.allIds, ..._.map(action.payload.posts, 'id')],
+                isLoading: false,
+                hasMore: action.payload.hasMore
             };
         case GET_POSTS_ERROR:
             return { ...state, isLoading: false };

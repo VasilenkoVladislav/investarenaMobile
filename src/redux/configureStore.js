@@ -8,7 +8,7 @@ import { middleware } from './utils/redux';
 
 export default function () {
     const sagaMiddleware = createSagaMiddleware();
-    const composeEnhancers = composeWithDevTools({ realtime: true, port: 5678 });
+    const composeEnhancers = composeWithDevTools({ realtime: true, port: 8000 });
     let store = createStore(rootReducer, {}, composeEnhancers(applyMiddleware(sagaMiddleware, middleware, logger)));
     if (process.env.NODE_ENV === 'production') {
         store = createStore(rootReducer, {}, applyMiddleware(sagaMiddleware, middleware));

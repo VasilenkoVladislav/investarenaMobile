@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { AsyncStorage } from 'react-native';
+import { authTokenFormat } from '../default/tokenFormat';
 
 export default class ApiClient {
     constructor ({prefix = 'localhost:3000/api/v1'} = {}) {
@@ -38,6 +40,12 @@ export default class ApiClient {
     async request ({url, method, params = {}, data, headers = {}}) {
         try {
             const response = await axios({method, url, params, data, headers});
+            if (response.headers && response.headers['access-token'] && response.headers['client'] && response.headers['uid']) {
+                response.headers = authTokenFormat(response.headers);
+                await AsyncStorage.setItem('authHeaders', JSON.stringify(response.headers));
+            } else {
+                response.headers = headers;
+            }
             if (response.status >= 200 && response.status < 300) {
                 if (response.data && response.data.data) {
                     response.data = response.data.data;
