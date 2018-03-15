@@ -1,31 +1,37 @@
-import { View, StatusBar, Image, Text } from 'react-native';
-import React from 'react';
-import Posts from './Posts';
-import { Input } from 'react-native-elements';
-import { styles } from './styles';
-import PropTypes from 'prop-types'
+import { Animated, View, Dimensions } from 'react-native';
+import React, { Component } from 'react';
+import { MainScreenTabs } from '../../router/tabs';
+import CustomSearchHeader from '../CustomSearchHeader';
 
-const propTypes = {
-    currentUserInfo: PropTypes.object.isRequired
-};
+const { height } = Dimensions.get('window');
 
-const MainScreen = ({currentUserInfo}) => {
-    return (
-        <View style={styles.container}>
-            <View>
-                <Image style={styles.image} source={{uri:currentUserInfo.image_small}}/>
-                <View>
-                    <Text>
-                        {`${currentUserInfo.name}what do you think about the financial market?`}
-                    </Text>
-                </View>
+class MainScreen extends Component {
+    constructor(props) {
+        super(props);
+        this.state = { scrollY: new Animated.Value(0) }
+    }
+    render() {
+        const mapY = this.state.scrollY.interpolate({
+            inputRange: [0, 50],
+            outputRange: [0, -50],
+            extrapolate: 'clamp',
+        });
+        return (
+            <View style={{ flex: 1 }}>
+                <CustomSearchHeader/>
+                <Animated.View style={{
+                    flex: 1,
+                    height: height,
+                    minHeight: height,
+                    transform: [
+                        {translateY: mapY},
+                        {perspective: 1000}
+                    ]}}>
+                    <MainScreenTabs screenProps={{scrollY:this.state.scrollY}} />
+                </Animated.View>
             </View>
-            <StatusBar backgroundColor="#16254c"/>
-            <Posts/>
-        </View>
-    );
-};
-
-MainScreen.propTypes = propTypes;
+        );
+    }
+}
 
 export default MainScreen;

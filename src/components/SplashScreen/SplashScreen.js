@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, ActivityIndicator } from 'react-native';
 import { styles } from './styles';
 
 class SplashScreen extends Component {
@@ -12,7 +12,7 @@ class SplashScreen extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text>Loading...</Text>
+                <ActivityIndicator size={70} color='grey' />
             </View>
         )
     }

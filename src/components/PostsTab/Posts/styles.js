@@ -4,7 +4,8 @@ export const styles = StyleSheet.create({
     container: {
         width: Dimensions.get('window').width,
         backgroundColor: '#fff',
-        marginBottom: 20
+        height: 300,
+        marginTop: 20
     },
     image: {
         width: 50,

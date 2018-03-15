@@ -7,7 +7,7 @@ import { getItemAsyncStorage } from '../utils/asyncStorageHelper';
 import { getHeadersState } from '../selectors/entities/headersSelectors';
 import { oAuth } from '../../oAuth';
 import { updateHeaders } from '../actions/entities/headersActions';
-import { replace } from '../actions/nav';
+import { push } from '../actions/nav';
 
 export function * validateToken () {
     const { result } = yield call(getItemAsyncStorage, 'authHeaders', true);
@@ -16,14 +16,14 @@ export function * validateToken () {
         if (data && headers) {
             yield put(updateHeaders(headers));
             yield put(signInSuccess(data));
-            yield put(replace('Main'))
+            yield put(push('App'))
         } else {
             yield put(validateTokenError());
-            yield put(replace('Login'))
+            yield put(push('Auth'))
         }
     } else {
         yield put(validateTokenError());
-        yield put(replace('Login'))
+        yield put(push('Auth'))
     }
 }
 
@@ -34,7 +34,7 @@ export function * oAuthSignIn ({payload}) {
         if (data && headers) {
             yield put(updateHeaders(headers));
             yield put(signInSuccess(data));
-            yield put(replace('Main'))
+            yield put(push('App'))
         } else {
             yield put(signInError());
         }
@@ -48,7 +48,7 @@ export function * signIn ({payload}) {
     if (data && headers) {
         yield put(updateHeaders(headers));
         yield put(signInSuccess(data));
-        yield put(replace('Main'))
+        yield put(push('App'))
     } else {
         yield put(signInError());
     }
