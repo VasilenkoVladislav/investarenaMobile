@@ -44,6 +44,7 @@ export const MainScreenTabs = TabNavigator(
             indicatorStyle: {
                 opacity: 0
             }
-        }
+        },
+        tabBarPosition: 'bottom',
     }
 );

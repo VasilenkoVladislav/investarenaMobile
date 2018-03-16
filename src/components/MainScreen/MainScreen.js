@@ -18,16 +18,16 @@ class MainScreen extends Component {
         });
         return (
             <View style={{ flex: 1 }}>
-                <CustomSearchHeader/>
                 <Animated.View style={{
-                    flex: 1,
-                    height: height,
-                    minHeight: height,
+                    height: 60,
                     transform: [
-                        {translateY: mapY}
-                    ]}}>
-                    <MainScreenTabs screenProps={{scrollY:this.state.scrollY}} />
+                        {translateY: mapY},
+                        {perspective: 1000}, // needed for Android
+                    ],
+                }}>
+                    <CustomSearchHeader/>
                 </Animated.View>
+                    <MainScreenTabs screenProps={{scrollY:this.state.scrollY}} />
             </View>
         );
     }

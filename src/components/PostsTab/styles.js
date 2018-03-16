@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
     container: {
@@ -6,10 +6,13 @@ export const styles = StyleSheet.create({
         backgroundColor: '#e9ebee'
     },
     createPostContainer: {
-
+        backgroundColor: 'white',
+        marginTop: 15,
+        padding: 10
     },
-    image: {
-        width: 50,
-        height: 50
-    },
+    creatPostImage: {
+        width: 40,
+        height: 40,
+        borderRadius: 20,
+    }
 });

@@ -5,10 +5,10 @@ export const styles = StyleSheet.create({
         width: Dimensions.get('window').width,
         backgroundColor: '#fff',
         height: 300,
-        marginTop: 20
+        marginTop: 15
     },
     image: {
         width: 50,
-        height: 50
+        height: 50,
     }
 });
