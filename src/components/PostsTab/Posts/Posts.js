@@ -23,12 +23,12 @@ class Posts extends Component {
     render () {
         return (
             <FlatList
-                style={{ height: height }}
                 data={this.props.posts}
                 keyExtractor={item => item.id}
                 refreshing={this.props.isLoading}
                 onRefresh={this.props.getRefreshPosts}
                 onEndReached={this.props.getNextPosts}
+                scrollEventThrottle={1}
                 onScroll={Animated.event(
                     [{nativeEvent: {contentOffset: {y: this.props.screenProps.scrollY}}}]
                 )}

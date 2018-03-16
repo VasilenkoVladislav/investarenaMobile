@@ -12,8 +12,8 @@ class MainScreen extends Component {
     }
     render() {
         const mapY = this.state.scrollY.interpolate({
-            inputRange: [0, 50],
-            outputRange: [0, -50],
+            inputRange: [0, 60],
+            outputRange: [0, -60],
             extrapolate: 'clamp',
         });
         return (
@@ -24,8 +24,7 @@ class MainScreen extends Component {
                     height: height,
                     minHeight: height,
                     transform: [
-                        {translateY: mapY},
-                        {perspective: 1000}
+                        {translateY: mapY}
                     ]}}>
                     <MainScreenTabs screenProps={{scrollY:this.state.scrollY}} />
                 </Animated.View>

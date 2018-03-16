@@ -4,6 +4,7 @@ import React from 'react';
 import RegistrationScreen from '../components/RegistrationScreen';
 import SignInScreen from '../components/SignInScreen';
 import SplashScreen from '../components/SplashScreen';
+import CustomSearchHeader from '../components/CustomSearchHeader';
 
 const AppStack = StackNavigator({
     Main: {
@@ -13,6 +14,9 @@ const AppStack = StackNavigator({
         navigationOptions: {
             header: null
         }
+        // navigationOptions: {
+        //     header: ({navigation}) => <CustomSearchHeader {...navigation}/>
+        // }
     }
 });
 
