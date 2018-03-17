@@ -19,21 +19,20 @@ class PostsTab extends Component {
     }
     render () {
         return (
-            <View style={styles.container}>
-                <FlatList
-                    data={this.props.posts}
-                    keyExtractor={item => item.id}
-                    refreshing={this.props.isLoading}
-                    onRefresh={this.props.getRefreshPosts}
-                    onEndReached={this.props.getNextPosts}
-                    scrollEventThrottle={1}
-                    onScroll={ Animated.event([{nativeEvent: {contentOffset: {y: this.props.screenProps.scrollY}}}]) }
-                    ListHeaderComponent={() =>
-                    <View style={styles.createPostContainer}>
-                        <Image style={styles.creatPostImage} source={ this.props.currentUserInfo.image_small ? {uri:this.props.currentUserInfo.image_small } : images.avatar }/>
-                    </View>}
-                    renderItem={({item}) => <Post post={item}/>}/>
-            </View>
+            <FlatList
+                data={this.props.posts}
+                contentContainerStyle={{marginTop: 60}}
+                keyExtractor={item => item.id}
+                refreshing={this.props.isLoading}
+                onRefresh={this.props.getRefreshPosts}
+                onEndReached={this.props.getNextPosts}
+                scrollEventThrottle={1}
+                onScroll={ Animated.event([{nativeEvent: {contentOffset: {y: this.props.screenProps.scrollY}}}]) }
+                ListHeaderComponent={() =>
+                <View style={styles.createPostContainer}>
+                    <Image style={styles.creatPostImage} source={ this.props.currentUserInfo.image_small ? {uri:this.props.currentUserInfo.image_small } : images.avatar }/>
+                </View>}
+                renderItem={({item}) => <Post post={item}/>}/>
         );
     }
 }
