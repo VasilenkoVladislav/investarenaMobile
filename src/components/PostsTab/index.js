@@ -2,6 +2,7 @@ import { getPostsEntitiesState, getPostHasMoreState, getPostsIsLoadingState } fr
 import { getNextPostsRequest, getRefreshPostsRequest } from '../../redux/actions/entities/postsActions';
 import { connect } from 'react-redux';
 import { getCurrentUserInfoState } from '../../redux/selectors/entities/userSelectors';
+import { push } from '../../redux/actions/nav'
 import PostsTab from './PostsTab';
 
 function mapStateToProps (state) {
@@ -16,7 +17,8 @@ function mapStateToProps (state) {
 function mapDispatchToProps (dispatch) {
     return {
         getRefreshPosts: () => dispatch(getRefreshPostsRequest()),
-        getNextPosts: () => dispatch(getNextPostsRequest())
+        getNextPosts: () => dispatch(getNextPostsRequest()),
+        goScreen: (screen) => dispatch(push(screen))
     };
 }
 

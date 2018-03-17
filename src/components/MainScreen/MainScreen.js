@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Animated, View } from 'react-native';
-import CustomSearchHeader from '../CustomSearchHeader';
+import { Animated } from 'react-native';
 import { MainScreenTabs } from '../../router/tabs';
 
 class MainScreen extends Component {
@@ -8,17 +7,17 @@ class MainScreen extends Component {
         super(props);
         this._animatedValue = new Animated.Value(0);
     }
-    render() {
-        const translateY = this._animatedValue.interpolate({
-            inputRange: [0, 80],
-            outputRange: [0, -80],
-            extrapolate: 'clamp'
+    componentWillMount() {
+        this.props.navigation.setParams({
+            animatedValue: this._animatedValue.interpolate({
+                inputRange: [0, 60],
+                outputRange: [0, -60],
+                extrapolate: 'clamp'
+            })
         });
-        return (
-            <View style={{flex:1}}>
-                <CustomSearchHeader translateY={translateY}/>
-                <MainScreenTabs screenProps={{scrollY: this._animatedValue}} />
-            </View>);
+    }
+    render() {
+        return (<MainScreenTabs screenProps={{scrollY: this._animatedValue}} />);
     }
 }
 

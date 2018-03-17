@@ -1,6 +1,6 @@
-import { View, Image, FlatList, Animated } from 'react-native';
+import { View, Image, FlatList, Animated, Text } from 'react-native';
 import React, { Component } from 'react';
-import { Input } from 'react-native-elements';
+import { Input, Icon } from 'react-native-elements';
 import { images } from '../../resources/images';
 import PropTypes from 'prop-types';
 import Post from './Post';
@@ -31,6 +31,13 @@ class PostsTab extends Component {
                 ListHeaderComponent={() =>
                 <View style={styles.createPostContainer}>
                     <Image style={styles.creatPostImage} source={ this.props.currentUserInfo.image_small ? {uri:this.props.currentUserInfo.image_small } : images.avatar }/>
+                    <View style={styles.createPostTextWrap}>
+                        <Text style={styles.createPostText} onPress={() => this.props.goScreen('CreatePost')}>
+                            What do you think?
+                        </Text>
+                    </View>
+                    <Icon name='image' color='#2c3552' size={30}/>
+                    <Icon name='attachment' color='#2c3552' size={30}/>
                 </View>}
                 renderItem={({item}) => <Post post={item}/>}/>
         );

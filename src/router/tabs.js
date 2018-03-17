@@ -39,7 +39,7 @@ export const MainScreenTabs = TabNavigator(
             showIcon: true,
             showLabel: false,
             style: {
-                backgroundColor: 'white',
+                backgroundColor: 'white'
             },
             indicatorStyle: {
                 opacity: 0
