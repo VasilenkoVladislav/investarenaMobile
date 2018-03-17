@@ -18,7 +18,6 @@ class PostsTab extends Component {
         this.props.getRefreshPosts();
     }
     render () {
-        console.log(this.props);
         return (
             <View style={styles.container}>
                 <FlatList
@@ -27,6 +26,7 @@ class PostsTab extends Component {
                     refreshing={this.props.isLoading}
                     onRefresh={this.props.getRefreshPosts}
                     onEndReached={this.props.getNextPosts}
+                    scrollEventThrottle={1}
                     onScroll={ Animated.event([{nativeEvent: {contentOffset: {y: this.props.screenProps.scrollY}}}]) }
                     ListHeaderComponent={() =>
                     <View style={styles.createPostContainer}>

@@ -4,14 +4,13 @@ import RegistrationScreen from '../components/RegistrationScreen';
 import SignInScreen from '../components/SignInScreen';
 import SplashScreen from '../components/SplashScreen';
 import MainScreen from '../components/MainScreen/MainScreen';
+import CustomSearchHeader from '../components/CustomSearchHeader';
 
 const AppStack = StackNavigator({
     Main: {
         screen: MainScreen,
-        headerMode: 'none',
-        header: null,
         navigationOptions: {
-            header: null
+            header: ({navigation}) => <CustomSearchHeader {...navigation}/>
         }
     }
 });
