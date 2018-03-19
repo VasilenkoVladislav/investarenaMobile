@@ -9,9 +9,14 @@ class MainScreen extends Component {
     }
     componentWillMount() {
         this.props.navigation.setParams({
-            animatedValue: this._animatedValue.interpolate({
+            animatedHeight: this._animatedValue.interpolate({
                 inputRange: [0, 60],
                 outputRange: [0, -60],
+                extrapolate: 'clamp'
+            }),
+            imageOpacity: this._animatedValue.interpolate({
+                inputRange: [0, 30, 60],
+                outputRange: [1, 0.5, 0],
                 extrapolate: 'clamp'
             })
         });

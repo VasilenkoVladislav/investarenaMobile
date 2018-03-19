@@ -1,10 +1,12 @@
-import { StyleSheet, Dimensions } from 'react-native';
-
-const SCREEN_WIDTH = Dimensions.get('window').width;
+import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
-    searchContainer: {
-        width: SCREEN_WIDTH,
+    container: {
+        position: 'absolute',
+        height: 60,
+        top: 0,
+        left: 0,
+        right: 0,
     },
     searchBarContainer: {
         backgroundColor: '#16254c',
