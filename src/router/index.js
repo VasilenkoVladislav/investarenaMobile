@@ -1,21 +1,22 @@
 import { StackNavigator, SwitchNavigator } from 'react-navigation'
 import CreatePostScreen from '../components/CreatePostScreen';
+import ImagePickerScreen from '../components/ImagePickerScreen';
 import React from 'react';
 import RegistrationScreen from '../components/RegistrationScreen';
 import SignInScreen from '../components/SignInScreen';
 import SplashScreen from '../components/SplashScreen';
 import MainScreen from '../components/MainScreen/MainScreen';
-import CustomSearchHeader from '../components/CustomSearchHeader';
+
 
 const AppStack = StackNavigator({
     Main: {
-        screen: MainScreen,
-        navigationOptions: {
-            header: ({navigation}) => <CustomSearchHeader {...navigation}/>
-        }
+        screen: MainScreen
     },
     CreatePost: {
         screen: CreatePostScreen
+    },
+    ImagePicker: {
+        screen: ImagePickerScreen
     }
 });
 

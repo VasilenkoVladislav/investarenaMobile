@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Animated } from 'react-native';
+import CustomSearchHeader from '../CustomSearchHeader';
 import { MainScreenTabs } from '../../router/tabs';
 
 class MainScreen extends Component {
@@ -7,6 +8,9 @@ class MainScreen extends Component {
         super(props);
         this._animatedValue = new Animated.Value(0);
     }
+    static navigationOptions = {
+        header: ({navigation}) => <CustomSearchHeader {...navigation}/>
+    };
     componentWillMount() {
         this.props.navigation.setParams({
             animatedHeight: this._animatedValue.interpolate({

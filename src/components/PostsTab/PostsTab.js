@@ -36,7 +36,7 @@ class PostsTab extends Component {
                             What do you think?
                         </Text>
                     </View>
-                    <Icon name='image' color='#2c3552' size={30}/>
+                    <Icon name='image' color='#2c3552' size={30} onPress={() => this.props.goScreen('ImagePicker')}/>
                     <Icon name='attachment' color='#2c3552' size={30}/>
                 </View>}
                 renderItem={({item}) => <Post post={item}/>}/>
