@@ -3,18 +3,22 @@ import React, { Component } from 'react';
 import { styles } from './styles';
 
 class ImagePickerScreen extends Component {
-    static navigationOptions = {
-        title: 'Gallery',
-        headerTintColor: 'white',
-        headerTitleStyle: styles.headerTitle,
-        headerStyle: styles.header,
-        headerRight: <TouchableOpacity style={styles.customHeader}>
-            <Text style={styles.customHeaderText}>Done</Text>
-        </TouchableOpacity>
+    static navigationOptions = ({ navigation }) => {
+        return {
+            title: 'Gallery',
+            headerTintColor: 'white',
+            headerTitleStyle: styles.headerTitle,
+            headerStyle: styles.header,
+            headerRight: (navigation.state.params && navigation.state.params.selectedPhoto) &&
+                <TouchableOpacity style={styles.customHeader}
+                                  onPress={() => navigation.replace('CreatePost', { selectedPhoto: navigation.state.params.selectedPhoto })}>
+                    <Text style={styles.customHeaderText}>Done</Text>
+                </TouchableOpacity>
+        }
     };
     constructor (props) {
         super(props);
-        this.state = { photos: [], indices: [] };
+        this.state = { photos: [], index: null };
     }
     componentDidMount = async () => {
         try {
@@ -34,14 +38,12 @@ class ImagePickerScreen extends Component {
         }
     };
     setIndex = (index) => {
-        let newArr = [];
-        if (this.state.indices.includes(index)) {
-            newArr = this.state.indices.filter((i) => i!== index);
+        if (index === this.state.index) {
+            index = null
         } else {
-            newArr = [index, ...this.state.indices];
+            this.props.navigation.setParams({selectedPhoto: this.state.photos[index]});
         }
-        // this.props.navigation.setParams({test: ''});
-        this.setState({ indices: newArr });
+        this.setState({ index });
     };
     getPhotos = async () => {
         const r = await CameraRoll.getPhotos({
@@ -58,7 +60,7 @@ class ImagePickerScreen extends Component {
                     {
                         this.state.photos.map((p, i) => {
                             return (
-                                <TouchableHighlight style={{opacity: this.state.indices.includes(i) ? 0.5 : 1}}
+                                <TouchableHighlight style={{opacity: i === this.state.index ? 0.5 : 1}}
                                                     key={i}
                                                     underlayColor='transparent'
                                                     onPress={() => this.setIndex(i)}>

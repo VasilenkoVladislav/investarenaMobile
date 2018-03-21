@@ -8,8 +8,10 @@ class MainScreen extends Component {
         super(props);
         this._animatedValue = new Animated.Value(0);
     }
-    static navigationOptions = {
-        header: ({navigation}) => <CustomSearchHeader {...navigation}/>
+    static navigationOptions = ({ navigation }) => {
+        return {
+            header: <CustomSearchHeader {...navigation}/>
+        }
     };
     componentWillMount() {
         this.props.navigation.setParams({

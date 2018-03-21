@@ -8,8 +8,8 @@ const CustomSearchHeader = ({state}) => {
         <Animated.View style={[
             styles.container,
                 {
-                    opacity: !state.routes[state.index].params ? 1 : state.routes[state.index].params.imageOpacity,
-                    transform: [{translateY: !state.routes[state.index].params ? 0 : state.routes[state.index].params.animatedHeight }]
+                    opacity: !state.params ? 1 : state.params.imageOpacity,
+                    transform: [{translateY: !state.params ? 0 : state.params.animatedHeight }]
                 }
             ]}>
             <StatusBar backgroundColor='#16254c'/>
