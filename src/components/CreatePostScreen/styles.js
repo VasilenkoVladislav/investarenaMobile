@@ -12,12 +12,14 @@ export const styles = StyleSheet.create({
         backgroundColor: '#16254c'
     },
     container: {
-        backgroundColor: '#fff'
+        backgroundColor: '#fff',
+        paddingVertical: 15
     },
     currentUserInfoWrap: {
         flexDirection: 'row',
         alignItems: 'center',
-        padding: 15
+        paddingHorizontal: 15,
+        marginBottom: 10
     },
     currentUserAvatar: {
         width: 40,
@@ -30,13 +32,15 @@ export const styles = StyleSheet.create({
         color: 'black'
     },
     inputWrap: {
-      paddingHorizontal: 15
+        textAlignVertical: 'top',
+        paddingHorizontal: 15,
+        marginBottom: 10
     },
     imagesWrap: {
-
+        marginBottom: 15
     },
     image: {
         width,
-        height: 400,
+        height: 350,
     },
 });
