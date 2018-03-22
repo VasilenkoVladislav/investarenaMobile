@@ -1,12 +1,9 @@
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { ScrollView, View, Text, Image, TouchableOpacity, TextInput } from 'react-native';
 import React, { Component } from 'react';
+import { images } from '../../resources/images';
 import { styles } from './styles';
 
 class CreatePostScreen extends Component {
-    constructor (props) {
-        super (props);
-        this.state = { content: '' }
-    }
     static navigationOptions = ({navigation}) => {
         return {
             title: 'Create Post',
@@ -14,18 +11,34 @@ class CreatePostScreen extends Component {
             headerTitleStyle: styles.headerTitle,
             headerStyle: styles.header,
             headerRight: <TouchableOpacity style={styles.customHeader}
-                              onPress={() => navigation.replace('Main')}>
+                               onPress={() => navigation.replace('Main')}>
                 <Text style={styles.customHeaderText}>Share</Text>
             </TouchableOpacity>
         }
     };
+    constructor (props) {
+        super (props);
+        this.state = { content: '' };
+    }
     render () {
+        const { params } = this.props.navigation.state;
         return (
-            <View style={styles.container}>
-                <View style={styles.imagesWrap}>
-                    {this.props.navigation.state.params && this.props.navigation.state.params.selectedPhoto && <Image style={styles.image} source={{uri: selectedPhoto.node.image.uri}}/>}
+            <ScrollView style={styles.container}>
+                <View>
+                    <Image style={styles.creatPostImage}
+                           source={ this.props.currentUserInfo.image_small
+                               ? { uri:this.props.currentUserInfo.image_small }
+                               : images.avatar }/>
                 </View>
-            </View>
+                <TextInput
+                    autogrow={true}
+                    multiline={true}
+                    onChangeText={(content) => this.setState({content})}
+                    value={ this.state.content }/>
+                <View style={styles.imagesWrap}>
+                    {params && params.selectedPhoto && <Image style={styles.image} source={{uri: params.selectedPhoto.node.image.uri}}/>}
+                </View>
+            </ScrollView>
         )
     }
 }

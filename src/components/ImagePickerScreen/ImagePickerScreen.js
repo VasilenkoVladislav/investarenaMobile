@@ -25,8 +25,8 @@ class ImagePickerScreen extends Component {
             const granted = await PermissionsAndroid.request(
                 PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
                 {
-                    'title': 'Cool Photo App Camera Permission',
-                    'message': 'Cool Photo App needs access to your camera ' +
+                    'title': 'InvestArena App Camera Permission',
+                    'message': 'InvestArena App needs access to your camera ' +
                     'so you can take awesome pictures.'
                 }
             );
@@ -46,17 +46,13 @@ class ImagePickerScreen extends Component {
         this.setState({ index });
     };
     getPhotos = async () => {
-        const r = await CameraRoll.getPhotos({
-            first: 10000,
-            assetType: 'Photos'
-        });
+        const r = await CameraRoll.getPhotos({ first: 30000, assetType: 'Photos' });
         this.setState({ photos: r.edges });
     };
     render () {
         return (
             <View style={styles.container}>
-                <ScrollView
-                    contentContainerStyle={styles.scrollView}>
+                <ScrollView contentContainerStyle={styles.scrollView}>
                     {
                         this.state.photos.map((p, i) => {
                             return (

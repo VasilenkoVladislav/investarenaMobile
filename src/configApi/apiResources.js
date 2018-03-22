@@ -1,6 +1,4 @@
 import apiFactory from '../api';
 import config from './config';
 
-export default apiFactory({
-    apiPrefix: config.apiPrefix + config.versionApi
-});
+export default apiFactory({ apiPrefix: config.apiPrefix + config.versionApi });

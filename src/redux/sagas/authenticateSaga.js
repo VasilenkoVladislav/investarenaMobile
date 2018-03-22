@@ -2,7 +2,6 @@ import { put, call, takeLatest, takeEvery ,select } from 'redux-saga/effects';
 import { VALIDATE_TOKEN_REQUEST, OAUTHENTICATE_REQUEST, SIGN_IN_REQUEST, SIGN_OUT_REQUEST } from '../constansActions';
 import { signInSuccess, signInError, signOutSuccess, signOutError, validateTokenError } from '../actions/entities/authenticateActions';
 import api from '../../configApi/apiAuth';
-import { delay } from 'redux-saga';
 import { getItemAsyncStorage } from '../utils/asyncStorageHelper';
 import { getHeadersState } from '../selectors/entities/headersSelectors';
 import { oAuth } from '../../oAuth';
@@ -42,7 +41,6 @@ export function * oAuthSignIn ({payload}) {
 }
 
 export function * signIn ({payload}) {
-    yield call(delay, 1500);
     const { email, password } = payload;
     const { data, headers } = yield call(api.authentications.signIn, email, password);
     if (data && headers) {

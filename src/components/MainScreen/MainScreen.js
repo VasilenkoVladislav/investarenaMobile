@@ -4,15 +4,15 @@ import CustomSearchHeader from '../CustomSearchHeader';
 import { MainScreenTabs } from '../../router/tabs';
 
 class MainScreen extends Component {
-    constructor(props) {
-        super(props);
-        this._animatedValue = new Animated.Value(0);
-    }
     static navigationOptions = ({ navigation }) => {
         return {
             header: <CustomSearchHeader {...navigation}/>
         }
     };
+    constructor(props) {
+        super(props);
+        this._animatedValue = new Animated.Value(0);
+    }
     componentWillMount() {
         this.props.navigation.setParams({
             animatedHeight: this._animatedValue.interpolate({

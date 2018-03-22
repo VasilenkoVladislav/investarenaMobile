@@ -1,11 +1,11 @@
 import { StackNavigator, SwitchNavigator } from 'react-navigation'
 import CreatePostScreen from '../components/CreatePostScreen';
 import ImagePickerScreen from '../components/ImagePickerScreen';
+import MainScreen from '../components/MainScreen/MainScreen';
 import React from 'react';
 import RegistrationScreen from '../components/RegistrationScreen';
 import SignInScreen from '../components/SignInScreen';
 import SplashScreen from '../components/SplashScreen';
-import MainScreen from '../components/MainScreen/MainScreen';
 
 
 const AppStack = StackNavigator({
@@ -30,7 +30,12 @@ const AuthStack  = StackNavigator({
         }
     },
     Registration: {
-        screen: RegistrationScreen
+        screen: RegistrationScreen,
+        headerMode: 'none',
+        header: null,
+        navigationOptions: {
+            header: null
+        }
     },
 });
 

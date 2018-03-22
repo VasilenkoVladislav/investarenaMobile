@@ -1,5 +1,5 @@
 import { addNavigationHelpers } from 'react-navigation';
-import { addListener } from '../../redux/utils/redux';
+import { addListener } from '../../redux/utils/reactNavigation';
 import AppNavigator from '../../router';
 import React from 'react';
 

@@ -7,7 +7,10 @@ import Post from './Post';
 import { styles } from './styles';
 
 const propTypes = {
-    currentUserInfo: PropTypes.object.isRequired
+    currentUserInfo: PropTypes.object.isRequired,
+    posts: PropTypes.array.isRequired,
+    hasMore: PropTypes.bool.isRequired,
+    isLoading: PropTypes.bool.isRequired
 };
 
 class PostsTab extends Component {
@@ -30,7 +33,10 @@ class PostsTab extends Component {
                 onScroll={ Animated.event([{nativeEvent: {contentOffset: {y: this.props.screenProps.scrollY}}}]) }
                 ListHeaderComponent={() =>
                 <View style={styles.createPostContainer}>
-                    <Image style={styles.creatPostImage} source={ this.props.currentUserInfo.image_small ? {uri:this.props.currentUserInfo.image_small } : images.avatar }/>
+                    <Image style={styles.creatPostImage}
+                           source={ this.props.currentUserInfo.image_small
+                               ? { uri:this.props.currentUserInfo.image_small }
+                               : images.avatar }/>
                     <View style={styles.createPostTextWrap}>
                         <Text style={styles.createPostText} onPress={() => this.props.goScreen('CreatePost')}>
                             What do you think?

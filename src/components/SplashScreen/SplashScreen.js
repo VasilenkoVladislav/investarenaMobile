@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
-import { View, Text, ActivityIndicator } from 'react-native';
+import { View, ActivityIndicator } from 'react-native';
+import PropTypes from 'prop-types';
 import { styles } from './styles';
+
+const propTypes = {
+    validateToken: PropTypes.func.isRequired
+};
 
 class SplashScreen extends Component {
     constructor (props) {
@@ -17,5 +22,7 @@ class SplashScreen extends Component {
         )
     }
 }
+
+SplashScreen.propTypes = propTypes;
 
 export default SplashScreen;
