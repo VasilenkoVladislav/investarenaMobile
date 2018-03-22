@@ -13,6 +13,7 @@ import { getPostsSuccess,
     deletePostError } from '../actions/entities/postsActions';
 import { put, call, takeEvery, select } from 'redux-saga/effects';
 import api from '../../configApi/apiResources';
+import { delay } from 'redux-saga';
 import { getHeadersState } from '../selectors/entities/headersSelectors';
 import { updateHeaders } from '../actions/entities/headersActions';
 import { getLastPostCreatedAtState } from '../selectors/entities/postsSelectors';
@@ -22,7 +23,7 @@ export function * getPosts () {
     const lastCreateAt = yield select(getLastPostCreatedAtState);
     const params = { last_created_at: lastCreateAt };
     const { data, headers } = yield call(api.posts.getPosts, params, headersForRequest);
-    if (data && headers) {
+    if (data && data.posts && headers) {
         yield put(updateHeaders(headers));
         yield put(getPostsSuccess(data));
     } else {
@@ -32,10 +33,12 @@ export function * getPosts () {
 
 export function * createPost ({payload}) {
     const headersForRequest = yield select(getHeadersState);
-    const { data, headers } = yield call(api.posts.createPost, payload, headersForRequest);
-    if (data && headers) {
+    yield call(delay, 3000);
+    const { data, headers } = yield call(api.posts.createPost, payload.data, headersForRequest);
+    if (data && data.post && headers) {
         yield put(updateHeaders(headers));
-        yield put(createPostSuccess(data.post));
+        console.log(data);
+        yield put(createPostSuccess(payload.clientPostId, data.post));
     } else {
         yield put(createPostError());
     }
@@ -44,7 +47,7 @@ export function * createPost ({payload}) {
 export function * updatePost ({payload}) {
     const headersForRequest = yield select(getHeadersState);
     const { data, headers } = yield call(api.posts.updatePost, payload, headersForRequest);
-    if (data && headers) {
+    if (data && data.post && headers) {
         yield put(updateHeaders(headers));
         yield put(updatePostSuccess(data.post));
     } else {

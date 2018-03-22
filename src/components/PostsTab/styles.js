@@ -14,10 +14,10 @@ export const styles = StyleSheet.create({
         marginTop: 15,
         padding: 10,
     },
-    creatPostImage: {
+    currentUserAvatar: {
         width: 30,
         height: 30,
-        borderRadius: 20
+        borderRadius: 15
     },
     createPostTextWrap: {
         paddingHorizontal: 10,

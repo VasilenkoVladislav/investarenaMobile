@@ -6,7 +6,11 @@ const getPosts = (state) => state.entities.posts;
 // reselect function
 export const getPostsEntitiesState = createSelector(
     [ getPosts ],
-    (posts) => posts.allIds.map(id => posts.entities[id])
+    (posts) => {
+        const unConfirmedPosts = posts.unConfirmedIds.map(id => posts.unConfirmed[id]);
+        const confirmedPosts = posts.allIds.map(id => posts.entities[id]);
+        return unConfirmedPosts.concat(confirmedPosts)
+    }
 );
 
 export const getPostByIdState = createSelector(

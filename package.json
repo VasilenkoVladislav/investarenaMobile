@@ -9,15 +9,15 @@
     "remotedev": "remotedev --hostname=localhost --port=8000"
   },
   "dependencies": {
-    "axios": "0.17.1",
+    "axios": "0.18.0",
     "lodash": "4.17.5",
     "react": "16.3.0-alpha.1",
     "react-native": "0.54.2",
-    "react-native-elements": "1.0.0-beta2",
+    "react-native-elements": "1.0.0-beta3",
     "react-native-fbsdk": "0.7.0",
-    "react-native-google-signin": "^0.12.0",
+    "react-native-google-signin": "0.12.0",
     "react-native-vector-icons": "4.5.0",
-    "react-navigation": "1.4.0",
+    "react-navigation": "1.5.8",
     "react-navigation-redux-helpers": "1.0.3",
     "react-redux": "5.0.7",
     "redux": "3.7.2",
@@ -25,9 +25,9 @@
     "reselect": "3.0.1"
   },
   "devDependencies": {
-    "babel-jest": "22.4.1",
+    "babel-jest": "22.4.3",
     "babel-preset-react-native": "4.0.0",
-    "jest": "22.4.2",
+    "jest": "22.4.3",
     "redux-logger": "3.0.6",
     "remote-redux-devtools": "0.5.12",
     "remotedev-server": "0.2.4"

@@ -18,14 +18,15 @@ class PostsTab extends Component {
         super(props);
     }
     componentWillMount () {
-        this.props.getRefreshPosts();
+        const { posts } = this.props;
+        posts.length === 0 && this.props.getRefreshPosts();
     }
     render () {
         return (
             <FlatList
                 data={this.props.posts}
                 contentContainerStyle={{marginTop: 60}}
-                keyExtractor={item => item.id}
+                keyExtractor={item => item.id || item.client_id}
                 refreshing={this.props.isLoading}
                 onRefresh={this.props.getRefreshPosts}
                 onEndReached={this.props.getNextPosts}
@@ -33,7 +34,7 @@ class PostsTab extends Component {
                 onScroll={ Animated.event([{nativeEvent: {contentOffset: {y: this.props.screenProps.scrollY}}}]) }
                 ListHeaderComponent={() =>
                 <View style={styles.createPostContainer}>
-                    <Image style={styles.creatPostImage}
+                    <Image style={styles.currentUserAvatar}
                            source={ this.props.currentUserInfo.image_small
                                ? { uri:this.props.currentUserInfo.image_small }
                                : images.avatar }/>

@@ -12,7 +12,7 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch) {
     return {
-        createPost: (data) => dispatch(createPostRequest(data))
+        createPost: (clientPostId, data) => dispatch(createPostRequest(clientPostId, data))
     }
 }
 

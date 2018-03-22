@@ -1,4 +1,6 @@
-import { StyleSheet } from "react-native";
+import { Dimensions, StyleSheet} from 'react-native';
+
+const { width } = Dimensions.get('window');
 
 export const styles = StyleSheet.create({
     headerTitle: {
@@ -9,21 +11,32 @@ export const styles = StyleSheet.create({
     header: {
         backgroundColor: '#16254c'
     },
-    customHeader: {
-        marginRight: 15,
-    },
-    customHeaderText: {
-        color: 'white',
-        fontSize: 16,
-    },
     container: {
-        backgroundColor: '#fff',
+        backgroundColor: '#fff'
+    },
+    currentUserInfoWrap: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        padding: 15
+    },
+    currentUserAvatar: {
+        width: 40,
+        height: 40,
+        marginRight: 15,
+        borderRadius: 20
+    },
+    currentUserName: {
+        fontWeight: 'bold',
+        color: 'black'
+    },
+    inputWrap: {
+      paddingHorizontal: 15
     },
     imagesWrap: {
 
     },
     image: {
-        width: 200,
-        height: 200,
+        width,
+        height: 400,
     },
 });

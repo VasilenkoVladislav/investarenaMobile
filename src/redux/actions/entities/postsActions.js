@@ -27,12 +27,12 @@ export function getPostsError () {
     return { type: GET_POSTS_ERROR };
 }
 
-export function createPostRequest (data) {
-    return { type: CREATE_POST_REQUEST, payload: data };
+export function createPostRequest (clientPostId, data) {
+    return { type: CREATE_POST_REQUEST, payload: {clientPostId, data} };
 }
 
-export function createPostSuccess (data) {
-    return { type: CREATE_POST_SUCCESS, payload: data };
+export function createPostSuccess (clientPostId, data) {
+    return { type: CREATE_POST_SUCCESS, payload: {clientPostId, data} };
 }
 
 export function createPostError () {

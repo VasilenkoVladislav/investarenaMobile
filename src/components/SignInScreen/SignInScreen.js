@@ -95,7 +95,7 @@ class SignInScreen extends Component {
                             buttonStyle={styles.loginButton}
                             containerStyle={styles.loginButtonContainer}
                             activeOpacity={0.8}
-                            text={'LOGIN'}
+                            title='LOGIN'
                             onPress={this.signInOnClick}
                             textStyle={styles.loginTextButton}
                             loading={this.props.isLoading}
@@ -137,7 +137,7 @@ class SignInScreen extends Component {
                             New here?
                         </Text>
                         <Button
-                            text="Create an Account"
+                            title="Create an Account"
                             clear
                             activeOpacity={0.5}
                             textStyle={styles.SignUpTextButton}
