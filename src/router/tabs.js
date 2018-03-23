@@ -14,10 +14,16 @@ export const MainScreenTabs = TabNavigator(
                 }
             })
         },
-        Users:  {
+        Favorites:  {
             screen: NotificationsTab,
             navigationOptions: () => ({
-                tabBarIcon: ({ focused }) => <Icon type='font-awesome' name='users' color={focused? '#3a79ee' : 'grey'} />
+                tabBarIcon: ({ focused }) => <Icon name='star' color={focused? '#3a79ee' : 'grey'} />
+            })
+        },
+        Quotes:  {
+            screen: NotificationsTab,
+            navigationOptions: () => ({
+                tabBarIcon: ({ focused }) => <Icon name='attach-money' color={focused? '#3a79ee' : 'grey'} />
             })
         },
         Notifications:  {

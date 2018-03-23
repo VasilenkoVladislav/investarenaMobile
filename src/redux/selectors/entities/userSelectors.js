@@ -13,6 +13,16 @@ export const getCurrentNameState = createSelector(
     (info) => info.name
 );
 
+export const getCurrentUserIdState = createSelector(
+    [ getCurrentUserInfoState ],
+    (info) => info.id
+);
+
+export const getCurrentUserAvatarState = createSelector(
+    [ getCurrentUserInfoState ],
+    (info) => { return { small: info.image_small, medium: info.image_medium, large: info.image } }
+);
+
 export const getUserIsSignInState = createSelector(
     [ getUserState ],
     (user) => user.isSignIn

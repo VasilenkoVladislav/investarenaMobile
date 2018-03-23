@@ -1,12 +1,13 @@
+import { getCurrentNameState, getCurrentUserAvatarState } from '../../redux/selectors/entities/userSelectors';
 import { createPostRequest } from '../../redux/actions/entities/postsActions';
 import CreatePostScreen from './CreatePostScreen';
 import { connect } from 'react-redux';
-import { getCurrentUserInfoState } from '../../redux/selectors/entities/userSelectors';
 
 
 function mapStateToProps (state) {
     return {
-        currentUserInfo: getCurrentUserInfoState(state)
+        currentUserName: getCurrentNameState(state),
+        currentUserAvatar: getCurrentUserAvatarState(state)
     };
 }
 

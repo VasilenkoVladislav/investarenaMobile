@@ -14,11 +14,6 @@ export const styles = StyleSheet.create({
         marginTop: 15,
         padding: 10,
     },
-    currentUserAvatar: {
-        width: 30,
-        height: 30,
-        borderRadius: 15
-    },
     createPostTextWrap: {
         paddingHorizontal: 10,
         paddingVertical: 5,

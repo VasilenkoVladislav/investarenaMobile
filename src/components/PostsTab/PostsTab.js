@@ -1,13 +1,19 @@
-import { View, Image, FlatList, Animated, Text } from 'react-native';
+import { View, FlatList, Animated, Text } from 'react-native';
 import React, { Component } from 'react';
-import { Input, Icon } from 'react-native-elements';
+import { Icon, Avatar } from 'react-native-elements';
 import { images } from '../../resources/images';
 import PropTypes from 'prop-types';
 import Post from './Post';
 import { styles } from './styles';
 
 const propTypes = {
-    currentUserInfo: PropTypes.object.isRequired,
+    currentUserAvatar: PropTypes.shape({
+        small: PropTypes.string,
+        medium: PropTypes.string,
+        large: PropTypes.string
+    }),
+    currentUserId: PropTypes.string.isRequired,
+    currentUserName: PropTypes.string.isRequired,
     posts: PropTypes.array.isRequired,
     hasMore: PropTypes.bool.isRequired,
     isLoading: PropTypes.bool.isRequired
@@ -34,19 +40,23 @@ class PostsTab extends Component {
                 onScroll={ Animated.event([{nativeEvent: {contentOffset: {y: this.props.screenProps.scrollY}}}]) }
                 ListHeaderComponent={() =>
                 <View style={styles.createPostContainer}>
-                    <Image style={styles.currentUserAvatar}
-                           source={ this.props.currentUserInfo.image_small
-                               ? { uri:this.props.currentUserInfo.image_small }
-                               : images.avatar }/>
+                    <Avatar
+                        small
+                        rounded
+                        source={ this.props.currentUserAvatar.small ? { uri:this.props.currentUserAvatar.small } : images.avatar }
+                        activeOpacity={0.7} />
                     <View style={styles.createPostTextWrap}>
-                        <Text style={styles.createPostText} onPress={() => this.props.goScreen('CreatePost')}>
+                        <Text onPress={() => this.props.goScreen('CreatePost')}>
                             What do you think?
                         </Text>
                     </View>
                     <Icon name='image' color='#2c3552' size={30} onPress={() => this.props.goScreen('ImagePicker')}/>
                     <Icon name='attachment' color='#2c3552' size={30}/>
                 </View>}
-                renderItem={({item}) => <Post post={item}/>}/>
+                renderItem={({item}) => <Post post={item}
+                                              currentUserId={this.props.currentUserId}
+                                              currentUserName={this.props.currentUserName}
+                                              currentUserAvatar={this.props.currentUserAvatar}/>}/>
         );
     }
 }

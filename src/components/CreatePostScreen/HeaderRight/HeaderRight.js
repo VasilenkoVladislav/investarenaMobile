@@ -9,7 +9,7 @@ const HeaderRight = ({state, replace}) => {
             post: {
                 client_id: clientPostId,
                 show_captcha: false,
-                access: 'Private',
+                access: 'Public',
                 market: 'Simple',
                 content: state.params.content,
                 image: null,

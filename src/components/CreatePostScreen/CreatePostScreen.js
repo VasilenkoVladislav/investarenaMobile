@@ -1,5 +1,6 @@
 import { ScrollView, View, Text, Image, TextInput } from 'react-native';
 import React, { Component } from 'react';
+import { Avatar } from 'react-native-elements';
 import HeaderRight from './HeaderRight';
 import { images } from '../../resources/images';
 import { styles } from './styles';
@@ -7,7 +8,12 @@ import PropTypes from 'prop-types';
 
 const propTypes = {
     createPost: PropTypes.func.isRequired,
-    currentUserInfo: PropTypes.object.isRequired,
+    currentUserAvatar: PropTypes.shape({
+        small: PropTypes.string,
+        medium: PropTypes.string,
+        large: PropTypes.string
+    }),
+    currentUserName: PropTypes.string.isRequired,
 };
 
 class CreatePostScreen extends Component {
@@ -39,11 +45,13 @@ class CreatePostScreen extends Component {
         return (
             <ScrollView style={styles.container}>
                 <View style={styles.currentUserInfoWrap}>
-                    <Image style={styles.currentUserAvatar}
-                           source={ this.props.currentUserInfo.image_medium
-                               ? { uri:this.props.currentUserInfo.image_medium }
-                               : images.avatar }/>
-                    <Text style={styles.currentUserName}>{this.props.currentUserInfo.name}</Text>
+                    <Avatar
+                        containerStyle={styles.currentUserAvatar}
+                        small
+                        rounded
+                        source={ this.props.currentUserAvatar.small ? { uri: this.props.currentUserAvatar.small } : images.avatar }
+                        activeOpacity={0.7} />
+                    <Text style={styles.currentUserName}>{this.props.currentUserName}</Text>
                 </View>
                 <TextInput
                     style={styles.inputWrap}

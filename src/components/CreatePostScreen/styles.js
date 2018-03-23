@@ -22,10 +22,7 @@ export const styles = StyleSheet.create({
         marginBottom: 10
     },
     currentUserAvatar: {
-        width: 40,
-        height: 40,
         marginRight: 15,
-        borderRadius: 20
     },
     currentUserName: {
         fontWeight: 'bold',
@@ -41,6 +38,7 @@ export const styles = StyleSheet.create({
     },
     image: {
         width,
+        marginBottom: 15,
         height: 350,
     },
 });
