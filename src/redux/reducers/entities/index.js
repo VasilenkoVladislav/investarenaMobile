@@ -1,10 +1,12 @@
 import { combineReducers } from 'redux';
+import favoritesReducer from './favoritesReducer';
 import headersReducer from './headersReducer';
 import userReducer from './userReducer';
 import postsReducer from './postsReducer';
 
 export default combineReducers({
-    user: userReducer,
+    favorites: favoritesReducer,
     headers: headersReducer,
+    user: userReducer,
     posts: postsReducer
 });

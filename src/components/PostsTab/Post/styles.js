@@ -18,15 +18,24 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        fontSize: 10
     },
-    userAvatar: {
-        width: 30,
-        height: 30,
-        borderRadius: 15
+    userName: {
+        fontSize: 14,
+        fontWeight: 'bold',
+        color: '#3a79ee'
+    },
+    statusWrap: {
+      flexDirection: 'row'
+    },
+    status: {
+        width: 4,
+        height: 4,
+        borderRadius: 2,
+        alignSelf: 'center',
+        marginRight: 3
     },
     forecastWrap: {
-
+        flexDirection: 'row'
     },
     image: {
         width: 50,
