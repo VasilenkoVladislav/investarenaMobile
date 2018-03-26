@@ -2,6 +2,12 @@
   "apiPrefix": "https://api.socialtrading.uat.pp.ua/",
   "versionApi": "api/v3/",
 
+  "brokerWSUrl": {
+    "maximarkets": "https://trading.maximarkets.org/stomp/",
+    "umarkets": "https://trading.umarkets.com/stomp/",
+    "widgets": "wss://informer.maximarkets.org/wss/Server.ashx?subscriber=true"
+  },
+
   "authentication":{
     "authScope": "auth/",
     "signIn": "auth/sign_in/",

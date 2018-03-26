@@ -1,17 +1,19 @@
 import { View, FlatList, Animated, Text } from 'react-native';
 import React, { Component } from 'react';
-import { Icon, Avatar } from 'react-native-elements';
-import { images } from '../../resources/images';
+import AvatarUser from '../core/AvatarUser';
+import { Icon } from 'react-native-elements';
 import PropTypes from 'prop-types';
 import Post from './Post';
 import { styles } from './styles';
 
 const propTypes = {
+    quotes: PropTypes.object,
+    quotesSettings: PropTypes.object,
     currentUserAvatar: PropTypes.shape({
         small: PropTypes.string,
         medium: PropTypes.string,
         large: PropTypes.string
-    }),
+    }).isRequired,
     currentUserId: PropTypes.string.isRequired,
     currentUserName: PropTypes.string.isRequired,
     posts: PropTypes.array.isRequired,
@@ -40,11 +42,11 @@ class PostsTab extends Component {
                 onScroll={ Animated.event([{nativeEvent: {contentOffset: {y: this.props.screenProps.scrollY}}}]) }
                 ListHeaderComponent={() =>
                 <View style={styles.createPostContainer}>
-                    <Avatar
-                        small
-                        rounded
-                        source={ this.props.currentUserAvatar.small ? { uri:this.props.currentUserAvatar.small } : images.avatar }
-                        activeOpacity={0.7} />
+                    <AvatarUser
+                        size='small'
+                        componentProps={{
+                            rounded: true,
+                            activeOpacity: 0.7 }}/>
                     <View style={styles.createPostTextWrap}>
                         <Text onPress={() => this.props.goScreen('CreatePost')}>
                             What do you think?
@@ -54,9 +56,10 @@ class PostsTab extends Component {
                     <Icon name='attachment' color='#2c3552' size={30}/>
                 </View>}
                 renderItem={({item}) => <Post post={item}
+                                              quote={this.props.quotes && this.props.quotes[item.quote]}
+                                              quoteSettings = {this.props.quotesSettings && this.props.quotesSettings[item.quote]}
                                               currentUserId={this.props.currentUserId}
-                                              currentUserName={this.props.currentUserName}
-                                              currentUserAvatar={this.props.currentUserAvatar}/>}/>
+                                              currentUserName={this.props.currentUserName}/>}/>
         );
     }
 }

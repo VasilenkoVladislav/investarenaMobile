@@ -11,18 +11,20 @@ import { getPostsSuccess,
     updatePostError,
     deletePostSuccess,
     deletePostError } from '../actions/entities/postsActions';
-import { put, call, takeEvery, select } from 'redux-saga/effects';
+import { all, put, call, takeEvery, select } from 'redux-saga/effects';
 import api from '../../configApi/apiResources';
 import { delay } from 'redux-saga';
 import { getHeadersState } from '../selectors/entities/headersSelectors';
-import { updateHeaders } from '../actions/entities/headersActions';
 import { getLastPostCreatedAtState } from '../selectors/entities/postsSelectors';
+import { updateHeaders } from '../actions/entities/headersActions';
+import { updateUserStatus } from '../actions/entities/usersStatusActions';
 
 export function * getRefreshPosts () {
     const headersForRequest = yield select(getHeadersState);
     const { data, headers } = yield call(api.posts.getPosts, {}, headersForRequest);
     if (data && data.posts && headers) {
         yield put(updateHeaders(headers));
+        yield all(data.posts.map(post => put(updateUserStatus(post.user_id, post.status_user))));
         yield put(getPostsSuccess(data));
     } else {
         yield put(getPostsError());
@@ -36,6 +38,7 @@ export function * getNextPosts () {
     const { data, headers } = yield call(api.posts.getPosts, params, headersForRequest);
     if (data && data.posts && headers) {
         yield put(updateHeaders(headers));
+        yield all(data.posts.map(post => put(updateUserStatus(post.user_id, post.status_user))));
         yield put(getPostsSuccess(data));
     } else {
         yield put(getPostsError());
@@ -48,7 +51,6 @@ export function * createPost ({payload}) {
     const { data, headers } = yield call(api.posts.createPost, payload.data, headersForRequest);
     if (data && data.post && headers) {
         yield put(updateHeaders(headers));
-        console.log(data);
         yield put(createPostSuccess(payload.clientPostId, data.post));
     } else {
         yield put(createPostError());

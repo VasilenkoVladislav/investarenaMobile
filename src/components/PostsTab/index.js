@@ -2,6 +2,8 @@ import { getPostsEntitiesState, getPostHasMoreState, getPostsIsLoadingState } fr
 import { getCurrentNameState, getCurrentUserAvatarState, getCurrentUserIdState } from '../../redux/selectors/entities/userSelectors';
 import { getNextPostsRequest, getRefreshPostsRequest } from '../../redux/actions/entities/postsActions';
 import { connect } from 'react-redux';
+import { getQuotesState } from '../../redux/selectors/entities/quotesSelectors';
+import { getQuotesSettingsState } from '../../redux/selectors/entities/quotesSettingsSelectors';
 import { push } from '../../redux/actions/nav'
 import PostsTab from './PostsTab';
 
@@ -12,7 +14,9 @@ function mapStateToProps (state) {
         hasMore: getPostHasMoreState(state),
         currentUserId: getCurrentUserIdState(state),
         currentUserName: getCurrentNameState(state),
-        currentUserAvatar: getCurrentUserAvatarState(state)
+        currentUserAvatar: getCurrentUserAvatarState(state),
+        quotesSettings: getQuotesSettingsState(state),
+        quotes: getQuotesState(state),
     };
 }
 

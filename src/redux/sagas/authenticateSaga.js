@@ -2,6 +2,7 @@ import { put, call, takeLatest, takeEvery ,select } from 'redux-saga/effects';
 import { VALIDATE_TOKEN_REQUEST, OAUTHENTICATE_REQUEST, SIGN_IN_REQUEST, SIGN_OUT_REQUEST } from '../constansActions';
 import { signInSuccess, signInError, signOutSuccess, signOutError, validateTokenError } from '../actions/entities/authenticateActions';
 import api from '../../configApi/apiAuth';
+import { connectPlatformRequest } from '../actions/entities/platformActions';
 import { getItemAsyncStorage } from '../utils/asyncStorageHelper';
 import { getHeadersState } from '../selectors/entities/headersSelectors';
 import { oAuth } from '../../oAuth';
@@ -15,14 +16,15 @@ export function * validateToken () {
         if (data && headers) {
             yield put(updateHeaders(headers));
             yield put(signInSuccess(data));
-            yield put(push('App'))
+            yield put(connectPlatformRequest());
+            yield put(push('App'));
         } else {
             yield put(validateTokenError());
-            yield put(push('Auth'))
+            yield put(push('Auth'));
         }
     } else {
         yield put(validateTokenError());
-        yield put(push('Auth'))
+        yield put(push('Auth'));
     }
 }
 
@@ -33,7 +35,8 @@ export function * oAuthSignIn ({payload}) {
         if (data && headers) {
             yield put(updateHeaders(headers));
             yield put(signInSuccess(data));
-            yield put(push('App'))
+            yield put(connectPlatformRequest());
+            yield put(push('App'));
         } else {
             yield put(signInError());
         }
@@ -46,7 +49,8 @@ export function * signIn ({payload}) {
     if (data && headers) {
         yield put(updateHeaders(headers));
         yield put(signInSuccess(data));
-        yield put(push('App'))
+        yield put(connectPlatformRequest());
+        yield put(push('App'));
     } else {
         yield put(signInError());
     }

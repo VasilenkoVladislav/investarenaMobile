@@ -1,12 +1,16 @@
 import { View, Image, Text, ProgressBarAndroid, ProgressViewIOS, Platform } from 'react-native';
 import React, { Component } from 'react';
-import { Avatar, Icon } from 'react-native-elements';
-import { images } from '../../../resources/images';
+import AvatarUser from '../../core/AvatarUser';
+import { Icon } from 'react-native-elements';
 import PostForecast from './PostForecast';
 import PropTypes from 'prop-types';
+import PostQuoteInfo from './PostQuoteInfo';
+import UserStatus from '../../core/UserStatus';
 import { styles } from './styles';
 
 const propTypes = {
+    quote: PropTypes.object,
+    quoteSettings: PropTypes.object,
     post: PropTypes.object.isRequired,
     currentUserAvatar: PropTypes.shape({
         small: PropTypes.string,
@@ -20,9 +24,19 @@ const propTypes = {
 class Post extends Component {
     render () {
         let blockForecast;
-        const isNotSimple = this.props.post.market !== 'Simple';
+        let postQuoteInfo;
+        const isNotSimple = this.props.post.market !== 'Simple' &&
+            this.props.quoteSettings &&
+            this.props.quote &&
+            this.props.quote.askPrice !== '0.000';
         if (isNotSimple) {
-            blockForecast = <PostForecast postForecast={this.props.post.forecast} />
+            blockForecast = <PostForecast postForecast={this.props.post.forecast} />;
+            postQuoteInfo = <PostQuoteInfo quote={this.props.quote}
+                                           quoteSettings={this.props.quoteSettings}
+                                           postPrice = {this.props.post.price}
+                                           forecast = {this.props.post.forecast}
+                                           recommend = {this.props.post.recommend}
+                                           profitability = {this.props.post.profitability}/>
         }
         return (
             <View style={[ styles.container, { backgroundColor: this.props.post.created_at ? '#fff' : 'grey' }]}>
@@ -31,21 +45,22 @@ class Post extends Component {
                     : !this.props.post.created_at && <ProgressViewIOS trackTintColor='#3a79ee'/> }
                 <View style={styles.postHeaderWrap}>
                     <View style={styles.userInfoWrap}>
-                        <Avatar
-                            containerStyle={{marginRight: 5}}
-                            small
-                            rounded
-                            source={ this.props.post.author_avatar_small ? { uri: this.props.post.author_avatar_small }: images.avatar }
-                            activeOpacity={0.7} />
+                        <AvatarUser
+                            userAvatar={this.props.post.author_avatar_small}
+                            userId={this.props.post.user_id}
+                            size='small'
+                            componentProps={{
+                                rounded: true,
+                                containerStyle: { marginRight: 5 },
+                                activeOpacity: 0.7 }}/>
                         <View>
-                            <Text style={styles.userName}>{this.props.currentUserId === this.props.post.user_id
-                                ? this.props.currentUserName
-                                : this.props.post.author_name}</Text>
+                            <Text style={styles.userName}>
+                                {this.props.currentUserId === this.props.post.user_id
+                                    ? this.props.currentUserName
+                                    : this.props.post.author_name}
+                            </Text>
                             <View style={styles.statusWrap}>
-                                <View style={[styles.status, { backgroundColor: this.props.post.status_user.online ? '#3bbc53' : '#e93700' }]}/>
-                                <Text style={{fontSize: 10, marginRight: 5, color:  this.props.post.status_user.online ? '#3bbc53' : '#e93700'}}>
-                                    {this.props.post.status_user.online ? 'Online' : 'Offline'}
-                                </Text>
+                                <UserStatus userId={this.props.post.user_id}/>
                                 <Text style={{fontSize: 10}}>Post created: 12 hrs</Text>
                             </View>
                         </View>
@@ -55,8 +70,11 @@ class Post extends Component {
                         <Icon name='more-vert' size={20}/>
                     </View>
                 </View>
-                <Text>{this.props.post.content}</Text>
-                {this.props.post.image_medium && <Image style={styles.image} source={{uri: this.props.post.image_medium}} resizeMode="stretch"/>}
+                <View>
+                    {postQuoteInfo}
+                    <Text>{this.props.post.content}</Text>
+                    {this.props.post.image_medium && <Image style={styles.image} source={{uri: this.props.post.image_medium}} resizeMode="stretch"/>}
+                </View>
             </View>
         );
     }

@@ -1,11 +1,11 @@
 import _ from 'lodash';
 import { createSelector } from 'reselect';
 // selector
-const getPosts = (state) => state.entities.posts;
+const getPostsState = (state) => state.entities.posts;
 
 // reselect function
 export const getPostsEntitiesState = createSelector(
-    [ getPosts ],
+    getPostsState,
     (posts) => {
         const unConfirmedPosts = posts.unConfirmedIds.map(id => posts.unConfirmed[id]);
         const confirmedPosts = posts.allIds.map(id => posts.entities[id]);
@@ -14,18 +14,18 @@ export const getPostsEntitiesState = createSelector(
 );
 
 export const getPostByIdState = createSelector(
-    getPosts,
+    getPostsState,
     (state, props) => props.postId,
     (posts, postId) => posts.entities[postId]
 );
 
 export const getPostHasMoreState = createSelector(
-    getPosts,
+    getPostsState,
     (posts) => posts.hasMore
 );
 
 export const getPostsIsLoadingState = createSelector(
-    getPosts,
+    getPostsState,
     (posts) => posts.isLoading
 );
 
