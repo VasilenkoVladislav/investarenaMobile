@@ -14,6 +14,7 @@ const propTypes = {
         medium: PropTypes.string,
         large: PropTypes.string
     }).isRequired,
+    getPostDeals: PropTypes.func.isRequired,
     currentUserId: PropTypes.string.isRequired,
     currentUserName: PropTypes.string.isRequired,
     posts: PropTypes.array.isRequired,
@@ -59,7 +60,8 @@ class PostsTab extends Component {
                                               quote={this.props.quotes && this.props.quotes[item.quote]}
                                               quoteSettings = {this.props.quotesSettings && this.props.quotesSettings[item.quote]}
                                               currentUserId={this.props.currentUserId}
-                                              currentUserName={this.props.currentUserName}/>}/>
+                                              currentUserName={this.props.currentUserName}
+                                              getPostDeals={this.props.getPostDeals}/>}/>
         );
     }
 }

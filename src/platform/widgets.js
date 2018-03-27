@@ -9,6 +9,7 @@ export default class Widgets {
     constructor ({ dispatch }) {
         this.dispatch = dispatch;
         this.quotes = {};
+        this.statesQuotes = {};
         this.websocket = null;
         this.quotesSettings = {};
     }
@@ -94,6 +95,9 @@ export default class Widgets {
         let data = {};
         if (msg.args) {
             msg.args.forEach((q) => {
+                if (_.size(this.quotes) !== 0 && this.quotes[q.Name]) {
+                    this.getStateQuote(q.Name, q, this.quotes[q.Name]);
+                }
                 this.quotes[q.Name] = {
                     security: q.Name,
                     bidPrice: q.Sess === 'Close' ? q.ESV : q.Bid,
@@ -101,7 +105,7 @@ export default class Widgets {
                     dailyChange: +q.Rate,
                     timestamp: q.Timestamp,
                     isSession: q.Sess === 'Open',
-                    state: this.getStateQuote(q, this.quotes[q.Name])
+                    state: this.statesQuotes[q.Name]
                 };
                 data[q.Name] = {
                     security: q.Name,
@@ -110,7 +114,7 @@ export default class Widgets {
                     dailyChange: +q.Rate,
                     timestamp: q.Timestamp,
                     isSession: q.Sess === 'Open',
-                    state: this.getStateQuote(q, this.quotes[q.Name])
+                    state: this.statesQuotes[q.Name]
                 };
             });
             this.dispatch(updateQuotes(data));
@@ -149,17 +153,11 @@ export default class Widgets {
             // this.dispatch(getChartDataSuccess({quoteSecurity, timeScale, bars }));
         }
     }
-    getStateQuote (quote, oldQuote) {
-        if (oldQuote) {
-            const newPrice = quote.Bid;
-            const oldPrice = oldQuote.bidPrice;
-            if (newPrice !== oldPrice) {
-                return newPrice > oldPrice ? 'up' : 'down';
-            } else {
-                return 'notUpdate';
-            }
-        } else {
-            return 'notUpdate';
+    getStateQuote (security, quote, oldQuote) {
+        const newPrice = quote.Bid;
+        const oldPrice = oldQuote.bidPrice;
+        if (newPrice !== oldPrice) {
+            this.statesQuotes[security] = newPrice > oldPrice ? 'up' : 'down';
         }
     }
 }

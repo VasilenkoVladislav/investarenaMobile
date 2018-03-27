@@ -37,6 +37,9 @@ export const styles = StyleSheet.create({
     forecastWrap: {
         flexDirection: 'row'
     },
+    contentWrap: {
+      marginTop: 10
+    },
     image: {
         width: 50,
         height: 50,

@@ -21,6 +21,12 @@
     "posts": "/posts/",
     "getNextPosts": "/posts/get_posts/",
     "decline": "/decline_collaborator"
+  },
+
+  "deals": {
+    "deals": "/deals/",
+    "lastClosedDeals": "/get_last_closed_deal/",
+    "createClosedDeals": "/create_closed_deals/"
   }
 }
 

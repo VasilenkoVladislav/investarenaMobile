@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 
-export function quoteFormat (price, quoteSettings) {
+export function quoteFormat (price, quoteSettings, color) {
     if (price === '-' || !quoteSettings) {
         return <Text>&ndash;</Text>;
     } else {
@@ -9,13 +9,13 @@ export function quoteFormat (price, quoteSettings) {
         if (rate) {
             let dot = rate.dot === 0 ? '' : '.';
             return <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
-                <Text style={{fontSize: 10, color: 'white'}}>
+                <Text style={{fontSize: 10, color}}>
                     {rate.small}
                 </Text>
-                <Text style={{fontSize: 12, color: 'white'}}>
+                <Text style={{fontSize: 12, color, fontWeight: 'bold'}}>
                     {dot + rate.big}
                 </Text>
-                <Text style={{fontSize: 10, color: 'white', alignSelf: 'flex-start'}}>
+                <Text style={{fontSize: 10, color, alignSelf: 'flex-start'}}>
                     {rate.mid}
                 </Text>
             </View>;

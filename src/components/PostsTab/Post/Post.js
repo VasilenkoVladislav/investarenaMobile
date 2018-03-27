@@ -2,8 +2,11 @@ import { View, Image, Text, ProgressBarAndroid, ProgressViewIOS, Platform } from
 import React, { Component } from 'react';
 import AvatarUser from '../../core/AvatarUser';
 import { Icon } from 'react-native-elements';
+import { currentTime } from '../../../helpers/currentTime';
+import moment from 'moment';
 import PostForecast from './PostForecast';
 import PropTypes from 'prop-types';
+import PostStatistics from './PostStatistics';
 import PostQuoteInfo from './PostQuoteInfo';
 import UserStatus from '../../core/UserStatus';
 import { styles } from './styles';
@@ -17,14 +20,35 @@ const propTypes = {
         medium: PropTypes.string,
         large: PropTypes.string
     }),
+    getPostDeals: PropTypes.func.isRequired,
     currentUserId: PropTypes.string.isRequired,
     currentUserName: PropTypes.string.isRequired,
 };
 
 class Post extends Component {
+    constructor (props) {
+        super(props);
+        this.state = {
+            showBannedInfo: this.props.post.banned,
+            isExpired: this.props.post.hasOwnProperty('expired_bars'),
+            deals: []
+        };
+    }
+    componentDidMount () {
+        this.setState({ isVisible: true });
+        if (moment(this.props.post.created_at).add(10, 'seconds') < moment(currentTime.getTime())) {
+            if (this.props.post.comments_count > 0) {
+                // this.props.getComments(this.props.post.id);
+            }
+            if (this.props.post.market !== 'Simple') {
+                this.props.getPostDeals(this.props.post.id);
+            }
+        }
+    }
     render () {
         let blockForecast;
         let postQuoteInfo;
+        let postStatistics;
         const isNotSimple = this.props.post.market !== 'Simple' &&
             this.props.quoteSettings &&
             this.props.quote &&
@@ -36,7 +60,12 @@ class Post extends Component {
                                            postPrice = {this.props.post.price}
                                            forecast = {this.props.post.forecast}
                                            recommend = {this.props.post.recommend}
-                                           profitability = {this.props.post.profitability}/>
+                                           profitability = {this.props.post.profitability}
+                                           isExpired={this.state.isExpired}/>;
+            postStatistics = <PostStatistics quote={this.props.quote}
+                                             postId = {this.props.post.id}
+                                             recommend = {this.props.post.recommend}
+                                             postPrice = {this.props.post.price}/>;
         }
         return (
             <View style={[ styles.container, { backgroundColor: this.props.post.created_at ? '#fff' : 'grey' }]}>
@@ -72,8 +101,9 @@ class Post extends Component {
                 </View>
                 <View>
                     {postQuoteInfo}
-                    <Text>{this.props.post.content}</Text>
+                    <Text style={styles.contentWrap}>{this.props.post.content}</Text>
                     {this.props.post.image_medium && <Image style={styles.image} source={{uri: this.props.post.image_medium}} resizeMode="stretch"/>}
+                    {postStatistics}
                 </View>
             </View>
         );
