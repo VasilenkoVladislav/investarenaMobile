@@ -1,6 +1,7 @@
-import { View, Text } from 'react-native';
+import { CustomText } from '../../core/CustomText';
 import React from 'react';
 import PropTypes from 'prop-types';
+import { View } from 'react-native';
 import { styles } from './styles';
 
 const propTypes = {
@@ -12,9 +13,9 @@ const UserStatus = ({statusStyle, textStyle, userStatus}) => {
     return (
         <React.Fragment>
             <View style={[statusStyle || styles.status, { backgroundColor: userStatus ? '#3bbc53' : '#e93700' }]}/>
-            <Text style={[textStyle || styles.statusText, { color: userStatus ? '#3bbc53' : '#e93700' }]}>
+            <CustomText style={[textStyle || styles.statusText, { color: userStatus ? '#3bbc53' : '#e93700' }]}>
                 {userStatus ? 'Online' : 'Offline'}
-            </Text>
+            </CustomText>
         </React.Fragment>
     );
 };

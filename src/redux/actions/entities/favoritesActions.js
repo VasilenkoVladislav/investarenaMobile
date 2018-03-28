@@ -5,16 +5,16 @@ import { GET_FAVORITES_REQUEST,
     UPDATE_FAVORITE_SUCCESS,
     UPDATE_FAVORITE_ERROR } from '../../constansActions';
 
-export function getFavoritesRequest (data) {
-    return { type: GET_FAVORITES_REQUEST, payload: data };
+export function getFavoritesRequest () {
+    return { type: GET_FAVORITES_REQUEST};
 }
 
 export function getFavoritesSuccess (data) {
     return { type: GET_FAVORITES_SUCCESS, payload: data };
 }
 
-export function getFavoritesError (data) {
-    return { type: GET_FAVORITES_ERROR, payload: data };
+export function getFavoritesError () {
+    return { type: GET_FAVORITES_ERROR };
 }
 
 export function updateFavoriteRequest (quoteSecurity) {
@@ -25,6 +25,6 @@ export function updateFavoriteSuccess (quoteSecurity) {
     return { type: UPDATE_FAVORITE_SUCCESS, payload: quoteSecurity };
 }
 
-export function updateFavoriteError (quoteSecurity) {
-    return { type: UPDATE_FAVORITE_ERROR, payload: quoteSecurity };
+export function updateFavoriteError () {
+    return { type: UPDATE_FAVORITE_ERROR };
 }

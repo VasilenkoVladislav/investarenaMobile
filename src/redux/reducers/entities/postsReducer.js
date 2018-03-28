@@ -6,6 +6,7 @@ import { GET_REFRESH_POSTS_REQUEST,
     CREATE_POST_SUCCESS,
     UPDATE_POST_SUCCESS,
     DELETE_POST_SUCCESS,
+    GET_POST_DEALS_SUCCESS,
     SIGN_OUT_SUCCESS } from '../../constansActions';
 import _ from 'lodash';
 
@@ -62,6 +63,15 @@ export default function (state = initialState, action) {
             return { ...state,
                 entities: _.omit(state.entities, action.payload),
                 allIds: state.allIds.filter(id => id !== action.payload)
+            };
+        case GET_POST_DEALS_SUCCESS:
+            return { ...state,
+                entities: {...state.entities,
+                    [action.payload.postId]:{
+                        ...state.entities[action.payload.postId],
+                        deals: _.map(action.payload.deals, 'id')
+                    }
+                }
             };
         case SIGN_OUT_SUCCESS:
             return initialState;

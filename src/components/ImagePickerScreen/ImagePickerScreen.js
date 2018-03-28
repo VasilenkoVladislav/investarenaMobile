@@ -1,5 +1,6 @@
-import { View, ScrollView, Text, TouchableHighlight, Image, CameraRoll, TouchableOpacity, PermissionsAndroid } from 'react-native';
+import { View, ScrollView, TouchableHighlight, Image, CameraRoll, TouchableOpacity, PermissionsAndroid } from 'react-native';
 import React, { Component } from 'react';
+import { CustomTextBold } from '../core/CustomText';
 import { styles } from './styles';
 
 class ImagePickerScreen extends Component {
@@ -12,7 +13,7 @@ class ImagePickerScreen extends Component {
             headerRight: (navigation.state.params && navigation.state.params.selectedPhoto) &&
                 <TouchableOpacity style={styles.customHeader}
                                   onPress={() => navigation.replace('CreatePost', { selectedPhoto: navigation.state.params.selectedPhoto })}>
-                    <Text style={styles.customHeaderText}>Done</Text>
+                    <CustomTextBold style={styles.customHeaderText}>Done</CustomTextBold>
                 </TouchableOpacity>
         }
     };

@@ -1,9 +1,10 @@
-import { View, Text } from 'react-native';
+import { CustomText, CustomTextBold } from '../../../../core/CustomText';
 import React, { Component } from 'react';
 import { currentTime } from '../../../../../helpers/currentTime';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import { styles } from './styles'
+import { View } from 'react-native';
 
 const propTypes = {
     quoteSettings: PropTypes.object,
@@ -65,8 +66,8 @@ class PostDifference extends Component {
     render () {
         return (
             <View style={styles.container}>
-                <Text style={styles.profitText}>Profitability:</Text>
-                <Text style={[styles.profitValue, { color: this.state.colorProfit }]}>{this.state.profitability + ' pips'}</Text>
+                <CustomText style={styles.profitText}>Profitability:</CustomText>
+                <CustomTextBold style={[styles.profitValue, { color: this.state.colorProfit }]}>{this.state.profitability + ' pips'}</CustomTextBold>
             </View>
         )
     }

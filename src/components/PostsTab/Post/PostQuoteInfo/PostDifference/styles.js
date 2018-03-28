@@ -11,7 +11,6 @@ export const styles = StyleSheet.create({
         marginRight: 5
     },
     profitValue: {
-        fontSize: 10,
-        fontWeight: '700',
+        fontSize: 10
     }
 });

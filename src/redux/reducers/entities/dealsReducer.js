@@ -1,7 +1,7 @@
 import { GET_OPEN_DEALS_SUCCESS,
     GET_CLOSE_DEALS_SUCCESS,
     GET_POST_DEALS_SUCCESS,
-    CREATE_POST_OPEN_DEAL_SUCCESS,
+    CREATE_OPEN_DEAL_SUCCESS,
     CHANGE_OPEN_DEAL_SUCCESS,
     CLOSE_OPEN_DEAL_SUCCESS,
     SIGN_OUT_SUCCESS,
@@ -11,9 +11,18 @@ import { GET_OPEN_DEALS_SUCCESS,
 import _ from 'lodash';
 
 const initialState = {
-    open: {},
-    closed: {},
-    postDeals: {}
+    open: {
+        entities: {},
+        allIds: []
+    },
+    closed: {
+        entities: {},
+        allIds: []
+    },
+    postDeals: {
+        entities: {},
+        allIds: []
+    }
 };
 
 export default function (state = initialState, action) {
@@ -23,8 +32,15 @@ export default function (state = initialState, action) {
         case GET_CLOSE_DEALS_SUCCESS:
             return {...state, closed: action.payload};
         case GET_POST_DEALS_SUCCESS:
-            return {...state, postDeals: {...state.postDeals, ...action.payload}};
-        case CREATE_POST_OPEN_DEAL_SUCCESS:
+            return {...state,
+                postDeals: {...state.postDeals,
+                    entities: action.payload.deals.reduce((result, item) => {
+                        state.postDeals.entities[item.id] = item;
+                        return state.postDeals.entities;
+                    }, state.postDeals.entities),
+                    allIds: [...state.postDeals.allIds, ..._.map(action.payload.deals, 'id')]
+                }};
+        case CREATE_OPEN_DEAL_SUCCESS:
             return createPostOpenDealSuccess(state, action);
         case CLOSE_OPEN_DEAL_SUCCESS :
             return {...state, open: _.omit(state.open, action.payload)};

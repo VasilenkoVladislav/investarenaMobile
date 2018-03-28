@@ -23,6 +23,10 @@
     "decline": "/decline_collaborator"
   },
 
+  "favorites": {
+    "favorites": "/favorites/"
+  },
+
   "deals": {
     "deals": "/deals/",
     "lastClosedDeals": "/get_last_closed_deal/",

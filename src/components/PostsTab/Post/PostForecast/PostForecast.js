@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { CustomText, CustomTextBold } from '../../../core/CustomText';
 import { currentTime } from '../../../../helpers/currentTime';
 import { Icon } from 'react-native-elements'
 import { timeForecastRemain } from '../../../../helpers/diffDateTime';
 import PropTypes from 'prop-types';
+import { View } from 'react-native';
 import { styles } from './styles';
 
 const propTypes = {
@@ -13,7 +14,7 @@ const propTypes = {
 class PostForecast extends Component {
     constructor (props) {
         super(props);
-        this.state = { time: null };
+        this.state = { time: '' };
     }
     componentDidMount () {
         currentTime.subscribeTick(this.handleUpdateTimeRemain);
@@ -29,8 +30,8 @@ class PostForecast extends Component {
             <View style={styles.container}>
                 <Icon name='update' size={16} color='#999' containerStyle={styles.imageContainer}/>
                 <View>
-                    <Text style={styles.validityText}>Validity period</Text>
-                    <Text style={styles.validityTime}>{this.state.time}</Text>
+                    <CustomText style={styles.validityText}>Validity period</CustomText>
+                    <CustomTextBold style={styles.validityTime}>{this.state.time}</CustomTextBold>
                 </View>
             </View>
         );

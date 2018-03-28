@@ -4,8 +4,7 @@ export const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center',
-        marginTop: 10,
+        alignItems: 'center'
     },
     blockWrap: {
         flexDirection: 'row',
@@ -13,7 +12,6 @@ export const styles = StyleSheet.create({
     },
     quoteName: {
         fontSize: 12,
-        fontWeight: '400',
         color: '#444',
         marginHorizontal: 5,
     },

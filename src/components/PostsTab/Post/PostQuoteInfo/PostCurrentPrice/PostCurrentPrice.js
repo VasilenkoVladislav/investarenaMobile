@@ -1,8 +1,8 @@
-import { View, Text } from 'react-native';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { quoteFormat } from '../../../../../platform';
 import { styles } from './styles'
+import { View } from 'react-native';
 
 const propTypes = {
     quote: PropTypes.object,

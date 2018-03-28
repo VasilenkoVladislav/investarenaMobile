@@ -1,23 +1,24 @@
+import { CustomText, CustomTextBold } from '../components/core/CustomText';
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 
 export function quoteFormat (price, quoteSettings, color) {
     if (price === '-' || !quoteSettings) {
-        return <Text>&ndash;</Text>;
+        return <CustomText>-</CustomText>;
     } else {
         const rate = parseRate(price, quoteSettings.tickSize, quoteSettings.priceRounding / 1000000);
         if (rate) {
             let dot = rate.dot === 0 ? '' : '.';
-            return <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
-                <Text style={{fontSize: 10, color}}>
+            return <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <CustomText style={{fontSize: 10, color, paddingTop: 3}}>
                     {rate.small}
-                </Text>
-                <Text style={{fontSize: 12, color, fontWeight: 'bold'}}>
+                </CustomText>
+                <CustomTextBold style={{fontSize: 14, color}}>
                     {dot + rate.big}
-                </Text>
-                <Text style={{fontSize: 10, color, alignSelf: 'flex-start'}}>
+                </CustomTextBold>
+                <CustomText style={{fontSize: 10, color, alignSelf: 'flex-start'}}>
                     {rate.mid}
-                </Text>
+                </CustomText>
             </View>;
         }
     }

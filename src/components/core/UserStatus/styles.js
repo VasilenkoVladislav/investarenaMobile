@@ -1,9 +1,6 @@
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
-    container: {
-
-    },
     status: {
         width: 4,
         height: 4,
@@ -12,7 +9,7 @@ export const styles = StyleSheet.create({
         marginRight: 3
     },
     statusText: {
-        fontSize: 10,
+        fontSize: 8,
         marginRight: 5,
     }
 });

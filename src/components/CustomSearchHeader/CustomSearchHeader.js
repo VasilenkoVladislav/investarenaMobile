@@ -16,7 +16,7 @@ const CustomSearchHeader = ({state}) => {
             <SearchBar
                 round={true}
                 containerStyle={styles.searchBarContainer}
-                inputStyle={{ backgroundColor: 'white' }}
+                inputStyle={{ backgroundColor: 'white', fontFamily: 'OpenSans-Regular' }}
                 placeholder='Search users' />
         </Animated.View>
     );

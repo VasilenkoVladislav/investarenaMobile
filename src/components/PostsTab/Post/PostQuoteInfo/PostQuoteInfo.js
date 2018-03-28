@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native';
+import { CustomText, CustomTextBold } from '../../../core/CustomText';
 import React from 'react';
 import Favorite from '../../../core/Favorite';
 import PropTypes from 'prop-types';
@@ -6,6 +6,7 @@ import PostCurrentPrice from './PostCurrentPrice';
 import PostDifference from './PostDifference';
 import { styles } from './styles'
 import { quoteFormat } from '../../../../platform';
+import { View } from 'react-native';
 
 const propTypes = {
     quote: PropTypes.object,
@@ -22,9 +23,9 @@ const PostQuoteInfo = ({quote, quoteSettings, recommend, postPrice, isExpired, p
         <View style={styles.container}>
             <View style={styles.blockWrap}>
                 <Favorite quoteSecurity={quote.security} size={16}/>
-                <Text style={styles.quoteName}>{quoteSettings.name}</Text>
+                <CustomTextBold style={styles.quoteName}>{quoteSettings.name}</CustomTextBold>
                 <View style={[styles.recommendWrap, { backgroundColor: recommend === 'Buy' ? '#1ebea5' : '#ee5451' }]}>
-                    <Text style={styles.recommendText}>{recommend.toUpperCase()}</Text>
+                    <CustomText style={styles.recommendText}>{recommend.toUpperCase()}</CustomText>
                     {quoteFormat(postPrice, quoteSettings, 'white')}
                 </View>
                 <View style={[styles.recommendTriangle, { borderBottomColor: recommend === 'Buy' ? '#1ebea5' : '#ee5451' }]}/>

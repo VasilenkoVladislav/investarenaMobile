@@ -6,8 +6,8 @@ export function getPostDealsRequest (postId) {
     return { type: GET_POST_DEALS_REQUEST, payload: postId };
 }
 
-export function getPostDealsSuccess (data) {
-    return { type: GET_POST_DEALS_SUCCESS, payload: data };
+export function getPostDealsSuccess (postId, deals) {
+    return { type: GET_POST_DEALS_SUCCESS, payload: { postId, deals } };
 }
 
 export function getPostDealsError () {

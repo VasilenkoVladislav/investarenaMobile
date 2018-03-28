@@ -13,7 +13,6 @@ import { getPostsSuccess,
     deletePostError } from '../actions/entities/postsActions';
 import { all, put, call, takeEvery, select } from 'redux-saga/effects';
 import api from '../../configApi/apiResources';
-import { delay } from 'redux-saga';
 import { getHeadersState } from '../selectors/entities/headersSelectors';
 import { getLastPostCreatedAtState } from '../selectors/entities/postsSelectors';
 import { updateHeaders } from '../actions/entities/headersActions';
@@ -47,7 +46,6 @@ export function * getNextPosts () {
 
 export function * createPost ({payload}) {
     const headersForRequest = yield select(getHeadersState);
-    yield call(delay, 3000);
     const { data, headers } = yield call(api.posts.createPost, payload.data, headersForRequest);
     if (data && data.post && headers) {
         yield put(updateHeaders(headers));

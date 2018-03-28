@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { View, Image, Text, TouchableOpacity, StatusBar } from 'react-native';
+import { View, Image, TouchableOpacity, StatusBar } from 'react-native';
 import { Input, Button } from 'react-native-elements'
+import { CustomText } from '../core/CustomText';
 import PropTypes from 'prop-types';
 import { images } from '../../resources/images';
 import { Icon } from 'react-native-elements';
@@ -97,10 +98,10 @@ class SignInScreen extends Component {
                             activeOpacity={0.8}
                             title='LOGIN'
                             onPress={this.signInOnClick}
-                            textStyle={styles.loginTextButton}
+                            titleStyle={styles.loginTextButton}
                             loading={this.props.isLoading}
                             disabled={this.props.isLoading}/>
-                        <Text style={styles.textSignUp}>Or SignUp using</Text>
+                        <CustomText style={styles.textSignUp}>Or SignUp using</CustomText>
                         <View style={styles.socialIconContainer}>
                             <TouchableOpacity style={styles.socialIconFacebookWrap}
                                       onPress={() => this.props.oAuthSignIn('facebook')}>
@@ -133,14 +134,14 @@ class SignInScreen extends Component {
                         </View>
                     </View>
                     <View style={styles.footerContainer}>
-                        <Text style={styles.textSignUp}>
+                        <CustomText style={styles.textSignUp}>
                             New here?
-                        </Text>
+                        </CustomText>
                         <Button
                             title="Create an Account"
                             clear
                             activeOpacity={0.5}
-                            textStyle={styles.SignUpTextButton}
+                            titleStyle={styles.SignUpTextButton}
                             containerStyle={styles.SignUpButtonContainer}
                             onPress={this.props.pushScreen.bind(this, 'Registration')}
                         />

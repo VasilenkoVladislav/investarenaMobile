@@ -1,6 +1,8 @@
-import { View, Image, Text, ProgressBarAndroid, ProgressViewIOS, Platform } from 'react-native';
+import { View, Image, Dimensions, TouchableOpacity } from 'react-native';
 import React, { Component } from 'react';
+import { CustomText, CustomTextBold } from '../../core/CustomText';
 import AvatarUser from '../../core/AvatarUser';
+import { Bar } from 'react-native-progress';
 import { Icon } from 'react-native-elements';
 import { currentTime } from '../../../helpers/currentTime';
 import moment from 'moment';
@@ -15,15 +17,13 @@ const propTypes = {
     quote: PropTypes.object,
     quoteSettings: PropTypes.object,
     post: PropTypes.object.isRequired,
-    currentUserAvatar: PropTypes.shape({
-        small: PropTypes.string,
-        medium: PropTypes.string,
-        large: PropTypes.string
-    }),
+    openDeals: PropTypes.array.isRequired,
     getPostDeals: PropTypes.func.isRequired,
     currentUserId: PropTypes.string.isRequired,
     currentUserName: PropTypes.string.isRequired,
 };
+
+const { width } = Dimensions.get('window');
 
 class Post extends Component {
     constructor (props) {
@@ -35,7 +35,6 @@ class Post extends Component {
         };
     }
     componentDidMount () {
-        this.setState({ isVisible: true });
         if (moment(this.props.post.created_at).add(10, 'seconds') < moment(currentTime.getTime())) {
             if (this.props.post.comments_count > 0) {
                 // this.props.getComments(this.props.post.id);
@@ -63,15 +62,18 @@ class Post extends Component {
                                            profitability = {this.props.post.profitability}
                                            isExpired={this.state.isExpired}/>;
             postStatistics = <PostStatistics quote={this.props.quote}
-                                             postId = {this.props.post.id}
+                                             openDeals={this.props.openDeals}
                                              recommend = {this.props.post.recommend}
                                              postPrice = {this.props.post.price}/>;
         }
         return (
             <View style={[ styles.container, { backgroundColor: this.props.post.created_at ? '#fff' : 'grey' }]}>
-                { Platform.OS === 'android'
-                    ? !this.props.post.created_at && <ProgressBarAndroid styleAttr='Horizontal' color='#3a79ee'/>
-                    : !this.props.post.created_at && <ProgressViewIOS trackTintColor='#3a79ee'/> }
+                {!this.props.post.created_at &&
+                <Bar color='#3a79ee'
+                     indeterminate={true}
+                     useNativeDriver={true}
+                     width={width-40}
+                     style={{alignSelf: 'center', marginBottom: 10}}/>}
                 <View style={styles.postHeaderWrap}>
                     <View style={styles.userInfoWrap}>
                         <AvatarUser
@@ -83,14 +85,14 @@ class Post extends Component {
                                 containerStyle: { marginRight: 5 },
                                 activeOpacity: 0.7 }}/>
                         <View>
-                            <Text style={styles.userName}>
+                            <CustomTextBold style={styles.userName}>
                                 {this.props.currentUserId === this.props.post.user_id
                                     ? this.props.currentUserName
                                     : this.props.post.author_name}
-                            </Text>
+                            </CustomTextBold>
                             <View style={styles.statusWrap}>
-                                <UserStatus userId={this.props.post.user_id}/>
-                                <Text style={{fontSize: 10}}>Post created: 12 hrs</Text>
+                                <UserStatus userId={this.props.post.user_id || this.props.currentUserId}/>
+                                <CustomText style={{fontSize: 8}}>Post created: 12 hrs</CustomText>
                             </View>
                         </View>
                     </View>
@@ -99,14 +101,53 @@ class Post extends Component {
                         <Icon name='more-vert' size={20}/>
                     </View>
                 </View>
-                <View>
+                <View style={styles.postContainerWrap}>
                     {postQuoteInfo}
-                    <Text style={styles.contentWrap}>{this.props.post.content}</Text>
+                    <CustomText style={styles.contentWrap}>{this.props.post.content}</CustomText>
                     {this.props.post.image_medium && <Image style={styles.image} source={{uri: this.props.post.image_medium}} resizeMode="stretch"/>}
                     {postStatistics}
                 </View>
+                <View style={styles.postFooterWrap}>
+                    <View style={styles.postFooterBlock}>
+                        <Icon name='thumb-up' color='#2c3552' size={22} />
+                        <CustomTextBold style={{fontSize: 12, marginLeft: 3, marginRight: 5}}>1000</CustomTextBold>
+                        <Icon name='comment' color='#2c3552' size={22} />
+                        <CustomTextBold style={{fontSize: 12, marginLeft: 3}}>1000</CustomTextBold>
+                    </View>
+                    <View style={styles.postFooterBlock}>
+                        <CustomText style={{fontSize: 12}}>Share with:</CustomText>
+                        <TouchableOpacity style={styles.socialIconFacebookWrap}
+                                          onPress={() => console.log('share')}>
+                            <Icon name='facebook'
+                                  type='font-awesome'
+                                  size={16}
+                                  color='white'/>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.socialIconVKWrap}
+                                          onPress={() => console.log('share')}>
+                            <Icon name='vk'
+                                  type='font-awesome'
+                                  size={16}
+                                  color='white'/>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.socialIconOdnoklassnikiWrap}
+                                          onPress={() => console.log('share')}>
+                            <Icon name='odnoklassniki'
+                                  type='font-awesome'
+                                  size={16}
+                                  color='white'/>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.socialIconGoogleWrap}
+                                          onPress={() => console.log('share')}>
+                            <Icon name='google-plus'
+                                  type='font-awesome'
+                                  size={16}
+                                  color='white'/>
+                        </TouchableOpacity>
+                    </View>
+                </View>
             </View>
-        );
+           );
     }
 }
 

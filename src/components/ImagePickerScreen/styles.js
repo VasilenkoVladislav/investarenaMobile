@@ -5,8 +5,8 @@ const { width } = Dimensions.get('window');
 export const styles = StyleSheet.create({
     headerTitle: {
         marginHorizontal: 0,
-        fontWeight: 'normal',
         fontSize: 16,
+        fontFamily: 'OpensSans-Regular'
     },
     header: {
         backgroundColor: '#16254c'

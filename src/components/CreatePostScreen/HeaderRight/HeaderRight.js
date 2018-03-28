@@ -1,5 +1,6 @@
-import { Text,  TouchableOpacity } from 'react-native';
 import React from 'react';
+import { CustomTextBold } from '../../core/CustomText';
+import { TouchableOpacity } from 'react-native';
 import { styles } from './styles';
 
 const HeaderRight = ({state, replace}) => {
@@ -33,7 +34,7 @@ const HeaderRight = ({state, replace}) => {
         state.params && state.params.contentValid
             ? <TouchableOpacity style={styles.customHeader}
                               onPress={handleOnPress}>
-                <Text style={styles.customHeaderText}>Share</Text>
+                <CustomTextBold style={styles.customHeaderText}>Share</CustomTextBold>
             </TouchableOpacity>
             : null
     )

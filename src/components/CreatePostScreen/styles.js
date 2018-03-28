@@ -5,7 +5,7 @@ const { width } = Dimensions.get('window');
 export const styles = StyleSheet.create({
     headerTitle: {
         marginHorizontal: 0,
-        fontWeight: 'normal',
+        fontFamily: 'OpenSans-Regular',
         fontSize: 16,
     },
     header: {
@@ -24,11 +24,8 @@ export const styles = StyleSheet.create({
     currentUserAvatar: {
         marginRight: 15,
     },
-    currentUserName: {
-        fontWeight: 'bold',
-        color: 'black'
-    },
     inputWrap: {
+        fontFamily: 'OpenSans-Regular',
         textAlignVertical: 'top',
         paddingHorizontal: 15,
         marginBottom: 10

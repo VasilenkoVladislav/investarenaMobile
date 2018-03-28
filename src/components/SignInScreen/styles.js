@@ -21,6 +21,7 @@ export const styles = StyleSheet.create({
         alignItems:'center',
     },
     input: {
+        fontFamily: 'OpenSans-Regular',
         color: '#CED7E0',
         padding: 0,
     },
@@ -46,9 +47,9 @@ export const styles = StyleSheet.create({
         width: 260,
     },
     loginTextButton: {
+        fontFamily: 'OpenSans-Bold',
         fontSize: 16,
-        color: 'white',
-        fontWeight: 'bold',
+        color: 'white'
     },
     socialIconContainer: {
         width: 250,
@@ -98,7 +99,8 @@ export const styles = StyleSheet.create({
         marginTop: -5
     },
     SignUpTextButton: {
-        color: '#8C96AF',
-        fontSize: 16
+        fontFamily: 'OpenSans-Bold',
+        fontSize: 16,
+        color: 'white'
     },
 });

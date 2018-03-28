@@ -8,10 +8,10 @@ import { updateHeaders } from '../actions/entities/headersActions';
 
 export function * getPostDeals ({payload}) {
     const headersForRequest = yield select(getHeadersState);
-    const { data, headers } = yield call(api.deals.getPostDeals, payload, headersForRequest);
+    const { data, headers } = yield call(api.deals.getPostDeals, {post_id: payload}, headersForRequest);
     if (data && data.deals && headers) {
         yield put(updateHeaders(headers));
-        yield put(getPostDealsSuccess(data.deals));
+        yield put(getPostDealsSuccess(payload, data.deals));
     } else {
         yield put(getPostDealsError());
     }
@@ -26,7 +26,7 @@ export function * watchGetPostDeals() {
 }
 
 export function * watchCreateOpenDeal() {
-    yield takeEvery(CREATE_OPEN_DEAL_REQUEST, getPostDeals);
+    yield takeEvery(CREATE_OPEN_DEAL_REQUEST, createOpenDeal);
 }
 
 export const dealsSagas = [

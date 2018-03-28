@@ -1,5 +1,6 @@
-import { ScrollView, View, Text, Image, TextInput } from 'react-native';
+import { ScrollView, View, Image, TextInput } from 'react-native';
 import React, { Component } from 'react';
+import { CustomTextBold } from '../core/CustomText';
 import AvatarUser from '../core/AvatarUser';
 import HeaderRight from './HeaderRight';
 import { styles } from './styles';
@@ -50,7 +51,7 @@ class CreatePostScreen extends Component {
                             containerStyle: styles.currentUserAvatar,
                             rounded: true,
                             activeOpacity: 0.7 }}/>
-                    <Text style={styles.currentUserName}>{this.props.currentUserName}</Text>
+                    <CustomTextBold>{this.props.currentUserName}</CustomTextBold>
                 </View>
                 <TextInput
                     style={styles.inputWrap}

@@ -33,3 +33,8 @@ export const getLastPostCreatedAtState = (state) => {
     const lastPost = _.last(getPostsEntitiesState(state));
     return lastPost ? lastPost.created_at : '';
 };
+
+export const getPostDealsIdsState = createSelector(
+    getPostByIdState,
+    (post) => post && post.deals || []
+);

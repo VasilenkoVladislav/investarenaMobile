@@ -1,22 +1,13 @@
-import { View, FlatList, Animated, Text } from 'react-native';
+import { View, FlatList, Animated } from 'react-native';
 import React, { Component } from 'react';
 import AvatarUser from '../core/AvatarUser';
+import { CustomText } from '../core/CustomText';
 import { Icon } from 'react-native-elements';
 import PropTypes from 'prop-types';
 import Post from './Post';
 import { styles } from './styles';
 
 const propTypes = {
-    quotes: PropTypes.object,
-    quotesSettings: PropTypes.object,
-    currentUserAvatar: PropTypes.shape({
-        small: PropTypes.string,
-        medium: PropTypes.string,
-        large: PropTypes.string
-    }).isRequired,
-    getPostDeals: PropTypes.func.isRequired,
-    currentUserId: PropTypes.string.isRequired,
-    currentUserName: PropTypes.string.isRequired,
     posts: PropTypes.array.isRequired,
     hasMore: PropTypes.bool.isRequired,
     isLoading: PropTypes.bool.isRequired
@@ -49,19 +40,14 @@ class PostsTab extends Component {
                             rounded: true,
                             activeOpacity: 0.7 }}/>
                     <View style={styles.createPostTextWrap}>
-                        <Text onPress={() => this.props.goScreen('CreatePost')}>
+                        <CustomText style={{fontSize: 12}} onPress={() => this.props.goScreen('CreatePost')}>
                             What do you think?
-                        </Text>
+                        </CustomText>
                     </View>
                     <Icon name='image' color='#2c3552' size={30} onPress={() => this.props.goScreen('ImagePicker')}/>
                     <Icon name='attachment' color='#2c3552' size={30}/>
                 </View>}
-                renderItem={({item}) => <Post post={item}
-                                              quote={this.props.quotes && this.props.quotes[item.quote]}
-                                              quoteSettings = {this.props.quotesSettings && this.props.quotesSettings[item.quote]}
-                                              currentUserId={this.props.currentUserId}
-                                              currentUserName={this.props.currentUserName}
-                                              getPostDeals={this.props.getPostDeals}/>}/>
+                renderItem={({item}) => <Post post={item} postId={item.id} quoteSecurity={item.quote}/>}/>
         );
     }
 }

@@ -4,8 +4,8 @@ const { width } = Dimensions.get('window');
 
 export const styles = StyleSheet.create({
     container: {
+        display: 'flex',
         width,
-        height: 300,
         padding: 10,
         marginTop: 15
     },
@@ -20,8 +20,7 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
     },
     userName: {
-        fontSize: 14,
-        fontWeight: 'bold',
+        fontSize: 12,
         color: '#3a79ee'
     },
     statusWrap: {
@@ -37,11 +36,60 @@ export const styles = StyleSheet.create({
     forecastWrap: {
         flexDirection: 'row'
     },
+    postContainerWrap: {
+        marginTop: 10
+    },
     contentWrap: {
-      marginTop: 10
+        fontSize: 12,
     },
     image: {
         width: 50,
         height: 50,
-    }
+    },
+    postFooterWrap: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginTop: 10
+    },
+    postFooterBlock: {
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    socialIconFacebookWrap: {
+        width: 25,
+        height: 25,
+        backgroundColor: '#3b5998',
+        borderRadius: 4,
+        marginLeft: 10,
+        alignItems:'center',
+        justifyContent: 'center'
+    },
+    socialIconVKWrap: {
+        width: 25,
+        height: 25,
+        backgroundColor: '#4c75a3',
+        borderRadius: 4,
+        marginLeft: 10,
+        alignItems:'center',
+        justifyContent: 'center'
+    },
+    socialIconOdnoklassnikiWrap: {
+        width: 25,
+        height: 25,
+        backgroundColor: '#f58220',
+        borderRadius: 4,
+        marginLeft: 10,
+        alignItems:'center',
+        justifyContent: 'center'
+    },
+    socialIconGoogleWrap: {
+        width: 25,
+        height: 25,
+        backgroundColor: '#bf3322',
+        borderRadius: 4,
+        marginLeft: 10,
+        alignItems:'center',
+        justifyContent: 'center'
+    },
 });

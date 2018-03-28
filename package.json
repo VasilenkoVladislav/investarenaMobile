@@ -17,6 +17,7 @@
     "react-native-elements": "1.0.0-beta3",
     "react-native-fbsdk": "0.7.0",
     "react-native-google-signin": "0.12.0",
+    "react-native-progress": "^3.4.0",
     "react-native-vector-icons": "4.5.0",
     "react-navigation": "1.5.8",
     "react-navigation-redux-helpers": "1.0.3",
@@ -35,5 +36,10 @@
   },
   "jest": {
     "preset": "react-native"
+  },
+  "rnpm": {
+    "assets": [
+      "fonts"
+    ]
   }
 }

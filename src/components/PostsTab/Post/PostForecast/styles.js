@@ -8,12 +8,10 @@ export const styles = StyleSheet.create({
         marginRight: 5
     },
     validityText: {
-        fontSize: 10,
+        fontSize: 8,
         color: '#999'
     },
     validityTime: {
-        fontWeight: 'bold',
-        fontSize: 12,
-        color: 'black'
+        fontSize: 12
     }
 });
