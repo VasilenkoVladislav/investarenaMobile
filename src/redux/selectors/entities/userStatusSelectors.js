@@ -10,5 +10,5 @@ export const getUserStatusState = createSelector(
     (usersStatus, currentUserId, userId) =>
         userId === currentUserId
             ? true
-            : (usersStatus[userId] &&usersStatus[userId].online) || false
+            : (usersStatus[userId] && usersStatus[userId].online) || false
 );

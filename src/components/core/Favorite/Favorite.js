@@ -4,9 +4,13 @@ import { platformService } from '../../../platform/platformService';
 import PropTypes from 'prop-types';
 
 const propTypes = {
-    size: PropTypes.number.isRequired,
+    size: PropTypes.number,
     isFavorite: PropTypes.bool.isRequired,
     quoteSecurity: PropTypes.string.isRequired
+};
+
+const defaultProps = {
+    size: 20
 };
 
 const Favorite = ({isFavorite, size, quoteSecurity}) => {
@@ -17,5 +21,6 @@ const Favorite = ({isFavorite, size, quoteSecurity}) => {
 };
 
 Favorite.propTypes = propTypes;
+Favorite.defaultProps = defaultProps;
 
 export default Favorite;

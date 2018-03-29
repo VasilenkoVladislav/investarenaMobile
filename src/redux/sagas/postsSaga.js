@@ -11,19 +11,21 @@ import { getPostsSuccess,
     updatePostError,
     deletePostSuccess,
     deletePostError } from '../actions/entities/postsActions';
-import { all, put, call, takeEvery, select } from 'redux-saga/effects';
+import { put, call, takeEvery, takeLatest, select } from 'redux-saga/effects';
 import api from '../../configApi/apiResources';
+import _ from 'lodash';
 import { getHeadersState } from '../selectors/entities/headersSelectors';
 import { getLastPostCreatedAtState } from '../selectors/entities/postsSelectors';
 import { updateHeaders } from '../actions/entities/headersActions';
-import { updateUserStatus } from '../actions/entities/usersStatusActions';
+import { updateUsersStatus } from '../actions/entities/usersStatusActions';
 
 export function * getRefreshPosts () {
     const headersForRequest = yield select(getHeadersState);
     const { data, headers } = yield call(api.posts.getPosts, {}, headersForRequest);
     if (data && data.posts && headers) {
+        const usersStatus = _.map(data.posts, _.partialRight(_.pick, ['user_id', 'status_user']));
         yield put(updateHeaders(headers));
-        yield all(data.posts.map(post => put(updateUserStatus(post.user_id, post.status_user))));
+        yield put(updateUsersStatus(usersStatus));
         yield put(getPostsSuccess(data));
     } else {
         yield put(getPostsError());
@@ -36,8 +38,9 @@ export function * getNextPosts () {
     const params = { last_created_at: lastCreateAt };
     const { data, headers } = yield call(api.posts.getPosts, params, headersForRequest);
     if (data && data.posts && headers) {
+        const usersStatus = _.map(data.posts, _.partialRight(_.pick, ['user_id', 'status_user']));
         yield put(updateHeaders(headers));
-        yield all(data.posts.map(post => put(updateUserStatus(post.user_id, post.status_user))));
+        yield put(updateUsersStatus(usersStatus));
         yield put(getPostsSuccess(data));
     } else {
         yield put(getPostsError());
@@ -82,7 +85,7 @@ export function * watchGetRefreshPosts () {
 }
 
 export function * watchGetNextPosts () {
-    yield takeEvery(GET_NEXT_POSTS_REQUEST, getNextPosts);
+    yield takeLatest(GET_NEXT_POSTS_REQUEST, getNextPosts);
 }
 
 export function * watchCreatePost () {

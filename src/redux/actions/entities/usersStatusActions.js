@@ -1,5 +1,5 @@
-import { UPDATE_USER_STATUS } from '../../constansActions';
+import { UPDATE_USERS_STATUS } from '../../constansActions';
 
-export function updateUserStatus (userId, status) {
-    return { type: UPDATE_USER_STATUS, payload: { userId, status } };
+export function updateUsersStatus (data) {
+    return { type: UPDATE_USERS_STATUS, payload: data };
 }

@@ -1,5 +1,5 @@
 import { View, Image, Dimensions, TouchableOpacity } from 'react-native';
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { CustomText, CustomTextBold } from '../../core/CustomText';
 import AvatarUser from '../../core/AvatarUser';
 import { Bar } from 'react-native-progress';
@@ -25,7 +25,7 @@ const propTypes = {
 
 const { width } = Dimensions.get('window');
 
-class Post extends Component {
+class Post extends PureComponent {
     constructor (props) {
         super(props);
         this.state = {
@@ -39,7 +39,7 @@ class Post extends Component {
             if (this.props.post.comments_count > 0) {
                 // this.props.getComments(this.props.post.id);
             }
-            if (this.props.post.market !== 'Simple') {
+            if (this.props.post.market !== 'Simple' && this.props.post.deals_count > 0) {
                 this.props.getPostDeals(this.props.post.id);
             }
         }

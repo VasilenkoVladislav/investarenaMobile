@@ -22,7 +22,7 @@ const PostQuoteInfo = ({quote, quoteSettings, recommend, postPrice, isExpired, p
     return (
         <View style={styles.container}>
             <View style={styles.blockWrap}>
-                <Favorite quoteSecurity={quote.security} size={16}/>
+                <Favorite quoteSecurity={quote.security} size={20}/>
                 <CustomTextBold style={styles.quoteName}>{quoteSettings.name}</CustomTextBold>
                 <View style={[styles.recommendWrap, { backgroundColor: recommend === 'Buy' ? '#1ebea5' : '#ee5451' }]}>
                     <CustomText style={styles.recommendText}>{recommend.toUpperCase()}</CustomText>
