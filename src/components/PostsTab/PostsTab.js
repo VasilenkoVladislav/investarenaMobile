@@ -19,6 +19,7 @@ class PostsTab extends Component {
         this.state={ viewableItems:[] };
     }
     componentWillMount () {
+        console.log('mount');
         const { posts } = this.props;
         posts.length === 0 && this.props.getRefreshPosts();
     }
@@ -64,7 +65,8 @@ class PostsTab extends Component {
                 data={this.props.posts}
                 contentContainerStyle={{marginTop: 60}}
                 keyExtractor={item => item.id || item.client_id}
-                refreshing={this.props.isLoading}
+                // refreshing={this.props.isLoading}
+                refreshing={false}
                 onViewableItemsChanged={this.onViewableItemsChanged}
                 onRefresh={this.onRefresh}
                 onEndReached={this.onEndReached}

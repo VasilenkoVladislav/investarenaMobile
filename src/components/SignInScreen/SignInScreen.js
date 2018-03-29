@@ -100,6 +100,7 @@ class SignInScreen extends Component {
                             onPress={this.signInOnClick}
                             titleStyle={styles.loginTextButton}
                             loading={this.props.isLoading}
+                            disabledStyle={{backgroundColor: '#3a79ee'}}
                             disabled={this.props.isLoading}/>
                         <CustomText style={styles.textSignUp}>Or SignUp using</CustomText>
                         <View style={styles.socialIconContainer}>

@@ -9,9 +9,7 @@ export const MainScreenTabs = TabNavigator(
         Posts: {
             screen: PostsTab,
             navigationOptions: () => ({
-                tabBarIcon: ({ focused }) => {
-                    return <Icon type='font-awesome' name='newspaper-o' color={focused? '#3a79ee' : 'grey'} />
-                }
+                tabBarIcon: ({ focused }) => <Icon type='font-awesome' name='newspaper-o' color={focused? '#3a79ee' : 'grey'} />
             })
         },
         Favorites:  {

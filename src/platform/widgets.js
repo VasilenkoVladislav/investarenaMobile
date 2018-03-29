@@ -2,12 +2,14 @@ import { connectPlatformSuccess, connectPlatformError } from '../redux/actions/e
 import { getFavoritesRequest, updateFavoriteRequest } from '../redux/actions/entities/favoritesActions';
 import _ from 'lodash';
 import config from '../configApi/config';
+import { getNav } from '../redux/selectors/nav';
 import { updateQuotes } from '../redux/actions/entities/quotesActions';
 import { updateQuotesSettings } from '../redux/actions/entities/quotesSettingsActions';
 
 export default class Widgets {
-    constructor ({ dispatch }) {
+    constructor ({dispatch, getState}) {
         this.dispatch = dispatch;
+        this.getState = getState;
         this.quotes = {};
         this.statesQuotes = {};
         this.websocket = null;
@@ -117,7 +119,12 @@ export default class Widgets {
                     state: this.statesQuotes[q.Name]
                 };
             });
-            this.dispatch(updateQuotes(data));
+            const nav = getNav(this.getState());
+            const appStack = nav.routes.find(route => route.key === 'App');
+            const lastScreen = appStack && _.last(appStack.routes).routeName;
+            if (lastScreen && lastScreen !== 'ImagePicker') {
+                this.dispatch(updateQuotes(data));
+            }
         }
     }
     parseSettings (msg) {

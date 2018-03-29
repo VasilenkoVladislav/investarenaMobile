@@ -36,7 +36,7 @@ class CreatePostScreen extends Component {
     }
     handleOnChangeContent = (content) => {
         const { params } = this.props.navigation.state;
-        const contentValid = !!(content.length > 0 || (params && params.selectedPhoto));
+        const contentValid = !!(content.length > 0 || (params && params.selectedImage));
         this.props.navigation.setParams({ content, contentValid });
         this.setState({ content, contentValid });
     };
@@ -62,7 +62,7 @@ class CreatePostScreen extends Component {
                     onChangeText={this.handleOnChangeContent}
                     value={this.state.content}/>
                 <View style={styles.imagesWrap}>
-                    {params && params.selectedPhoto && <Image style={styles.image} source={{uri: params.selectedPhoto.node.image.uri}}/>}
+                    {params && params.selectedImage && <Image style={styles.image} source={{uri: params.selectedImage.node.image.uri}}/>}
                 </View>
             </ScrollView>
         )

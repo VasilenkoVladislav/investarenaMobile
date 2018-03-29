@@ -29,8 +29,8 @@ export const styles = StyleSheet.create({
         justifyContent: 'space-between'
     },
     image: {
-        width: (width / 3) - 3,
+        width: (width / 3),
         height: (width / 3),
-        marginBottom: 3
+        margin: 1,
     }
 });

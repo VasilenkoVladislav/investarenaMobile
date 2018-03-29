@@ -1,7 +1,7 @@
 import { StackNavigator, SwitchNavigator } from 'react-navigation'
 import CreatePostScreen from '../components/CreatePostScreen';
 import ImagePickerScreen from '../components/ImagePickerScreen';
-import MainScreen from '../components/MainScreen/MainScreen';
+import MainScreen from '../components/MainScreen';
 import React from 'react';
 import RegistrationScreen from '../components/RegistrationScreen';
 import SignInScreen from '../components/SignInScreen';

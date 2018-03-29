@@ -1,4 +1,4 @@
-import { View, ScrollView, TouchableHighlight, Image, CameraRoll, TouchableOpacity, PermissionsAndroid } from 'react-native';
+import { View, FlatList, TouchableHighlight, Image, CameraRoll, TouchableOpacity, PermissionsAndroid, InteractionManager } from 'react-native';
 import React, { Component } from 'react';
 import { CustomTextBold } from '../core/CustomText';
 import { styles } from './styles';
@@ -10,20 +10,25 @@ class ImagePickerScreen extends Component {
             headerTintColor: 'white',
             headerTitleStyle: styles.headerTitle,
             headerStyle: styles.header,
-            headerRight: (navigation.state.params && navigation.state.params.selectedPhoto) &&
+            headerRight: (navigation.state.params && navigation.state.params.selectedImage) &&
                 <TouchableOpacity style={styles.customHeader}
-                                  onPress={() => navigation.replace('CreatePost', { selectedPhoto: navigation.state.params.selectedPhoto })}>
+                                  onPress={() => navigation.replace('CreatePost', { selectedImage: navigation.state.params.selectedImage })}>
                     <CustomTextBold style={styles.customHeaderText}>Done</CustomTextBold>
                 </TouchableOpacity>
         }
     };
     constructor (props) {
         super(props);
-        this.state = { photos: [], index: null };
+        this.state = {
+            images: [],
+            index: null,
+            has_next_page: true,
+            end_cursor: null
+        };
     }
     componentDidMount = async () => {
         try {
-            const granted = await PermissionsAndroid.request(
+            await PermissionsAndroid.request(
                 PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
                 {
                     'title': 'InvestArena App Camera Permission',
@@ -31,9 +36,6 @@ class ImagePickerScreen extends Component {
                     'so you can take awesome pictures.'
                 }
             );
-            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-                await this.getPhotos();
-            }
         } catch (err) {
             console.warn(err)
         }
@@ -41,32 +43,46 @@ class ImagePickerScreen extends Component {
     setIndex = (index) => {
         if (index === this.state.index) {
             index = null
-        } else {
-            this.props.navigation.setParams({selectedPhoto: this.state.photos[index]});
         }
+        this.props.navigation.setParams({selectedImage: index && this.state.images[index]});
         this.setState({ index });
     };
-    getPhotos = async () => {
-        const r = await CameraRoll.getPhotos({ first: 30000, assetType: 'Photos' });
-        this.setState({ photos: r.edges });
+    onEndReached = () => {
+        InteractionManager.runAfterInteractions(async () => {
+            const { end_cursor, has_next_page, images } = this.state;
+            if (!has_next_page && images) {
+                return;
+            }
+            const data = await CameraRoll.getPhotos({
+                first: 10,
+                assetType: 'Photos',
+                after: end_cursor
+            });
+            this.setState({
+                images: (images || []).concat(data.edges),
+                end_cursor: data.page_info.end_cursor,
+                has_next_page: data.page_info.has_next_page,
+            });
+        });
     };
     render () {
         return (
             <View style={styles.container}>
-                <ScrollView contentContainerStyle={styles.scrollView}>
-                    {
-                        this.state.photos.map((p, i) => {
-                            return (
-                                <TouchableHighlight style={{opacity: i === this.state.index ? 0.5 : 1}}
-                                                    key={i}
-                                                    underlayColor='transparent'
-                                                    onPress={() => this.setIndex(i)}>
-                                    <Image style={styles.image} source={{uri: p.node.image.uri}}/>
-                                </TouchableHighlight>
-                            )
-                        })
-                    }
-                </ScrollView>
+                <FlatList
+                    extraData={this.state.index}
+                    data={this.state.images}
+                    numColumns={3}
+                    keyExtractor={item => item.node.image.uri}
+                    onEndReachedThreshold={0.5}
+                    onEndReached={this.onEndReached}
+                    renderItem={({ item, index }) => (
+                         <TouchableHighlight style={{opacity: index === this.state.index ? 0.5 : 1}}
+                                            underlayColor='transparent'
+                                            onPress={() => this.setIndex(index)}>
+                            <Image style={styles.image} source={{uri: item.node.image.uri}}/>
+                        </TouchableHighlight>
+                    )}>
+                </FlatList>
             </View>
         )
     }
