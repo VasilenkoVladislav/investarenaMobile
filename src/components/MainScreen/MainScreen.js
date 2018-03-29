@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Animated } from 'react-native';
 import CustomSearchHeader from '../CustomSearchHeader';
 import { MainScreenTabs } from '../../router/tabs';
 
-class MainScreen extends Component {
+class MainScreen extends PureComponent {
     static navigationOptions = ({ navigation }) => {
         return {
             header: <CustomSearchHeader {...navigation}/>

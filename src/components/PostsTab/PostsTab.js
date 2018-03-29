@@ -1,5 +1,5 @@
 import { View, FlatList, Animated } from 'react-native';
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import AvatarUser from '../core/AvatarUser';
 import { CustomText } from '../core/CustomText';
 import { Icon } from 'react-native-elements';
@@ -13,13 +13,14 @@ const propTypes = {
     isLoading: PropTypes.bool.isRequired
 };
 
-class PostsTab extends Component {
+const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
+
+class PostsTab extends PureComponent {
     constructor(props) {
         super(props);
         this.state={ viewableItems:[] };
     }
     componentWillMount () {
-        console.log('mount');
         const { posts } = this.props;
         posts.length === 0 && this.props.getRefreshPosts();
     }
@@ -61,17 +62,20 @@ class PostsTab extends Component {
     };
     render () {
         return (
-            <FlatList
+            <AnimatedFlatList
                 data={this.props.posts}
                 contentContainerStyle={{marginTop: 60}}
                 keyExtractor={item => item.id || item.client_id}
-                // refreshing={this.props.isLoading}
-                refreshing={false}
+                refreshing={this.props.isLoading}
                 onViewableItemsChanged={this.onViewableItemsChanged}
                 onRefresh={this.onRefresh}
                 onEndReached={this.onEndReached}
+                initialNumToRender={10}
+                scrollEventThrottle={16}
                 onEndReachedThreshold={1}
-                // onScroll={ Animated.event([{nativeEvent: {contentOffset: {y: this.props.screenProps.scrollY}}}]) }
+                onScroll={ Animated.event(
+                    [{nativeEvent: {contentOffset: {y: this.props.screenProps.scrollY}}}],
+                    { useNativeDriver: true } ) }
                 ListHeaderComponent={this.renderHeader}
                 renderItem={this.renderItem} />
         );
