@@ -37,20 +37,17 @@ export const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     postContainerWrap: {
-        marginTop: 10
-    },
-    contentWrap: {
-        fontSize: 12,
+        marginTop: 15
     },
     image: {
-        width: 50,
-        height: 50,
+        width: width - 20,
+        height: 350,
     },
     postFooterWrap: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        marginTop: 10
+        marginTop: 15
     },
     postFooterBlock: {
         flexDirection: 'row',

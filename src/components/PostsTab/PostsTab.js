@@ -16,6 +16,7 @@ const propTypes = {
 class PostsTab extends Component {
     constructor(props) {
         super(props);
+        this.state={ viewableItems:[] };
     }
     componentWillMount () {
         const { posts } = this.props;
@@ -31,6 +32,32 @@ class PostsTab extends Component {
             this.props.getNextPosts();
         }
     };
+    renderItem = ({item}) => (
+        <Post post={item}
+              visible={this.state.viewableItems.includes(item.id)}
+              currentUserId={this.props.currentUserId}
+              currentUserName={this.props.currentUserName}
+              getPostDeals={this.props.getPostDeals}/>
+    );
+    renderHeader = () => (
+        <View style={styles.createPostContainer}>
+            <AvatarUser
+                size='small'
+                componentProps={{
+                    rounded: true,
+                    activeOpacity: 0.7 }}/>
+            <View style={styles.createPostTextWrap}>
+                <CustomText style={{fontSize: 12}} onPress={() => this.props.goScreen('CreatePost')}>
+                    What do you think?
+                </CustomText>
+            </View>
+            <Icon name='image' color='#2c3552' size={30} onPress={() => this.props.goScreen('ImagePicker')}/>
+            <Icon name='attachment' color='#2c3552' size={30}/>
+        </View>
+    );
+    onViewableItemsChanged = ({viewableItems}) => {
+        this.setState({viewableItems: viewableItems.map(x => x.key)});
+    };
     render () {
         return (
             <FlatList
@@ -38,27 +65,13 @@ class PostsTab extends Component {
                 contentContainerStyle={{marginTop: 60}}
                 keyExtractor={item => item.id || item.client_id}
                 refreshing={this.props.isLoading}
+                onViewableItemsChanged={this.onViewableItemsChanged}
                 onRefresh={this.onRefresh}
                 onEndReached={this.onEndReached}
-                scrollEventThrottle={1}
                 onEndReachedThreshold={1}
-                onScroll={ Animated.event([{nativeEvent: {contentOffset: {y: this.props.screenProps.scrollY}}}]) }
-                ListHeaderComponent={() =>
-                <View style={styles.createPostContainer}>
-                    <AvatarUser
-                        size='small'
-                        componentProps={{
-                            rounded: true,
-                            activeOpacity: 0.7 }}/>
-                    <View style={styles.createPostTextWrap}>
-                        <CustomText style={{fontSize: 12}} onPress={() => this.props.goScreen('CreatePost')}>
-                            What do you think?
-                        </CustomText>
-                    </View>
-                    <Icon name='image' color='#2c3552' size={30} onPress={() => this.props.goScreen('ImagePicker')}/>
-                    <Icon name='attachment' color='#2c3552' size={30}/>
-                </View>}
-                renderItem={({item}) => <Post post={item} postId={item.id} quoteSecurity={item.quote}/>}/>
+                // onScroll={ Animated.event([{nativeEvent: {contentOffset: {y: this.props.screenProps.scrollY}}}]) }
+                ListHeaderComponent={this.renderHeader}
+                renderItem={this.renderItem} />
         );
     }
 }

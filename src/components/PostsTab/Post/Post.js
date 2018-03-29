@@ -1,5 +1,5 @@
 import { View, Image, Dimensions, TouchableOpacity } from 'react-native';
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { CustomText, CustomTextBold } from '../../core/CustomText';
 import AvatarUser from '../../core/AvatarUser';
 import { Bar } from 'react-native-progress';
@@ -14,10 +14,8 @@ import UserStatus from '../../core/UserStatus';
 import { styles } from './styles';
 
 const propTypes = {
-    quote: PropTypes.object,
-    quoteSettings: PropTypes.object,
+    visible: PropTypes.bool.isRequired,
     post: PropTypes.object.isRequired,
-    openDeals: PropTypes.array.isRequired,
     getPostDeals: PropTypes.func.isRequired,
     currentUserId: PropTypes.string.isRequired,
     currentUserName: PropTypes.string.isRequired,
@@ -25,7 +23,7 @@ const propTypes = {
 
 const { width } = Dimensions.get('window');
 
-class Post extends PureComponent {
+class Post extends Component {
     constructor (props) {
         super(props);
         this.state = {
@@ -33,6 +31,9 @@ class Post extends PureComponent {
             isExpired: this.props.post.hasOwnProperty('expired_bars'),
             deals: []
         };
+    }
+    shouldComponentUpdate(nextProps) {
+        return nextProps.visible !== this.props.visible;
     }
     componentDidMount () {
         if (moment(this.props.post.created_at).add(10, 'seconds') < moment(currentTime.getTime())) {
@@ -48,23 +49,24 @@ class Post extends PureComponent {
         let blockForecast;
         let postQuoteInfo;
         let postStatistics;
-        const isNotSimple = this.props.post.market !== 'Simple' &&
-            this.props.quoteSettings &&
-            this.props.quote &&
-            this.props.quote.askPrice !== '0.000';
+        const isNotSimple = this.props.post.market !== 'Simple';
         if (isNotSimple) {
-            blockForecast = <PostForecast postForecast={this.props.post.forecast} />;
-            postQuoteInfo = <PostQuoteInfo quote={this.props.quote}
-                                           quoteSettings={this.props.quoteSettings}
-                                           postPrice = {this.props.post.price}
-                                           forecast = {this.props.post.forecast}
-                                           recommend = {this.props.post.recommend}
-                                           profitability = {this.props.post.profitability}
-                                           isExpired={this.state.isExpired}/>;
-            postStatistics = <PostStatistics quote={this.props.quote}
-                                             openDeals={this.props.openDeals}
-                                             recommend = {this.props.post.recommend}
-                                             postPrice = {this.props.post.price}/>;
+            blockForecast = this.props.visible && <PostForecast postForecast={this.props.post.forecast} />;
+            postQuoteInfo = this.props.visible
+                ? <PostQuoteInfo postPrice={this.props.post.price}
+                                 postId={this.props.post.id}
+                                 quoteSecurity={this.props.post.quote}
+                                 forecast={this.props.post.forecast}
+                                 recommend={this.props.post.recommend}
+                                 profitability={this.props.post.profitability}
+                                 isExpired={this.state.isExpired}/>
+                : <View style={{height: 35}}/>;
+            postStatistics = this.props.visible
+                ? <PostStatistics postId={this.props.post.id}
+                                  quoteSecurity={this.props.post.quote}
+                                  recommend={this.props.post.recommend}
+                                  postPrice={this.props.post.price}/>
+                : <View style={{height: 35}}/>;
         }
         return (
             <View style={[ styles.container, { backgroundColor: this.props.post.created_at ? '#fff' : 'grey' }]}>
@@ -103,7 +105,7 @@ class Post extends PureComponent {
                 </View>
                 <View style={styles.postContainerWrap}>
                     {postQuoteInfo}
-                    <CustomText style={styles.contentWrap}>{this.props.post.content}</CustomText>
+                    <CustomText>{this.props.post.content}</CustomText>
                     {this.props.post.image_medium && <Image style={styles.image} source={{uri: this.props.post.image_medium}} resizeMode="stretch"/>}
                     {postStatistics}
                 </View>

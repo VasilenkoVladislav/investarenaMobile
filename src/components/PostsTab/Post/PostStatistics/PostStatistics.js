@@ -47,41 +47,45 @@ class PostStatistics extends Component {
     };
     render () {
         return (
-            <View style={styles.container}>
-                <View>
-                    <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                        <CustomText style={{fontSize: 12}}>
-                            {(this.state.longShort * 100)}%
-                        </CustomText>
-                        <CustomText style={{fontSize: 12}}>
-                            {100 - (this.state.longShort * 100)}%
-                        </CustomText>
+            <React.Fragment>
+                {this.props.quote && this.props.quoteSettings && this.props.quote.askPrice !== '0.000' ?
+                    <View style={styles.container}>
+                        <View>
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                                <CustomText style={{fontSize: 12}}>
+                                    {(this.state.longShort * 100)}%
+                                </CustomText>
+                                <CustomText style={{fontSize: 12}}>
+                                    {100 - (this.state.longShort * 100)}%
+                                </CustomText>
+                            </View>
+                            <Bar color='#ee5451'
+                                 unfilledColor='#1ebea5'
+                                 borderColor='transparent'
+                                 progress={this.state.longShort}
+                                 width={120}
+                                 height={2}
+                                 useNativeDriver={true}/>
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                                <CustomText style={{fontSize: 10, marginRight: 5}}>
+                                    long
+                                </CustomText>
+                                <CustomText style={{fontSize: 10}}>
+                                    short
+                                </CustomText>
+                            </View>
+                        </View>
+                        <View style={{flexDirection: 'row'}}>
+                            <CustomTextBold style={{fontSize: 12, marginRight: 5}}>Open Deals</CustomTextBold>
+                            <CustomTextBold style={{fontSize: 12, color: '#3a79ee'}}>{this.props.openDeals.length}</CustomTextBold>
+                        </View>
+                        <View style={{flexDirection: 'row'}}>
+                            <CustomTextBold style={{fontSize: 12, marginRight: 5}}>PnL</CustomTextBold>
+                            <CustomTextBold style={{fontSize: 12, color: '#3a79ee'}}>{currencyFormat(this.state.pnl)}</CustomTextBold>
+                        </View>
                     </View>
-                    <Bar color='#ee5451'
-                         unfilledColor='#1ebea5'
-                         borderColor='transparent'
-                         progress={this.state.longShort}
-                         width={120}
-                         height={2}
-                         useNativeDriver={true}/>
-                    <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                        <CustomText style={{fontSize: 10, marginRight: 5}}>
-                            long
-                        </CustomText>
-                        <CustomText style={{fontSize: 10}}>
-                            short
-                        </CustomText>
-                    </View>
-                </View>
-                <View style={{flexDirection: 'row'}}>
-                    <CustomTextBold style={{fontSize: 12, marginRight: 5}}>Open Deals</CustomTextBold>
-                    <CustomTextBold style={{fontSize: 12, color: '#3a79ee'}}>{this.props.openDeals.length}</CustomTextBold>
-                </View>
-                <View style={{flexDirection: 'row'}}>
-                    <CustomTextBold style={{fontSize: 12, marginRight: 5}}>PnL</CustomTextBold>
-                    <CustomTextBold style={{fontSize: 12, color: '#3a79ee'}}>{currencyFormat(this.state.pnl)}</CustomTextBold>
-                </View>
-            </View>
+                    : null}
+            </React.Fragment>
         );
     }
 }

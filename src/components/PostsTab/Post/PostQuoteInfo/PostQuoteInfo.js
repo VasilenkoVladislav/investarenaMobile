@@ -20,29 +20,34 @@ const propTypes = {
 
 const PostQuoteInfo = ({quote, quoteSettings, recommend, postPrice, isExpired, profitability, forecast}) => {
     return (
-        <View style={styles.container}>
-            <View style={styles.blockWrap}>
-                <Favorite quoteSecurity={quote.security} size={20}/>
-                <CustomTextBold style={styles.quoteName}>{quoteSettings.name}</CustomTextBold>
-                <View style={[styles.recommendWrap, { backgroundColor: recommend === 'Buy' ? '#1ebea5' : '#ee5451' }]}>
-                    <CustomText style={styles.recommendText}>{recommend.toUpperCase()}</CustomText>
-                    {quoteFormat(postPrice, quoteSettings, 'white')}
+        <React.Fragment>
+            {quote && quoteSettings && quote.askPrice !== '0.000' ?
+                <View style={styles.container}>
+                    <View style={styles.blockWrap}>
+                        <Favorite quoteSecurity={quote.security} size={22}/>
+                        <CustomTextBold style={styles.quoteName}>{quoteSettings.name}</CustomTextBold>
+                        <View style={[styles.recommendWrap, {backgroundColor: recommend === 'Buy' ? '#1ebea5' : '#ee5451'}]}>
+                            <CustomText style={styles.recommendText}>{recommend.toUpperCase()}</CustomText>
+                            {quoteFormat(postPrice, quoteSettings, 'white')}
+                        </View>
+                        <View
+                            style={[styles.recommendTriangle, {borderBottomColor: recommend === 'Buy' ? '#1ebea5' : '#ee5451'}]}/>
+                    </View>
+                    <View style={styles.blockWrap}>
+                        <PostCurrentPrice quoteSettings={quoteSettings}
+                                          quote={quote}
+                                          recommend={recommend}/>
+                        <PostDifference quoteSettings={quoteSettings}
+                                        isExpired={isExpired}
+                                        profitability={profitability}
+                                        quote={quote}
+                                        forecast={forecast}
+                                        postPrice={postPrice}
+                                        recommend={recommend}/>
+                    </View>
                 </View>
-                <View style={[styles.recommendTriangle, { borderBottomColor: recommend === 'Buy' ? '#1ebea5' : '#ee5451' }]}/>
-            </View>
-            <View style={styles.blockWrap}>
-                <PostCurrentPrice quoteSettings={quoteSettings}
-                                  quote={quote}
-                                  recommend={recommend}/>
-                <PostDifference quoteSettings={quoteSettings}
-                                isExpired={isExpired}
-                                profitability={profitability}
-                                quote={quote}
-                                forecast={forecast}
-                                postPrice={postPrice}
-                                recommend={recommend}/>
-            </View>
-        </View>
+                : null }
+        </React.Fragment>
     )
 };
 
