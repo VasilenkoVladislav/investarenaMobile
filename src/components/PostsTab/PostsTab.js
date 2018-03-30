@@ -53,7 +53,7 @@ class PostsTab extends PureComponent {
                     rounded: true,
                     activeOpacity: 0.7 }}/>
             <View style={styles.createPostTextWrap}>
-                <CustomText style={{fontSize: 12}} onPress={() => this.props.goScreen('CreatePost')}>
+                <CustomText onPress={() => this.props.goScreen('CreatePost')}>
                     What do you think?
                 </CustomText>
             </View>

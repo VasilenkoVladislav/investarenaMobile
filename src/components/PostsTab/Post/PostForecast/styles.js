@@ -6,12 +6,5 @@ export const styles = StyleSheet.create({
     },
     imageContainer: {
         marginRight: 5
-    },
-    validityText: {
-        fontSize: 8,
-        color: '#999'
-    },
-    validityTime: {
-        fontSize: 12
     }
 });

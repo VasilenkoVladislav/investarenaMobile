@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
         marginRight: 3
     },
     statusText: {
-        fontSize: 8,
+        fontSize: 10,
         marginRight: 5,
     }
 });

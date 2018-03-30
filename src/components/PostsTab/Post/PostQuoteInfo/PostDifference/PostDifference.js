@@ -64,12 +64,7 @@ class PostDifference extends PureComponent {
         this.setState({profitability, colorProfit});
     };
     render () {
-        return (
-            <View style={styles.container}>
-                <CustomText style={styles.profitText}>Profitability:</CustomText>
-                <CustomTextBold style={[styles.profitValue, { color: this.state.colorProfit }]}>{this.state.profitability + ' pips'}</CustomTextBold>
-            </View>
-        )
+        return (<CustomTextBold style={{ color: this.state.colorProfit }}>{this.state.profitability + ' pips'}</CustomTextBold>)
     }
 }
 

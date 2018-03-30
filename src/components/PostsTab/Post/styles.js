@@ -20,7 +20,6 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
     },
     userName: {
-        fontSize: 12,
         color: '#3a79ee'
     },
     statusWrap: {
@@ -32,11 +31,6 @@ export const styles = StyleSheet.create({
         borderRadius: 2,
         alignSelf: 'center',
         marginRight: 3
-    },
-    forecastWrap: {
-        flexDirection: 'row'
-    },
-    postContainerWrap: {
     },
     postContent: {
         marginTop: 10

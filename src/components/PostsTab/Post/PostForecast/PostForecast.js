@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { CustomText, CustomTextBold } from '../../../core/CustomText';
+import { CustomTextBold } from '../../../core/CustomText';
 import { currentTime } from '../../../../helpers/currentTime';
 import { Icon } from 'react-native-elements'
 import { timeForecastRemain } from '../../../../helpers/diffDateTime';
@@ -29,10 +29,7 @@ class PostForecast extends Component {
         return (
             <View style={styles.container}>
                 <Icon name='update' size={16} color='#999' containerStyle={styles.imageContainer}/>
-                <View>
-                    <CustomText style={styles.validityText}>Validity period</CustomText>
-                    <CustomTextBold style={styles.validityTime}>{this.state.time}</CustomTextBold>
-                </View>
+                <CustomTextBold>{this.state.time}</CustomTextBold>
             </View>
         );
     }

@@ -78,12 +78,12 @@ class PostStatistics extends PureComponent {
                             </View>
                         </View>
                         <View style={{flexDirection: 'row'}}>
-                            <CustomTextBold style={{fontSize: 12, marginRight: 5}}>Open Deals</CustomTextBold>
-                            <CustomTextBold style={{fontSize: 12, color: '#3a79ee'}}>{this.props.openDeals.length}</CustomTextBold>
+                            <CustomTextBold style={{marginRight: 5}}>Open Deals</CustomTextBold>
+                            <CustomTextBold style={{color: '#3a79ee'}}>{this.props.openDeals.length}</CustomTextBold>
                         </View>
                         <View style={{flexDirection: 'row'}}>
-                            <CustomTextBold style={{fontSize: 12, marginRight: 5}}>PnL</CustomTextBold>
-                            <CustomTextBold style={{fontSize: 12, color: '#3a79ee'}}>{currencyFormat(this.state.pnl)}</CustomTextBold>
+                            <CustomTextBold style={{marginRight: 5}}>PnL</CustomTextBold>
+                            <CustomTextBold style={{color: '#3a79ee'}}>{currencyFormat(this.state.pnl)}</CustomTextBold>
                         </View>
                     </View>
                     : null}

@@ -9,10 +9,9 @@ export const MainScreenTabs = TabNavigator(
         Posts: {
             screen: PostsTab,
             navigationOptions: () => ({
-                tabBarIcon: ({ focused }) => <Icon type='font-awesome'
-                                                   size={26}
-                                                   name='newspaper-o'
-                                                   color={focused? '#3a79ee' : 'grey'} />
+                tabBarIcon: ({ focused }) => <Icon size={26}
+                                                   name='list'
+                                                   color={focused? 'white' : '#999'} />
             })
         },
         Favorites:  {
@@ -20,7 +19,7 @@ export const MainScreenTabs = TabNavigator(
             navigationOptions: () => ({
                 tabBarIcon: ({ focused }) => <Icon size={26}
                                                    name='star'
-                                                   color={focused? '#3a79ee' : 'grey'} />
+                                                   color={focused? 'white' : '#999'} />
             })
         },
         Quotes:  {
@@ -28,7 +27,7 @@ export const MainScreenTabs = TabNavigator(
             navigationOptions: () => ({
                 tabBarIcon: ({ focused }) => <Icon size={26}
                                                    name='attach-money'
-                                                   color={focused? '#3a79ee' : 'grey'} />
+                                                   color={focused? 'white' : '#999'} />
             })
         },
         Notifications:  {
@@ -36,7 +35,7 @@ export const MainScreenTabs = TabNavigator(
             navigationOptions: () => ({
                 tabBarIcon: ({ focused }) => <Icon size={26}
                                                    name='notifications'
-                                                   color={focused? '#3a79ee' : 'grey'} />
+                                                   color={focused? 'white' : '#999'} />
             })
         },
         Settings:  {
@@ -44,7 +43,7 @@ export const MainScreenTabs = TabNavigator(
             navigationOptions: () => ({
                 tabBarIcon: ({ focused }) => <Icon size={26}
                                                    name='settings'
-                                                   color={focused? '#3a79ee' : 'grey'} />
+                                                   color={focused? 'white' : '#999'} />
             })
         },
     },
@@ -54,7 +53,7 @@ export const MainScreenTabs = TabNavigator(
             showIcon: true,
             showLabel: false,
             style: {
-                backgroundColor: 'white'
+                backgroundColor: '#16254c'
             },
             indicatorStyle: {
                 opacity: 0

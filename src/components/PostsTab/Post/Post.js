@@ -6,7 +6,6 @@ import { Bar } from 'react-native-progress';
 import { Icon } from 'react-native-elements';
 import { currentTime } from '../../../helpers/currentTime';
 import moment from 'moment';
-import PostForecast from './PostForecast';
 import PropTypes from 'prop-types';
 import PostStatistics from './PostStatistics';
 import PostQuoteInfo from './PostQuoteInfo';
@@ -44,7 +43,6 @@ class Post extends PureComponent {
         }
     }
     render () {
-        let blockForecast;
         let postQuoteInfo;
         let postStatistics;
         const isNotSimple = this.props.post.market !== 'Simple' &&
@@ -52,7 +50,6 @@ class Post extends PureComponent {
             this.props.quote &&
             this.props.quote.askPrice !== '0.000';
         if (isNotSimple) {
-            blockForecast = <PostForecast postForecast={this.props.post.forecast} />;
             postQuoteInfo = this.props.visible
                 ? <PostQuoteInfo quote={this.props.quote}
                                  quoteSettings={this.props.quoteSettings}
@@ -61,7 +58,7 @@ class Post extends PureComponent {
                                  recommend={this.props.post.recommend}
                                  profitability={this.props.post.profitability}
                                  isExpired={this.state.isExpired}/>
-                : <View style={{height: 40}}/>;
+                : <View style={{height: 80}}/>;
             postStatistics = this.props.visible
                 ? <PostStatistics quote={this.props.quote}
                                   quoteSettings={this.props.quoteSettings}
@@ -96,14 +93,11 @@ class Post extends PureComponent {
                             </CustomTextBold>
                             <View style={styles.statusWrap}>
                                 <UserStatus userId={this.props.post.user_id || this.props.currentUserId}/>
-                                <CustomText style={{fontSize: 8}}>Post created: 12 hrs</CustomText>
+                                <CustomText style={{fontSize: 10}}>Post created: 12 hrs</CustomText>
                             </View>
                         </View>
                     </View>
-                    <View style={styles.forecastWrap}>
-                        {blockForecast}
-                        <Icon name='more-vert' size={24}/>
-                    </View>
+                    <Icon name='more-vert' size={24}/>
                 </View>
                 <View style={styles.postContainerWrap}>
                     {postQuoteInfo}

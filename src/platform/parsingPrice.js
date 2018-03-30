@@ -10,13 +10,13 @@ export function quoteFormat (price, quoteSettings, color) {
         if (rate) {
             let dot = rate.dot === 0 ? '' : '.';
             return <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <CustomText style={{fontSize: 10, color, paddingTop: 3}}>
+                <CustomText style={{color, paddingTop: 2}}>
                     {rate.small}
                 </CustomText>
-                <CustomTextBold style={{color}}>
+                <CustomTextBold style={{fontSize: 18, color}}>
                     {dot + rate.big}
                 </CustomTextBold>
-                <CustomText style={{fontSize: 10, color, alignSelf: 'flex-start'}}>
+                <CustomText style={{color, alignSelf: 'flex-start'}}>
                     {rate.mid}
                 </CustomText>
             </View>;
