@@ -102,7 +102,7 @@ class Post extends PureComponent {
                     </View>
                     <View style={styles.forecastWrap}>
                         {blockForecast}
-                        <Icon name='more-vert' size={20}/>
+                        <Icon name='more-vert' size={24}/>
                     </View>
                 </View>
                 <View style={styles.postContainerWrap}>
