@@ -20,8 +20,7 @@ const initialState = {
         allIds: []
     },
     postDeals: {
-        entities: {},
-        allIds: []
+        byPostId: {},
     }
 };
 
@@ -34,11 +33,9 @@ export default function (state = initialState, action) {
         case GET_POST_DEALS_SUCCESS:
             return {...state,
                 postDeals: {...state.postDeals,
-                    entities: action.payload.deals.reduce((result, item) => {
-                        state.postDeals.entities[item.id] = item;
-                        return state.postDeals.entities;
-                    }, state.postDeals.entities),
-                    allIds: [...state.postDeals.allIds, ..._.map(action.payload.deals, 'id')]
+                    byPostId: { ...state.postDeals.byPostId,
+                        [action.payload.postId]: action.payload.deals
+                    }
                 }};
         case CREATE_OPEN_DEAL_SUCCESS:
             return createPostOpenDealSuccess(state, action);

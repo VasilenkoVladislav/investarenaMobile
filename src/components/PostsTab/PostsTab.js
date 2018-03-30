@@ -1,4 +1,4 @@
-import { View, FlatList, Animated } from 'react-native';
+import { View, FlatList } from 'react-native';
 import React, { PureComponent } from 'react';
 import AvatarUser from '../core/AvatarUser';
 import { CustomText } from '../core/CustomText';
@@ -14,8 +14,6 @@ const propTypes = {
     hasMore: PropTypes.bool.isRequired,
     isLoading: PropTypes.bool.isRequired
 };
-
-const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
 class PostsTab extends PureComponent {
     constructor(props) {
@@ -66,9 +64,9 @@ class PostsTab extends PureComponent {
     };
     render () {
         return (
-            <AnimatedFlatList
+            <FlatList
                 data={this.props.posts}
-                contentContainerStyle={{marginTop: 60}}
+                contentContainerStyle={{marginTop: 10}}
                 keyExtractor={item => item.id || item.client_id}
                 refreshing={this.props.isLoading}
                 onViewableItemsChanged={this.onViewableItemsChanged}
@@ -79,9 +77,6 @@ class PostsTab extends PureComponent {
                 onEndReachedThreshold={1}
                 progressViewOffset={40}
                 removeClippedSubviews={true}
-                onScroll={ Animated.event(
-                    [{nativeEvent: {contentOffset: {y: this.props.screenProps.scrollY}}}],
-                    { useNativeDriver: true } ) }
                 ListHeaderComponent={this.renderHeader}
                 renderItem={this.renderItem} />
         );

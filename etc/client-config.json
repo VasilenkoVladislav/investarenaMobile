@@ -23,6 +23,16 @@
     "decline": "/decline_collaborator"
   },
 
+  "comments":{
+    "commentsScope": "/comments/",
+    "comments": "/comments/"
+  },
+
+  "likes":{
+    "updateLike": "/like/",
+    "getLikesNames": "/get_likes_names/"
+  },
+
   "favorites": {
     "favorites": "/favorites/"
   },

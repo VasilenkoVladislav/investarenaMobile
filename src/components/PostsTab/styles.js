@@ -11,7 +11,6 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         backgroundColor: 'white',
-        marginTop: 10,
         padding: 10,
     },
     createPostTextWrap: {

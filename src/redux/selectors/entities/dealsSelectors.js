@@ -1,5 +1,4 @@
 import { createSelector } from 'reselect';
-import { getPostDealsIdsState } from './postsSelectors';
 
 // selector
 const getDealsState = (state) => state.entities.deals;
@@ -17,6 +16,6 @@ export const getClosedDealsState = createSelector(
 
 export const makeGetPostDealsState = () => createSelector(
     getDealsState,
-    getPostDealsIdsState,
-    (deals, dealsIds) => dealsIds.map(id => deals.postDeals.entities[id])
+    (state, props) => props.postId,
+    (deals, postId) => deals.postDeals.byPostId[postId] || []
 );
