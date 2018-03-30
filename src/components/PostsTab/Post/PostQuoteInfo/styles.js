@@ -4,14 +4,14 @@ export const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginTop: 10
     },
     blockWrap: {
         flexDirection: 'row',
         alignItems: 'center'
     },
     quoteName: {
-        fontSize: 12,
         color: '#444',
         marginHorizontal: 5,
     },
@@ -40,7 +40,6 @@ export const styles = StyleSheet.create({
         transform: [{rotate: '90deg'}]
     },
     recommendText: {
-        fontSize: 12,
         marginRight: 5,
         color: 'white'
     },

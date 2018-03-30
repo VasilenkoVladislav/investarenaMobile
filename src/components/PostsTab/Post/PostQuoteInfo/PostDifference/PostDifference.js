@@ -1,5 +1,5 @@
 import { CustomText, CustomTextBold } from '../../../../core/CustomText';
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { currentTime } from '../../../../../helpers/currentTime';
 import moment from 'moment';
 import PropTypes from 'prop-types';
@@ -16,7 +16,7 @@ const propTypes = {
     recommend: PropTypes.string.isRequired
 };
 
-class PostDifference extends Component {
+class PostDifference extends PureComponent {
     constructor (props) {
         super(props);
         this.state = {

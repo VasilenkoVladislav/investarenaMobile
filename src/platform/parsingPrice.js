@@ -13,7 +13,7 @@ export function quoteFormat (price, quoteSettings, color) {
                 <CustomText style={{fontSize: 10, color, paddingTop: 3}}>
                     {rate.small}
                 </CustomText>
-                <CustomTextBold style={{fontSize: 14, color}}>
+                <CustomTextBold style={{color}}>
                     {dot + rate.big}
                 </CustomTextBold>
                 <CustomText style={{fontSize: 10, color, alignSelf: 'flex-start'}}>

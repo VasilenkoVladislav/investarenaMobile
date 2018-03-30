@@ -8,6 +8,8 @@ import Post from './Post';
 import { styles } from './styles';
 
 const propTypes = {
+    quotes: PropTypes.object,
+    quotesSettings: PropTypes.object,
     posts: PropTypes.array.isRequired,
     hasMore: PropTypes.bool.isRequired,
     isLoading: PropTypes.bool.isRequired
@@ -36,6 +38,8 @@ class PostsTab extends PureComponent {
     };
     renderItem = ({item}) => (
         <Post post={item}
+              quote={this.props.quotes && this.props.quotes[item.quote]}
+              quoteSettings={this.props.quotesSettings && this.props.quotesSettings[item.quote]}
               visible={this.state.viewableItems.includes(item.id)}
               currentUserId={this.props.currentUserId}
               currentUserName={this.props.currentUserName}
@@ -71,8 +75,10 @@ class PostsTab extends PureComponent {
                 onRefresh={this.onRefresh}
                 onEndReached={this.onEndReached}
                 initialNumToRender={10}
-                scrollEventThrottle={16}
+                scrollEventThrottle={1}
                 onEndReachedThreshold={1}
+                progressViewOffset={40}
+                removeClippedSubviews={true}
                 onScroll={ Animated.event(
                     [{nativeEvent: {contentOffset: {y: this.props.screenProps.scrollY}}}],
                     { useNativeDriver: true } ) }

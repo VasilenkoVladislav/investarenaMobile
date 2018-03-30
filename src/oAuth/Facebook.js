@@ -13,7 +13,6 @@ export default class Facebook {
             return { accessToken: FBAccessToken && FBAccessToken.accessToken };
         }
         catch (e) {
-            console.log(e);
             return { accessToken: null };
         }
     }

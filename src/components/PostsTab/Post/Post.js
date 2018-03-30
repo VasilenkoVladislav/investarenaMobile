@@ -1,5 +1,5 @@
 import { View, Image, Dimensions, TouchableOpacity } from 'react-native';
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { CustomText, CustomTextBold } from '../../core/CustomText';
 import AvatarUser from '../../core/AvatarUser';
 import { Bar } from 'react-native-progress';
@@ -14,7 +14,8 @@ import UserStatus from '../../core/UserStatus';
 import { styles } from './styles';
 
 const propTypes = {
-    visible: PropTypes.bool.isRequired,
+    quote: PropTypes.object,
+    quoteSettings: PropTypes.object,
     post: PropTypes.object.isRequired,
     getPostDeals: PropTypes.func.isRequired,
     currentUserId: PropTypes.string.isRequired,
@@ -23,7 +24,7 @@ const propTypes = {
 
 const { width } = Dimensions.get('window');
 
-class Post extends Component {
+class Post extends PureComponent {
     constructor (props) {
         super(props);
         this.state = {
@@ -31,9 +32,6 @@ class Post extends Component {
             isExpired: this.props.post.hasOwnProperty('expired_bars'),
             deals: []
         };
-    }
-    shouldComponentUpdate(nextProps) {
-        return nextProps.visible !== this.props.visible;
     }
     componentDidMount () {
         if (moment(this.props.post.created_at).add(10, 'seconds') < moment(currentTime.getTime())) {
@@ -49,24 +47,28 @@ class Post extends Component {
         let blockForecast;
         let postQuoteInfo;
         let postStatistics;
-        const isNotSimple = this.props.post.market !== 'Simple';
+        const isNotSimple = this.props.post.market !== 'Simple' &&
+            this.props.quoteSettings &&
+            this.props.quote &&
+            this.props.quote.askPrice !== '0.000';
         if (isNotSimple) {
-            blockForecast = this.props.visible && <PostForecast postForecast={this.props.post.forecast} />;
+            blockForecast = <PostForecast postForecast={this.props.post.forecast} />;
             postQuoteInfo = this.props.visible
-                ? <PostQuoteInfo postPrice={this.props.post.price}
-                                 postId={this.props.post.id}
-                                 quoteSecurity={this.props.post.quote}
+                ? <PostQuoteInfo quote={this.props.quote}
+                                 quoteSettings={this.props.quoteSettings}
+                                 postPrice={this.props.post.price}
                                  forecast={this.props.post.forecast}
                                  recommend={this.props.post.recommend}
                                  profitability={this.props.post.profitability}
                                  isExpired={this.state.isExpired}/>
-                : <View style={{height: 35}}/>;
+                : <View style={{height: 40}}/>;
             postStatistics = this.props.visible
-                ? <PostStatistics postId={this.props.post.id}
-                                  quoteSecurity={this.props.post.quote}
+                ? <PostStatistics quote={this.props.quote}
+                                  quoteSettings={this.props.quoteSettings}
+                                  postId={this.props.post.id}
                                   recommend={this.props.post.recommend}
                                   postPrice={this.props.post.price}/>
-                : <View style={{height: 35}}/>;
+                : <View style={{height: 40}}/>;
         }
         return (
             <View style={[ styles.container, { backgroundColor: this.props.post.created_at ? '#fff' : 'grey' }]}>
@@ -105,7 +107,7 @@ class Post extends Component {
                 </View>
                 <View style={styles.postContainerWrap}>
                     {postQuoteInfo}
-                    <CustomText>{this.props.post.content}</CustomText>
+                    <CustomText style={styles.postContent}>{this.props.post.content}</CustomText>
                     {this.props.post.image_medium && <Image style={styles.image} source={{uri: this.props.post.image_medium}} resizeMode="stretch"/>}
                     {postStatistics}
                 </View>
@@ -118,29 +120,25 @@ class Post extends Component {
                     </View>
                     <View style={styles.postFooterBlock}>
                         <CustomText style={{fontSize: 12}}>Share with:</CustomText>
-                        <TouchableOpacity style={styles.socialIconFacebookWrap}
-                                          onPress={() => console.log('share')}>
+                        <TouchableOpacity style={styles.socialIconFacebookWrap}>
                             <Icon name='facebook'
                                   type='font-awesome'
                                   size={16}
                                   color='white'/>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.socialIconVKWrap}
-                                          onPress={() => console.log('share')}>
+                        <TouchableOpacity style={styles.socialIconVKWrap}>
                             <Icon name='vk'
                                   type='font-awesome'
                                   size={16}
                                   color='white'/>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.socialIconOdnoklassnikiWrap}
-                                          onPress={() => console.log('share')}>
+                        <TouchableOpacity style={styles.socialIconOdnoklassnikiWrap}>
                             <Icon name='odnoklassniki'
                                   type='font-awesome'
                                   size={16}
                                   color='white'/>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.socialIconGoogleWrap}
-                                          onPress={() => console.log('share')}>
+                        <TouchableOpacity style={styles.socialIconGoogleWrap}>
                             <Icon name='google-plus'
                                   type='font-awesome'
                                   size={16}

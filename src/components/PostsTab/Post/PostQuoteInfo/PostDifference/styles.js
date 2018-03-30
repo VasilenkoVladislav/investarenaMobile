@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
         alignItems: 'center'
     },
     profitText: {
-        fontSize: 8,
+        fontSize: 10,
         color: '#999',
         marginRight: 5
     },

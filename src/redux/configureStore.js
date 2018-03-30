@@ -9,7 +9,7 @@ import { reactNavigationMiddleware } from './utils/reactNavigation';
 export default function () {
     const sagaMiddleware = createSagaMiddleware();
     const composeEnhancers = composeWithDevTools({ realtime: true, port: 8000 });
-    const store = createStore(rootReducer, {}, composeEnhancers(applyMiddleware(sagaMiddleware, reactNavigationMiddleware, logger)));
+    const store = createStore(rootReducer, {}, composeEnhancers(applyMiddleware(sagaMiddleware, reactNavigationMiddleware)));
     sagaMiddleware.run(rootSaga);
     return store;
 }

@@ -12,7 +12,6 @@ export default class Google {
             return { accessToken: user && user.accessToken };
         }
         catch (e) {
-            console.log(e);
             return { accessToken: null };
         }
     }

@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
         display: 'flex',
         width,
         padding: 10,
-        marginTop: 15
+        marginTop: 10
     },
     postHeaderWrap: {
       flexDirection: 'row',
@@ -37,9 +37,12 @@ export const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     postContainerWrap: {
-        marginTop: 15
+    },
+    postContent: {
+        marginTop: 10
     },
     image: {
+        marginTop: 10,
         width: width - 20,
         height: 350,
     },
@@ -47,7 +50,7 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        marginTop: 15
+        marginTop: 10
     },
     postFooterBlock: {
         flexDirection: 'row',

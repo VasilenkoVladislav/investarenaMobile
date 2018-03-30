@@ -1,5 +1,5 @@
 import { CustomText, CustomTextBold } from '../../../core/CustomText';
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { PlatformHelper, currencyFormat } from '../../../../platform';
 import { View } from 'react-native';
 import { Bar } from 'react-native-progress';
@@ -8,12 +8,14 @@ import { styles } from './styles';
 
 const propTypes = {
     quote: PropTypes.object,
+    quoteSettings: PropTypes.object,
+    postId: PropTypes.string.isRequired,
     openDeals: PropTypes.array.isRequired,
     recommend: PropTypes.string.isRequired,
     postPrice: PropTypes.string.isRequired
 };
 
-class PostStatistics extends Component {
+class PostStatistics extends PureComponent {
     constructor (props) {
         super(props);
         this.state = {
