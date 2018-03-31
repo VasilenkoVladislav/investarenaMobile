@@ -56,15 +56,15 @@ export default class ApiClient {
             const response = { error: {} };
             response.error.statusCode = (error && error.response && error.response.status) || 500;
             response.error.status = 'error';
-            response.error.toString = () => {
-                let result = 'Bad response from server';
-                if (error && error.response && error.response.data) {
-                    result = error.response.data.errors;
-                } else {
-                    result = error.message;
+            response.error.message = 'Bad response from server';
+            if (error && error.response && error.response.data) {
+                const errors = error.response.data.errors;
+                if (errors && errors.full_messages) {
+                    response.error.message = errors.full_messages.toString();
+                } else if (errors) {
+                    response.error.message = errors.toString();
                 }
-                return result;
-            };
+            }
             return response;
         }
     }

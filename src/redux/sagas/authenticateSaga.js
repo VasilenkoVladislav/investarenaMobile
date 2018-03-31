@@ -1,6 +1,7 @@
 import { put, call, takeLatest, takeEvery ,select } from 'redux-saga/effects';
 import { VALIDATE_TOKEN_REQUEST, OAUTHENTICATE_REQUEST, SIGN_IN_REQUEST, SIGN_OUT_REQUEST } from '../constansActions';
 import { signInSuccess, signInError, signOutSuccess, signOutError, validateTokenError } from '../actions/entities/authenticateActions';
+import { Alert } from 'react-native';
 import api from '../../configApi/apiAuth';
 import { connectPlatformRequest } from '../actions/entities/platformActions';
 import { getItemAsyncStorage } from '../utils/asyncStorageHelper';
@@ -31,13 +32,14 @@ export function * validateToken () {
 export function * oAuthSignIn ({payload}) {
     const { accessToken } = yield oAuth.getAccessToken(payload);
     if (accessToken) {
-        const { data, headers } = yield call(api.authentications.oAuthSignIn, payload, { access_token: accessToken });
+        const { data, headers, error } = yield call(api.authentications.oAuthSignIn, payload, { access_token: accessToken });
         if (data && headers) {
             yield put(updateHeaders(headers));
             yield put(signInSuccess(data));
             yield put(connectPlatformRequest());
             yield put(push('App'));
         } else {
+            Alert.alert('Error', error.message);
             yield put(signInError());
         }
     }
@@ -45,13 +47,14 @@ export function * oAuthSignIn ({payload}) {
 
 export function * signIn ({payload}) {
     const { email, password } = payload;
-    const { data, headers } = yield call(api.authentications.signIn, email, password);
+    const { data, headers, error } = yield call(api.authentications.signIn, email, password);
     if (data && headers) {
         yield put(updateHeaders(headers));
         yield put(signInSuccess(data));
         yield put(connectPlatformRequest());
         yield put(push('App'));
     } else {
+        Alert.alert('Invalid login or password', error.message);
         yield put(signInError());
     }
 }

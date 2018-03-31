@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Image, TouchableOpacity, StatusBar } from 'react-native';
+import { Alert, View, Image, TouchableOpacity, StatusBar } from 'react-native';
 import { Input, Button } from 'react-native-elements'
 import { CustomText } from '../core/CustomText';
 import PropTypes from 'prop-types';
@@ -9,6 +9,7 @@ import { styles } from './styles';
 import { validateRegistrationSignIn } from '../../constants/validateConstants';
 
 const propTypes = {
+    error: PropTypes.object,
     signIn: PropTypes.func.isRequired,
     oAuthSignIn: PropTypes.func.isRequired,
     pushScreen: PropTypes.func.isRequired,
@@ -29,6 +30,8 @@ class SignInScreen extends Component {
         const emailValid = (validateRegistrationSignIn.email).test(this.state.email);
         const passwordValid = (validateRegistrationSignIn.password).test(this.state.password);
         this.setState({ emailValid, passwordValid});
+        !emailValid && this.emailInput.shake();
+        !passwordValid && this.passwordInput.shake();
         if (emailValid && passwordValid) {
             this.props.signIn(this.state.email, this.state.password);
             this.setState({ email: '', password: '' });
@@ -52,6 +55,7 @@ class SignInScreen extends Component {
                                     size={17}
                                     color='#FFFDFF'/>
                             }
+                            ref={input => this.emailInput = input}
                             inputStyle={styles.input}
                             placeholderTextColor='#CED7E0'
                             leftIconContainerStyle={styles.leftIconInputContainer}
@@ -76,6 +80,7 @@ class SignInScreen extends Component {
                                     size={17}
                                     color='#FFFDFF'/>
                             }
+                            ref={input => this.passwordInput = input}
                             inputStyle={styles.input}
                             placeholderTextColor='#CED7E0'
                             leftIconContainerStyle={styles.leftIconInputContainer}
@@ -87,7 +92,6 @@ class SignInScreen extends Component {
                             blurOnSubmit={true}
                             containerStyle={styles.inputContainerPassword}
                             placeholder={'Password'}
-                            ref={input => this.passwordInput = input}
                             onSubmitEditing={() => this.signInOnClick()}
                             onChangeText={(password) => this.setState({password})}
                             displayError={!this.state.passwordValid}

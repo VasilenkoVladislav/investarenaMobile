@@ -28,6 +28,11 @@ export const getUserIsSignInState = createSelector(
     (user) => user.isSignIn
 );
 
+export const getUserErrorState = createSelector(
+    [ getUserState ],
+    (user) => user.error
+);
+
 export const getUserIsLoadingState = createSelector(
     [ getUserState ],
     (user) => user.isLoading

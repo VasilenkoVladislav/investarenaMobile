@@ -12,6 +12,10 @@ export function validateTokenRequest () {
     return { type: VALIDATE_TOKEN_REQUEST };
 }
 
+export function validateTokenError () {
+    return { type: VALIDATE_TOKEN_ERROR };
+}
+
 export function oAuthSignInRequest (provider) {
     return { type: OAUTHENTICATE_REQUEST, payload: provider };
 }
@@ -22,10 +26,6 @@ export function signInRequest (email, password) {
 
 export function signInSuccess (data) {
     return { type: SIGN_IN_SUCCESS, payload: data };
-}
-
-export function validateTokenError () {
-    return { type: VALIDATE_TOKEN_ERROR };
 }
 
 export function signInError () {

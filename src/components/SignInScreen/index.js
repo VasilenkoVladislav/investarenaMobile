@@ -1,12 +1,13 @@
 import { signInRequest, oAuthSignInRequest } from '../../redux/actions/entities/authenticateActions';
+import { getUserIsLoadingState, getUserErrorState } from '../../redux/selectors/entities/userSelectors';
 import { connect } from 'react-redux';
-import { getUserIsLoadingState } from '../../redux/selectors/entities/userSelectors';
 import { push } from '../../redux/actions/nav';
 import SignInScreen from './SignInScreen';
 
 function mapStateToProps (state) {
     return {
-        isLoading: getUserIsLoadingState(state)
+        isLoading: getUserIsLoadingState(state),
+        error: getUserErrorState(state)
     }
 }
 

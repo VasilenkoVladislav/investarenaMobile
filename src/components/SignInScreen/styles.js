@@ -38,7 +38,7 @@ export const styles = StyleSheet.create({
         borderBottomColor: '#D5D7E3'
     },
     loginButtonContainer: {
-        marginVertical: 30
+        marginVertical: 30,
     },
     loginButton: {
         backgroundColor: '#3a79ee',
