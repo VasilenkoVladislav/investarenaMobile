@@ -1,6 +1,6 @@
-import { CustomText, CustomTextBold } from '../../../core/CustomText';
+import { CustomText, CustomTextBold } from '../../../CustomText';
 import React, { PureComponent } from 'react';
-import { PlatformHelper, currencyFormat } from '../../../../platform';
+import { PlatformHelper, currencyFormat } from '../../../../../platform';
 import { View } from 'react-native';
 import { Bar } from 'react-native-progress';
 import PropTypes from 'prop-types';

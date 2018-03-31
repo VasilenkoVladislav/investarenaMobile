@@ -1,7 +1,7 @@
 import { View, FlatList } from 'react-native';
 import React, { PureComponent } from 'react';
-import AvatarUser from '../core/AvatarUser';
-import { CustomText } from '../core/CustomText';
+import AvatarUser from '../AvatarUser';
+import { CustomText } from '../CustomText';
 import { Icon } from 'react-native-elements';
 import PropTypes from 'prop-types';
 import Post from './Post';
@@ -15,7 +15,7 @@ const propTypes = {
     isLoading: PropTypes.bool.isRequired
 };
 
-class PostsTab extends PureComponent {
+class Posts extends PureComponent {
     constructor(props) {
         super(props);
         this.state={ viewableItems:[] };
@@ -83,6 +83,6 @@ class PostsTab extends PureComponent {
     }
 }
 
-PostsTab.propTypes = propTypes;
+Posts.propTypes = propTypes;
 
-export default PostsTab;
+export default Posts;

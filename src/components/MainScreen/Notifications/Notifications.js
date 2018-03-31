@@ -2,7 +2,7 @@ import { View, Text } from 'react-native';
 import React from 'react';
 import { styles } from './styles';
 
-const NotificationsTab = () => {
+const Notifications = () => {
     return (
         <View style={styles.container}>
             <Text>Notifications Tab</Text>
@@ -10,4 +10,4 @@ const NotificationsTab = () => {
     )
 };
 
-export default NotificationsTab;
+export default Notifications;

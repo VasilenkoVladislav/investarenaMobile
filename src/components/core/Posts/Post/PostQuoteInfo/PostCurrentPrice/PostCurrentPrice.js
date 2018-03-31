@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { quoteFormat } from '../../../../../platform';
+import { quoteFormat } from '../../../../../../platform';
 import { styles } from './styles'
 import { View } from 'react-native';
 

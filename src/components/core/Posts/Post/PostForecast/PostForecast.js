@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { CustomTextBold } from '../../../core/CustomText';
-import { currentTime } from '../../../../helpers/currentTime';
+import { CustomTextBold } from '../../../CustomText';
+import { currentTime } from '../../../../../helpers/currentTime';
 import { Icon } from 'react-native-elements'
-import { timeForecastRemain } from '../../../../helpers/diffDateTime';
+import { timeForecastRemain } from '../../../../../helpers/diffDateTime';
 import PropTypes from 'prop-types';
 import { View } from 'react-native';
 import { styles } from './styles';

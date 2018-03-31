@@ -1,12 +1,12 @@
-import { CustomText, CustomTextBold } from '../../../core/CustomText';
+import { CustomText, CustomTextBold } from '../../../CustomText';
 import React from 'react';
-import Favorite from '../../../core/Favorite';
+import Favorite from '../../../Favorite';
 import PostCurrentPrice from './PostCurrentPrice';
 import PostDifference from './PostDifference';
 import PostForecast from '../PostForecast';
 import PropTypes from 'prop-types';
 import { styles } from './styles'
-import { quoteFormat } from '../../../../platform';
+import { quoteFormat } from '../../../../../platform';
 import { View } from 'react-native';
 
 const propTypes = {

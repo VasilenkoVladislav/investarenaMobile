@@ -1,10 +1,8 @@
-import { CustomText, CustomTextBold } from '../../../../core/CustomText';
 import React, { PureComponent } from 'react';
-import { currentTime } from '../../../../../helpers/currentTime';
+import { CustomTextBold } from '../../../../CustomText';
+import { currentTime } from '../../../../../../helpers/currentTime';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import { styles } from './styles'
-import { View } from 'react-native';
 
 const propTypes = {
     quoteSettings: PropTypes.object,

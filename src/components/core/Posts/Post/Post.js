@@ -1,15 +1,15 @@
 import { View, Image, Dimensions, TouchableOpacity } from 'react-native';
 import React, { PureComponent } from 'react';
-import { CustomText, CustomTextBold } from '../../core/CustomText';
-import AvatarUser from '../../core/AvatarUser';
+import { CustomText, CustomTextBold } from '../../CustomText';
+import AvatarUser from '../../AvatarUser';
 import { Bar } from 'react-native-progress';
 import { Icon } from 'react-native-elements';
-import { currentTime } from '../../../helpers/currentTime';
+import { currentTime } from '../../../../helpers/currentTime';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import PostStatistics from './PostStatistics';
 import PostQuoteInfo from './PostQuoteInfo';
-import UserStatus from '../../core/UserStatus';
+import UserStatus from '../../UserStatus';
 import { styles } from './styles';
 
 const propTypes = {

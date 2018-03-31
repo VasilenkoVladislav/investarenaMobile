@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { makeGetPostDealsState } from '../../../../redux/selectors/entities/dealsSelectors';
+import { makeGetPostDealsState } from '../../../../../redux/selectors/entities/dealsSelectors';
 import PostStatistics from './PostStatistics';
 
 const mapState = () => {

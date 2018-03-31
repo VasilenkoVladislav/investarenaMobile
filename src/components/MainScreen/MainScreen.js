@@ -1,13 +1,13 @@
 import { TabNavigator } from 'react-navigation';
 import React from 'react';
-import PostsTab from '../components/PostsTab';
-import NotificationsTab from '../components/NotificationsTab';
+import Posts from '../core/Posts';
+import NotificationsTab from './Notifications';
 import { Icon } from 'react-native-elements'
 
-export const MainScreenTabs = TabNavigator(
+export default MainScreen = TabNavigator(
     {
         Posts: {
-            screen: PostsTab,
+            screen: Posts,
             navigationOptions: () => ({
                 tabBarIcon: ({ focused }) => <Icon size={26}
                                                    name='list'
