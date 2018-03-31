@@ -5,6 +5,7 @@ import AvatarUser from '../../AvatarUser';
 import { Bar } from 'react-native-progress';
 import { Icon } from 'react-native-elements';
 import { currentTime } from '../../../../helpers/currentTime';
+import Modal from 'react-native-modal';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import PostStatistics from './PostStatistics';
@@ -29,7 +30,8 @@ class Post extends PureComponent {
         this.state = {
             showBannedInfo: this.props.post.banned,
             isExpired: this.props.post.hasOwnProperty('expired_bars'),
-            deals: []
+            deals: [],
+            isOpenDropDown: false
         };
     }
     componentDidMount () {
@@ -97,9 +99,44 @@ class Post extends PureComponent {
                             </View>
                         </View>
                     </View>
-                    <Icon name='more-vert' size={24}/>
+                    <Icon name='more-vert' size={24} onPress={() => this.setState({isOpenDropDown: true})}/>
+                        <Modal
+                            useNativeDriver={true}
+                            style={{ justifyContent: 'flex-end', margin: 0}}
+                            animationIn={'bounceInUp'}
+                            animationOut={'fadeOutDown'}
+                            animationInTiming={1000}
+                            animationOutTiming={1000}
+                            backdropTransitionInTiming={1000}
+                            backdropTransitionOutTiming={1000}
+                            isVisible={this.state.isOpenDropDown}
+                            onBackButtonPress={() => this.setState({ isOpenDropDown: false })}
+                            onBackdropPress={() => this.setState({ isOpenDropDown: false })}>
+                            <View style={{backgroundColor: 'white'}}>
+                                <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center', padding: 15}}>
+                                    <Icon name='bookmark' size={26} color='#999' containerStyle={{marginRight: 10}}/>
+                                    <CustomText>Save post</CustomText>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center', padding: 15}}>
+                                    <Icon name='block' size={26} color='#999' containerStyle={{marginRight: 10}}/>
+                                    <CustomText>Complain</CustomText>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center', padding: 15}}>
+                                    <Icon name='create' size={26} color='#999' containerStyle={{marginRight: 10}}/>
+                                    <CustomText>Update</CustomText>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center', padding: 15}}>
+                                    <Icon name='delete' size={26} color='#999' containerStyle={{marginRight: 10}}/>
+                                    <CustomText>Delete</CustomText>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center', padding: 15}}>
+                                    <Icon name='link' size={26} color='#999' containerStyle={{marginRight: 10}}/>
+                                    <CustomText>Copy link</CustomText>
+                                </TouchableOpacity>
+                            </View>
+                        </Modal>
                 </View>
-                <View style={styles.postContainerWrap}>
+                <View>
                     {postQuoteInfo}
                     <CustomText style={styles.postContent}>{this.props.post.content}</CustomText>
                     {this.props.post.image_medium && <Image style={styles.image} source={{uri: this.props.post.image_medium}} resizeMode="stretch"/>}

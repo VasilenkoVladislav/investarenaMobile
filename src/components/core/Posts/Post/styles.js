@@ -7,12 +7,13 @@ export const styles = StyleSheet.create({
         display: 'flex',
         width,
         padding: 10,
-        marginTop: 10
+        marginTop: 10,
     },
     postHeaderWrap: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center'
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center'
     },
     userInfoWrap: {
         flexDirection: 'row',
@@ -23,7 +24,7 @@ export const styles = StyleSheet.create({
         color: '#3a79ee'
     },
     statusWrap: {
-      flexDirection: 'row'
+        flexDirection: 'row'
     },
     status: {
         width: 4,
