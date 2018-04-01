@@ -31,7 +31,8 @@ class Post extends PureComponent {
             showBannedInfo: this.props.post.banned,
             isExpired: this.props.post.hasOwnProperty('expired_bars'),
             deals: [],
-            isOpenDropDown: false
+            isOpenActionModal: false,
+            isOpenShareModal: false
         };
     }
     componentDidMount () {
@@ -99,7 +100,7 @@ class Post extends PureComponent {
                             </View>
                         </View>
                     </View>
-                    <Icon name='more-vert' size={24} onPress={() => this.setState({isOpenDropDown: true})}/>
+                    <Icon name='more-vert' size={24} onPress={() => this.setState({isOpenActionModal: true})}/>
                         <Modal
                             useNativeDriver={true}
                             style={{ justifyContent: 'flex-end', margin: 0}}
@@ -109,9 +110,9 @@ class Post extends PureComponent {
                             animationOutTiming={1000}
                             backdropTransitionInTiming={1000}
                             backdropTransitionOutTiming={1000}
-                            isVisible={this.state.isOpenDropDown}
-                            onBackButtonPress={() => this.setState({ isOpenDropDown: false })}
-                            onBackdropPress={() => this.setState({ isOpenDropDown: false })}>
+                            isVisible={this.state.isOpenActionModal}
+                            onBackButtonPress={() => this.setState({ isOpenActionModal: false })}
+                            onBackdropPress={() => this.setState({ isOpenActionModal: false })}>
                             <View style={{backgroundColor: 'white'}}>
                                 <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center', padding: 15}}>
                                     <Icon name='bookmark' size={26} color='#999' containerStyle={{marginRight: 10}}/>
@@ -143,45 +144,63 @@ class Post extends PureComponent {
                     {postStatistics}
                 </View>
                 <View style={styles.postFooterWrap}>
-                    <View style={styles.postFooterBlock}>
-                        <Icon name='thumb-up' color='#2c3552' size={22} />
-                        <CustomTextBold style={{fontSize: 12, marginLeft: 3, marginRight: 5}}>1000</CustomTextBold>
-                        <Icon name='comment' color='#2c3552' size={22} />
-                        <CustomTextBold style={{fontSize: 12, marginLeft: 3}}>1000</CustomTextBold>
-                    </View>
-                    <View style={styles.postFooterBlock}>
-                        <CustomText style={{fontSize: 12}}>Share with:</CustomText>
-                        <TouchableOpacity style={styles.socialIconFacebookWrap}>
-                            <Icon name='facebook'
-                                  type='font-awesome'
-                                  size={16}
-                                  color='white'/>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.socialIconVKWrap}>
-                            <Icon name='vk'
-                                  type='font-awesome'
-                                  size={16}
-                                  color='white'/>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.socialIconOdnoklassnikiWrap}>
-                            <Icon name='odnoklassniki'
-                                  type='font-awesome'
-                                  size={16}
-                                  color='white'/>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.socialIconGoogleWrap}>
-                            <Icon name='google-plus'
-                                  type='font-awesome'
-                                  size={16}
-                                  color='white'/>
-                        </TouchableOpacity>
-                    </View>
+                    <TouchableOpacity style={styles.postFooterBlock}>
+                        <Icon name='thumb-up' color='#2c3552' size={26} />
+                        <CustomTextBold style={{marginLeft: 5, marginRight: 5}}>Like</CustomTextBold>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.postFooterBlock}>
+                        <Icon name='comment' color='#2c3552' size={26} />
+                        <CustomTextBold style={{marginLeft: 5}}>Comment</CustomTextBold>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.postFooterBlock} onPress={() => this.setState({isOpenShareModal: true})}>
+                        <Icon name='share' color='#2c3552' size={26}/>
+                        <CustomTextBold style={{marginLeft: 5}}>Share</CustomTextBold>
+                    </TouchableOpacity>
+                    <Modal
+                        useNativeDriver={true}
+                        style={{ justifyContent: 'flex-end', margin: 0}}
+                        animationIn={'bounceInUp'}
+                        animationOut={'fadeOutDown'}
+                        animationInTiming={1000}
+                        animationOutTiming={1000}
+                        backdropTransitionInTiming={1000}
+                        backdropTransitionOutTiming={1000}
+                        isVisible={this.state.isOpenShareModal}
+                        onBackButtonPress={() => this.setState({ isOpenShareModal: false })}
+                        onBackdropPress={() => this.setState({ isOpenShareModal: false })}>
+                        <View style={{backgroundColor: 'white'}}>
+                            <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center', padding: 15}}>
+                                <View style={styles.socialIconFacebookWrap}>
+                                    <Icon name='facebook' type='font-awesome' size={16} color='white'/>
+                                </View>
+                                <CustomText>Facebook</CustomText>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center', padding: 15}}>
+                                <View style={styles.socialIconVKWrap}>
+                                    <Icon name='vk' type='font-awesome' size={16} color='white'/>
+                                </View>
+                                <CustomText>VK</CustomText>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center', padding: 15}}>
+                                <View style={styles.socialIconOdnoklassnikiWrap}>
+                                    <Icon name='odnoklassniki' type='font-awesome' size={16} color='white'/>
+                                </View>
+                                <CustomText>Odnoklassniki</CustomText>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center', padding: 15}}>
+                                <View style={styles.socialIconGoogleWrap}>
+                                    <Icon name='google-plus' type='font-awesome' size={16} color='white'/>
+                                </View>
+                                <CustomText>Google Plus</CustomText>
+                            </TouchableOpacity>
+                        </View>
+                    </Modal>
                 </View>
             </View>
            );
     }
 }
-
+// #Todo modal redux
 Post.propTypes = propTypes;
 
 export default Post;

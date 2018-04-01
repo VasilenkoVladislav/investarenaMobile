@@ -56,7 +56,7 @@ export const styles = StyleSheet.create({
         height: 25,
         backgroundColor: '#3b5998',
         borderRadius: 4,
-        marginLeft: 10,
+        marginRight: 10,
         alignItems:'center',
         justifyContent: 'center'
     },
@@ -65,7 +65,7 @@ export const styles = StyleSheet.create({
         height: 25,
         backgroundColor: '#4c75a3',
         borderRadius: 4,
-        marginLeft: 10,
+        marginRight: 10,
         alignItems:'center',
         justifyContent: 'center'
     },
@@ -74,7 +74,7 @@ export const styles = StyleSheet.create({
         height: 25,
         backgroundColor: '#f58220',
         borderRadius: 4,
-        marginLeft: 10,
+        marginRight: 10,
         alignItems:'center',
         justifyContent: 'center'
     },
@@ -83,7 +83,7 @@ export const styles = StyleSheet.create({
         height: 25,
         backgroundColor: '#bf3322',
         borderRadius: 4,
-        marginLeft: 10,
+        marginRight: 10,
         alignItems:'center',
         justifyContent: 'center'
     },
