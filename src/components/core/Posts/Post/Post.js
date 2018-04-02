@@ -5,21 +5,24 @@ import AvatarUser from '../../AvatarUser';
 import { Bar } from 'react-native-progress';
 import { Icon } from 'react-native-elements';
 import { currentTime } from '../../../../helpers/currentTime';
-import Modal from 'react-native-modal';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import PostStatistics from './PostStatistics';
 import PostQuoteInfo from './PostQuoteInfo';
 import UserStatus from '../../UserStatus';
 import { styles } from './styles';
+import ModalManagePost from '../../Modals/ModalManagePost/ModalManagePost';
+import ModalSharePost from '../../Modals/ModalSharePost/ModalSharePost';
 
 const propTypes = {
     quote: PropTypes.object,
     quoteSettings: PropTypes.object,
     post: PropTypes.object.isRequired,
-    getPostDeals: PropTypes.func.isRequired,
+    visible: PropTypes.bool.isRequired,
     currentUserId: PropTypes.string.isRequired,
     currentUserName: PropTypes.string.isRequired,
+    showModal: PropTypes.func.isRequired,
+    getPostDeals: PropTypes.func.isRequired
 };
 
 const { width } = Dimensions.get('window');
@@ -30,9 +33,7 @@ class Post extends PureComponent {
         this.state = {
             showBannedInfo: this.props.post.banned,
             isExpired: this.props.post.hasOwnProperty('expired_bars'),
-            deals: [],
-            isOpenActionModal: false,
-            isOpenShareModal: false
+            deals: []
         };
     }
     componentDidMount () {
@@ -100,42 +101,9 @@ class Post extends PureComponent {
                             </View>
                         </View>
                     </View>
-                    <Icon name='more-vert' size={24} onPress={() => this.setState({isOpenActionModal: true})}/>
-                        <Modal
-                            useNativeDriver={true}
-                            style={{ justifyContent: 'flex-end', margin: 0}}
-                            animationIn={'bounceInUp'}
-                            animationOut={'fadeOutDown'}
-                            animationInTiming={1000}
-                            animationOutTiming={1000}
-                            backdropTransitionInTiming={1000}
-                            backdropTransitionOutTiming={1000}
-                            isVisible={this.state.isOpenActionModal}
-                            onBackButtonPress={() => this.setState({ isOpenActionModal: false })}
-                            onBackdropPress={() => this.setState({ isOpenActionModal: false })}>
-                            <View style={{backgroundColor: 'white'}}>
-                                <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center', padding: 15}}>
-                                    <Icon name='bookmark' size={26} color='#999' containerStyle={{marginRight: 10}}/>
-                                    <CustomText>Save post</CustomText>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center', padding: 15}}>
-                                    <Icon name='block' size={26} color='#999' containerStyle={{marginRight: 10}}/>
-                                    <CustomText>Complain</CustomText>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center', padding: 15}}>
-                                    <Icon name='create' size={26} color='#999' containerStyle={{marginRight: 10}}/>
-                                    <CustomText>Update</CustomText>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center', padding: 15}}>
-                                    <Icon name='delete' size={26} color='#999' containerStyle={{marginRight: 10}}/>
-                                    <CustomText>Delete</CustomText>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center', padding: 15}}>
-                                    <Icon name='link' size={26} color='#999' containerStyle={{marginRight: 10}}/>
-                                    <CustomText>Copy link</CustomText>
-                                </TouchableOpacity>
-                            </View>
-                        </Modal>
+                    <Icon name='more-vert'
+                          size={24}
+                          onPress={() => this.props.showModal('ModalManagePost', {postId: this.props.post.id, userId: this.props.post.user_id})}/>
                 </View>
                 <View>
                     {postQuoteInfo}
@@ -152,55 +120,17 @@ class Post extends PureComponent {
                         <Icon name='comment' color='#2c3552' size={26} />
                         <CustomTextBold style={{marginLeft: 5}}>Comment</CustomTextBold>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.postFooterBlock} onPress={() => this.setState({isOpenShareModal: true})}>
+                    <TouchableOpacity style={styles.postFooterBlock}
+                                      onPress={() => this.props.showModal('ModalSharePost')}>
                         <Icon name='share' color='#2c3552' size={26}/>
                         <CustomTextBold style={{marginLeft: 5}}>Share</CustomTextBold>
                     </TouchableOpacity>
-                    <Modal
-                        useNativeDriver={true}
-                        style={{ justifyContent: 'flex-end', margin: 0}}
-                        animationIn={'bounceInUp'}
-                        animationOut={'fadeOutDown'}
-                        animationInTiming={1000}
-                        animationOutTiming={1000}
-                        backdropTransitionInTiming={1000}
-                        backdropTransitionOutTiming={1000}
-                        isVisible={this.state.isOpenShareModal}
-                        onBackButtonPress={() => this.setState({ isOpenShareModal: false })}
-                        onBackdropPress={() => this.setState({ isOpenShareModal: false })}>
-                        <View style={{backgroundColor: 'white'}}>
-                            <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center', padding: 15}}>
-                                <View style={styles.socialIconFacebookWrap}>
-                                    <Icon name='facebook' type='font-awesome' size={16} color='white'/>
-                                </View>
-                                <CustomText>Facebook</CustomText>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center', padding: 15}}>
-                                <View style={styles.socialIconVKWrap}>
-                                    <Icon name='vk' type='font-awesome' size={16} color='white'/>
-                                </View>
-                                <CustomText>VK</CustomText>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center', padding: 15}}>
-                                <View style={styles.socialIconOdnoklassnikiWrap}>
-                                    <Icon name='odnoklassniki' type='font-awesome' size={16} color='white'/>
-                                </View>
-                                <CustomText>Odnoklassniki</CustomText>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center', padding: 15}}>
-                                <View style={styles.socialIconGoogleWrap}>
-                                    <Icon name='google-plus' type='font-awesome' size={16} color='white'/>
-                                </View>
-                                <CustomText>Google Plus</CustomText>
-                            </TouchableOpacity>
-                        </View>
-                    </Modal>
                 </View>
             </View>
            );
     }
 }
-// #Todo modal redux
+
 Post.propTypes = propTypes;
 
 export default Post;

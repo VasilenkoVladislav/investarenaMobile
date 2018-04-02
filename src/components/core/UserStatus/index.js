@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { getUserStatusState } from '../../../redux/selectors/entities/userStatusSelectors';
+import { getUserStatusState } from '../../../redux/selectors/entities/usersStatusSelectors';
 import UserStatus from './UserStatus';
 
 function mapStateToProps (state, ownProps) {

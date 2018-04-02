@@ -2,19 +2,20 @@ import { addNavigationHelpers, NavigationActions } from 'react-navigation';
 import React, { Component } from 'react';
 import { addListener } from '../../redux/utils/reactNavigation';
 import AppNavigator from '../../router';
-import { BackHandler } from "react-native";
+import { BackHandler } from 'react-native';
 import { currentTime } from '../../helpers/currentTime';
+import Modals from '../../components/core/Modals';
 
 class App extends Component {
     constructor (props) {
         super(props);
     }
     componentDidMount () {
-        BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
+        BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
         currentTime.startCountdown();
     }
     componentWillUnmount() {
-        BackHandler.removeEventListener("hardwareBackPress", this.onBackPress);
+        BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
     }
     onBackPress = () => {
         const { dispatch, nav } = this.props;
@@ -28,7 +29,10 @@ class App extends Component {
         const { dispatch, nav } = this.props;
         const navigation = addNavigationHelpers({ dispatch, state: nav, addListener });
         return (
-            <AppNavigator navigation={navigation}/>
+            <React.Fragment>
+                <AppNavigator navigation={navigation}/>
+                <Modals/>
+            </React.Fragment>
         );
     }
 }

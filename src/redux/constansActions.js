@@ -119,3 +119,7 @@ export const UPDATE_LIKE_SUCCESS = 'UPDATE_LIKE_SUCCESS';
 export const UPDATE_LIKE_ERROR = 'UPDATE_LIKE_ERROR';
 
 export const UPDATE_LIKES = 'UPDATE_LIKES';
+
+// modals
+export const SHOW_MODAL = 'SHOW_MODAL';
+export const HIDE_MODAL = 'HIDE_MODAL';

@@ -7,6 +7,7 @@ import { getQuotesSettingsState } from '../../../redux/selectors/entities/quotes
 import { getPostDealsRequest } from '../../../redux/actions/entities/dealsActions';
 import { push } from '../../../redux/actions/nav'
 import Posts from './Posts';
+import { showModal } from '../../../redux/actions/ui/modalsActions';
 
 function mapStateToProps (state) {
     return {
@@ -22,6 +23,7 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch) {
     return {
+        showModal: (type, data) => dispatch(showModal(type, data)),
         getPostDeals: (postId) => dispatch(getPostDealsRequest(postId)),
         getRefreshPosts: () => dispatch(getRefreshPostsRequest()),
         getNextPosts: () => dispatch(getNextPostsRequest()),

@@ -56,7 +56,6 @@ class CreatePostScreen extends Component {
                 <TextInput
                     style={styles.inputWrap}
                     placeholder='What do you think?'
-                    autogrow={true}
                     multiline={true}
                     maxLength={64000}
                     onChangeText={this.handleOnChangeContent}
