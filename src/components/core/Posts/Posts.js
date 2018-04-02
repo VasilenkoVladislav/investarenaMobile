@@ -25,10 +25,6 @@ class Posts extends PureComponent {
         super(props);
         this.state = { viewableItems:[] };
     }
-    componentWillMount () {
-        const { posts } = this.props;
-        posts.length === 0 && this.props.getRefreshPosts();
-    }
     onRefresh = () => {
         if (!this.props.isLoading) {
             this.props.getRefreshPosts();

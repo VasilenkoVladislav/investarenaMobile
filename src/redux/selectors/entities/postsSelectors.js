@@ -13,6 +13,11 @@ export const getPostsEntitiesState = createSelector(
     }
 );
 
+export const getPostsAllIdsState = createSelector(
+    getPostsState,
+    (posts) => posts.allIds
+);
+
 export const getPostByIdState = createSelector(
     getPostsState,
     (state, props) => props.postId,

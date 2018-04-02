@@ -3,8 +3,10 @@ import { VALIDATE_TOKEN_REQUEST, OAUTHENTICATE_REQUEST, SIGN_IN_REQUEST, SIGN_OU
 import { signInSuccess, signInError, signOutSuccess, signOutError, validateTokenError } from '../actions/entities/authenticateActions';
 import { Alert, NetInfo } from 'react-native';
 import api from '../../configApi/apiAuth';
+import { clearPersistStore } from '../utils/reduxPersist';
 import { connectPlatformRequest } from '../actions/entities/platformActions';
 import { getItemAsyncStorage } from '../utils/asyncStorageHelper';
+import { getRefreshPostsRequest } from '../actions/entities/postsActions';
 import { getHeadersState } from '../selectors/entities/headersSelectors';
 import { oAuth } from '../../oAuth';
 import { updateHeaders } from '../actions/entities/headersActions';
@@ -19,15 +21,16 @@ export function * validateToken () {
             yield put(updateHeaders(headers));
             yield put(signInSuccess(data));
             yield put(connectPlatformRequest());
+            yield put(getRefreshPostsRequest());
             yield put(push('App'));
         } else if (type === 'none'){
-            yield put(signInSuccess(data));
             yield put(push('App'));
         } else {
             yield put(validateTokenError());
             yield put(push('Auth'));
         }
     } else {
+        yield call(clearPersistStore);
         yield put(validateTokenError());
         yield put(push('Auth'));
     }
@@ -67,8 +70,10 @@ export function * signOut () {
     const headers = yield select(getHeadersState);
     const { error } = yield call(api.authentications.signOut, headers);
     if (!error) {
+        yield call(clearPersistStore);
         yield put(signOutSuccess());
     } else {
+        yield call(clearPersistStore);
         yield put(signOutError());
     }
 }

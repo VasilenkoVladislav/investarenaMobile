@@ -65,7 +65,6 @@ export default class ApiClient {
                     response.error.message = errors.toString();
                 }
             }
-            console.log(response);
             return response;
         }
     }

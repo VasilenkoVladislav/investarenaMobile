@@ -11,7 +11,7 @@ class SplashScreen extends Component {
     constructor (props) {
         super(props);
     }
-    componentWillMount() {
+    componentDidMount() {
         this.props.validateToken();
     }
     render() {
