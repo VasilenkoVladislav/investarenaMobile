@@ -31,8 +31,9 @@ class CreatePostScreen extends Component {
         this.state = { content: '', contentValid: false };
     }
     componentDidMount () {
-        const { createPost } = this.props;
-        this.props.navigation.setParams({ createPost });
+        const { createPost, navigation } = this.props;
+        const { params } = navigation.state;
+        this.props.navigation.setParams({ createPost, image: params && params.selectedImage.node.image.uri});
     }
     handleOnChangeContent = (content) => {
         const { params } = this.props.navigation.state;
@@ -55,6 +56,7 @@ class CreatePostScreen extends Component {
                 </View>
                 <TextInput
                     style={styles.inputWrap}
+                    underlineColorAndroid='transparent'
                     placeholder='What do you think?'
                     multiline={true}
                     maxLength={64000}

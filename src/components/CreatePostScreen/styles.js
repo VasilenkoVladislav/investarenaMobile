@@ -25,7 +25,7 @@ export const styles = StyleSheet.create({
         marginRight: 15,
     },
     inputWrap: {
-        fontFamily: 'OpenSans-Regular',
+        // fontFamily: 'OpenSans-Regular',
         textAlignVertical: 'top',
         paddingHorizontal: 15,
         marginBottom: 10

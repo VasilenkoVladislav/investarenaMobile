@@ -1,7 +1,7 @@
 import { put, call, takeLatest, takeEvery ,select } from 'redux-saga/effects';
 import { VALIDATE_TOKEN_REQUEST, OAUTHENTICATE_REQUEST, SIGN_IN_REQUEST, SIGN_OUT_REQUEST } from '../constansActions';
 import { signInSuccess, signInError, signOutSuccess, signOutError, validateTokenError } from '../actions/entities/authenticateActions';
-import { Alert } from 'react-native';
+import { Alert, NetInfo } from 'react-native';
 import api from '../../configApi/apiAuth';
 import { connectPlatformRequest } from '../actions/entities/platformActions';
 import { getItemAsyncStorage } from '../utils/asyncStorageHelper';
@@ -13,11 +13,15 @@ import { push } from '../actions/nav';
 export function * validateToken () {
     const { result } = yield call(getItemAsyncStorage, 'authHeaders', true);
     if (result) {
+        const { type } = yield call(NetInfo.getConnectionInfo);
         const { data, headers } = yield call(api.authentications.validateToken, result);
         if (data && headers) {
             yield put(updateHeaders(headers));
             yield put(signInSuccess(data));
             yield put(connectPlatformRequest());
+            yield put(push('App'));
+        } else if (type === 'none'){
+            yield put(signInSuccess(data));
             yield put(push('App'));
         } else {
             yield put(validateTokenError());
