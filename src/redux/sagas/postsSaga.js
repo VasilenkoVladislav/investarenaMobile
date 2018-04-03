@@ -11,13 +11,13 @@ import { getPostsSuccess,
     updatePostError,
     deletePostSuccess,
     deletePostError } from '../actions/entities/postsActions';
+import { updateLikes, updateLikeSuccess } from '../actions/entities/likesActions';
 import { put, call, takeEvery, takeLatest, select } from 'redux-saga/effects';
 import api from '../../configApi/apiResources';
 import _ from 'lodash';
 import { getHeadersState } from '../selectors/entities/headersSelectors';
 import { getLastPostCreatedAtState } from '../selectors/entities/postsSelectors';
 import { updateHeaders } from '../actions/entities/headersActions';
-import { updateLikes } from '../actions/entities/likesActions';
 import { updateUsersStatus } from '../actions/entities/usersStatusActions';
 
 export function * getRefreshPosts () {
@@ -57,6 +57,7 @@ export function * createPost ({payload}) {
     const { data, headers } = yield call(api.posts.createPost, payload.data, headersForRequest);
     if (data && data.post && headers) {
         yield put(updateHeaders(headers));
+        yield put(updateLikeSuccess({likedId: data.post.id, count: 0, liked: false}));
         yield put(createPostSuccess(payload.clientPostId, data.post));
     } else {
         yield put(createPostError());

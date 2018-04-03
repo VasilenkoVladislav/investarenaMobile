@@ -112,10 +112,10 @@ class Post extends PureComponent {
                     <CustomText style={styles.postContent}>{this.props.post.content}</CustomText>
                     {this.props.post.image_medium && <Image style={styles.image} source={{uri: this.props.post.image_medium}} resizeMode="stretch"/>}
                     {postStatistics}
-                    <PostCounts likedId={this.props.post.id}/>
+                    <PostCounts likedId={this.props.post.id || this.props.post.client_id}/>
                 </View>
                 <View style={styles.postFooterWrap}>
-                    <Like likedId={this.props.post.id} likedType='Post'/>
+                    <Like likedId={this.props.post.id || this.props.post.client_id} likedType='Post'/>
                     <TouchableOpacity style={styles.postFooterBlock}
                                       onPress={() => this.props.showModal('ModalComments', { postId: this.props.post.id })}>
                         <Icon name='comment' color='#2c3552' size={26} />

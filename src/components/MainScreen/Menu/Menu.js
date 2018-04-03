@@ -81,6 +81,9 @@ const Menu = ({currentUserName, signOut}) => {
                 {
                     list.map((item, i) => (
                         <ListItem
+                            scaleProps={{
+                                activeScale: 0.95,
+                            }}
                             key={i}
                             onPress={item.onPress}
                             bottomDivider={true}

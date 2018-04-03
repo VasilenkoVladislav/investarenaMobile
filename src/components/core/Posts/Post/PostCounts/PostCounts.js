@@ -15,16 +15,18 @@ const propTypes = {
 
 const PostCounts = ({like}) => {
     return (<React.Fragment>
-        {((like && like.count > 0)) && <View style={styles.container}>
-            {like && like.count > 0 && <TouchableOpacity style={styles.likesCountWrap}>
-                <Icon name='thumb-up'
-                      color='#ddd'
-                      size={10}
-                      containerStyle={styles.iconWrap}/>
-                <CustomText style={styles.text}>{like.count}</CustomText>
-            </TouchableOpacity>}
-            <CustomText style={styles.text}>11 comments</CustomText>
-        </View> }
+        {((like && like.count > 0))
+            ? <View style={styles.container}>
+                {like && like.count > 0 && <TouchableOpacity style={styles.likesCountWrap}>
+                    <Icon name='thumb-up'
+                          color='#ddd'
+                          size={10}
+                          containerStyle={styles.iconWrap}/>
+                    <CustomText style={styles.text}>{like.count}</CustomText>
+                </TouchableOpacity>}
+                <CustomText style={styles.text}>11 comments</CustomText>
+            </View>
+            : null }
     </React.Fragment>)
 };
 

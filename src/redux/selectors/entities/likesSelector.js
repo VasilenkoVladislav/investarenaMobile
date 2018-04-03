@@ -5,5 +5,5 @@ const getLikesState = (state) => state.entities.likes;
 export const makeGetLikeState = () => createSelector(
     getLikesState,
     (state, props) => props.likedId,
-    (likes, likedId) => likes.byLikedId[likedId]
+    (likes, likedId) => likes.byLikedId[likedId] || { likedId, count: 0, liked: false }
 );

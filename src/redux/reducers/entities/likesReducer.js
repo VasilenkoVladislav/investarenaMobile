@@ -14,6 +14,7 @@ export default function (state = initialState, action) {
         return { ...state,
             byLikedId: action.payload.reduce((result, item) => {
                 state.byLikedId[item.id] = {
+                    likedId: item.id,
                     liked: item.liked,
                     count: item.likes_count
                 };
