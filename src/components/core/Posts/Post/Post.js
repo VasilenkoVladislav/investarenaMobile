@@ -6,6 +6,8 @@ import { Bar } from 'react-native-progress';
 import { Icon } from 'react-native-elements';
 import { currentTime } from '../../../../helpers/currentTime';
 import moment from 'moment';
+import Like from '../../../core/Like';
+import PostCounts from './PostCounts';
 import PropTypes from 'prop-types';
 import PostStatistics from './PostStatistics';
 import PostQuoteInfo from './PostQuoteInfo';
@@ -102,7 +104,7 @@ class Post extends PureComponent {
                         </View>
                     </View>
                     <Icon name='more-vert'
-                          size={24}
+                          size={26}
                           onPress={() => this.props.showModal('ModalManagePost', {postId: this.props.post.id, userId: this.props.post.user_id})}/>
                 </View>
                 <View>
@@ -110,13 +112,12 @@ class Post extends PureComponent {
                     <CustomText style={styles.postContent}>{this.props.post.content}</CustomText>
                     {this.props.post.image_medium && <Image style={styles.image} source={{uri: this.props.post.image_medium}} resizeMode="stretch"/>}
                     {postStatistics}
+                    <PostCounts likedId={this.props.post.id}/>
                 </View>
                 <View style={styles.postFooterWrap}>
-                    <TouchableOpacity style={styles.postFooterBlock}>
-                        <Icon name='thumb-up' color='#2c3552' size={26} />
-                        <CustomTextBold style={{marginLeft: 5, marginRight: 5}}>Like</CustomTextBold>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.postFooterBlock}>
+                    <Like likedId={this.props.post.id} likedType='Post'/>
+                    <TouchableOpacity style={styles.postFooterBlock}
+                                      onPress={() => this.props.showModal('ModalComments', { postId: this.props.post.id })}>
                         <Icon name='comment' color='#2c3552' size={26} />
                         <CustomTextBold style={{marginLeft: 5}}>Comment</CustomTextBold>
                     </TouchableOpacity>

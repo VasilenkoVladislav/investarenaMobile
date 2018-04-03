@@ -1,10 +1,10 @@
 import { put, call, takeLatest, takeEvery ,select } from 'redux-saga/effects';
 import { VALIDATE_TOKEN_REQUEST, OAUTHENTICATE_REQUEST, SIGN_IN_REQUEST, SIGN_OUT_REQUEST } from '../constansActions';
+import { connectPlatformRequest, disconnectPlatformRequest } from '../actions/entities/platformActions';
 import { signInSuccess, signInError, signOutSuccess, signOutError, validateTokenError } from '../actions/entities/authenticateActions';
 import { Alert, NetInfo } from 'react-native';
 import api from '../../configApi/apiAuth';
 import { clearPersistStore } from '../utils/reduxPersist';
-import { connectPlatformRequest } from '../actions/entities/platformActions';
 import { getItemAsyncStorage } from '../utils/asyncStorageHelper';
 import { getRefreshPostsRequest } from '../actions/entities/postsActions';
 import { getHeadersState } from '../selectors/entities/headersSelectors';
@@ -44,6 +44,7 @@ export function * oAuthSignIn ({payload}) {
             yield put(updateHeaders(headers));
             yield put(signInSuccess(data));
             yield put(connectPlatformRequest());
+            yield put(getRefreshPostsRequest());
             yield put(push('App'));
         } else {
             Alert.alert('Error', error.message);
@@ -59,6 +60,7 @@ export function * signIn ({payload}) {
         yield put(updateHeaders(headers));
         yield put(signInSuccess(data));
         yield put(connectPlatformRequest());
+        yield put(getRefreshPostsRequest());
         yield put(push('App'));
     } else {
         Alert.alert('Invalid login or password', error.message);
@@ -71,9 +73,13 @@ export function * signOut () {
     const { error } = yield call(api.authentications.signOut, headers);
     if (!error) {
         yield call(clearPersistStore);
+        yield put(push('Auth'));
+        yield put(disconnectPlatformRequest());
         yield put(signOutSuccess());
     } else {
         yield call(clearPersistStore);
+        yield put(push('Auth'));
+        yield put(disconnectPlatformRequest());
         yield put(signOutError());
     }
 }

@@ -1,6 +1,6 @@
 {
   "apiPrefix": "https://api.socialtrading.uat.pp.ua/",
-  "versionApi": "api/v3/",
+  "versionApi": "api/v3",
   "siteUrlPost": "https://socialtrading.uat.pp.ua/posts/",
 
   "brokerWSUrl": {

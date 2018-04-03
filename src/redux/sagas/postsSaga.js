@@ -17,6 +17,7 @@ import _ from 'lodash';
 import { getHeadersState } from '../selectors/entities/headersSelectors';
 import { getLastPostCreatedAtState } from '../selectors/entities/postsSelectors';
 import { updateHeaders } from '../actions/entities/headersActions';
+import { updateLikes } from '../actions/entities/likesActions';
 import { updateUsersStatus } from '../actions/entities/usersStatusActions';
 
 export function * getRefreshPosts () {
@@ -24,7 +25,9 @@ export function * getRefreshPosts () {
     const { data, headers } = yield call(api.posts.getPosts, {}, headersForRequest);
     if (data && data.posts && headers) {
         const usersStatus = _.map(data.posts, _.partialRight(_.pick, ['user_id', 'status_user']));
+        const likes = _.map(data.posts, _.partialRight(_.pick, ['id', 'liked', 'likes_count']));
         yield put(updateHeaders(headers));
+        yield put(updateLikes(likes));
         yield put(updateUsersStatus(usersStatus));
         yield put(getPostsSuccess(data));
     } else {
@@ -39,7 +42,9 @@ export function * getNextPosts () {
     const { data, headers } = yield call(api.posts.getPosts, params, headersForRequest);
     if (data && data.posts && headers) {
         const usersStatus = _.map(data.posts, _.partialRight(_.pick, ['user_id', 'status_user']));
+        const likes = _.map(data.posts, _.partialRight(_.pick, ['id', 'liked', 'likes_count']));
         yield put(updateHeaders(headers));
+        yield put(updateLikes(likes));
         yield put(updateUsersStatus(usersStatus));
         yield put(getPostsSuccess(data));
     } else {

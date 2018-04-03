@@ -8,7 +8,7 @@ import { updateHeaders } from '../actions/entities/headersActions';
 export function * updateLike ({payload}) {
     const { likedId, likedType } = payload;
     const headersForRequest = yield select(getHeadersState);
-    const { data, headers } = yield call(api.favorites.getFavorites, headersForRequest);
+    const { data, headers } = yield call(api.likes.updateLike, likedId, likedType, headersForRequest);
     if (data && headers) {
         yield put(updateHeaders(headers));
         yield put(updateLikeSuccess({likedId, likedType, count: data.count_likes, liked: data.liked}));

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert, View, Image, TouchableOpacity, StatusBar } from 'react-native';
+import { View, Image, TouchableOpacity, StatusBar } from 'react-native';
 import { Input, Button } from 'react-native-elements'
 import { CustomText } from '../core/CustomText';
 import PropTypes from 'prop-types';
@@ -40,7 +40,7 @@ class SignInScreen extends Component {
     render () {
         return (
             <View style={styles.container}>
-                <StatusBar backgroundColor="#16254c"/>
+                <StatusBar backgroundColor="#2D3D54"/>
                 <View style={styles.loginContainer}>
                     <View style={styles.logoContainer}>
                         <Image style={styles.logo} source={images.investArenaLogo}/>
@@ -65,12 +65,11 @@ class SignInScreen extends Component {
                             autoCorrect={false}
                             keyboardType='email-address'
                             returnKeyType='next'
-                            placeholder={'Email'}
+                            placeholder='Email'
                             containerStyle={styles.inputContainerEmail}
                             onSubmitEditing={() => this.passwordInput.focus()}
                             onChangeText={email => this.setState({ email })}
-                            displayError={!this.state.emailValid}
-                            errorMessage='Please enter a valid email address'/>
+                            errorMessage={!this.state.emailValid ? 'Please enter a valid email address' : null}/>
                         <Input
                             value={this.state.password}
                             leftIcon={
@@ -94,8 +93,7 @@ class SignInScreen extends Component {
                             placeholder={'Password'}
                             onSubmitEditing={() => this.signInOnClick()}
                             onChangeText={(password) => this.setState({password})}
-                            displayError={!this.state.passwordValid}
-                            errorMessage='Please enter at least 5 characters'/>
+                            errorMessage={!this.state.passwordValid ? 'Please enter at least 5 characters' : null}/>
                         <Button
                             buttonStyle={styles.loginButton}
                             containerStyle={styles.loginButtonContainer}

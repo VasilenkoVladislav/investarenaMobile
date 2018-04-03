@@ -44,7 +44,7 @@ class ImagePickerScreen extends Component {
         if (index === this.state.index) {
             index = null
         }
-        this.props.navigation.setParams({selectedImage: index && this.state.images[index]});
+        this.props.navigation.setParams({selectedImage: this.state.images[index]});
         this.setState({ index });
     };
     onEndReached = () => {

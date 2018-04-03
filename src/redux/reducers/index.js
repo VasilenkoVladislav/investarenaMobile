@@ -8,7 +8,7 @@ import storage from 'redux-persist/lib/storage';
 const entitiesConfig = {
     key: 'entities',
     storage: storage,
-    whitelist: ['user', 'posts', 'headers']
+    whitelist: ['user', 'posts', 'headers', 'likes', 'favorites']
 };
 
 export default combineReducers({

@@ -1,8 +1,9 @@
-import { TabNavigator } from 'react-navigation';
+import MenuTab from './Menu';
+import NotificationsTab from './Notifications';
 import React from 'react';
 import Posts from '../core/Posts';
-import NotificationsTab from './Notifications';
 import { Icon } from 'react-native-elements'
+import { TabNavigator } from 'react-navigation';
 
 export default MainScreen = TabNavigator(
     {
@@ -38,11 +39,11 @@ export default MainScreen = TabNavigator(
                                                    color={focused? 'white' : '#999'} />
             })
         },
-        Settings:  {
-            screen: NotificationsTab,
+        Menu:  {
+            screen: MenuTab,
             navigationOptions: () => ({
                 tabBarIcon: ({ focused }) => <Icon size={26}
-                                                   name='settings'
+                                                   name='menu'
                                                    color={focused? 'white' : '#999'} />
             })
         },

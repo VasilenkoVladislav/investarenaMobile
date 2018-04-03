@@ -10,10 +10,11 @@ export const styles = StyleSheet.create({
         marginTop: 10,
     },
     postHeaderWrap: {
+        paddingBottom: 5,
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     userInfoWrap: {
         flexDirection: 'row',
@@ -34,10 +35,10 @@ export const styles = StyleSheet.create({
         marginRight: 3
     },
     postContent: {
-        marginTop: 10
+        paddingVertical: 5
     },
     image: {
-        marginTop: 10,
+        paddingVertical: 5,
         width: width - 20,
         height: 350,
     },
@@ -45,7 +46,7 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        marginTop: 10
+        paddingTop: 5
     },
     postFooterBlock: {
         flexDirection: 'row',

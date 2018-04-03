@@ -3,13 +3,14 @@ import { StyleSheet } from 'react-native';
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginTop: 10
+        paddingVertical: 5
     },
     postTradingInfoWrap: {
         flexDirection: 'row',
         alignItems: 'center'
     },
     currentTradingInfoWrap: {
+        paddingTop: 5,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center'

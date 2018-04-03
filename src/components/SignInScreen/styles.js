@@ -29,13 +29,9 @@ export const styles = StyleSheet.create({
         marginLeft: 0
     },
     inputContainerEmail: {
-        borderBottomWidth: 0.5,
-        borderBottomColor: '#D5D7E3'
     },
     inputContainerPassword: {
         marginTop: 15,
-        borderBottomWidth: 0.5,
-        borderBottomColor: '#D5D7E3'
     },
     loginButtonContainer: {
         marginVertical: 30,

@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import commentsReducer from './commentsReducer';
 import dealsReducer from './dealsReducer';
 import favoritesReducer from './favoritesReducer';
 import headersReducer from './headersReducer';
@@ -10,6 +11,7 @@ import userReducer from './userReducer';
 import usersStatusReducer from './usersStatusReducer';
 
 export default combineReducers({
+    comments: commentsReducer,
     deals: dealsReducer,
     favorites: favoritesReducer,
     headers: headersReducer,
