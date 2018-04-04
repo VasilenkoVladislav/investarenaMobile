@@ -57,7 +57,7 @@ export function * createPost ({payload}) {
     const { data, headers } = yield call(api.posts.createPost, payload.data, headersForRequest);
     if (data && data.post && headers) {
         yield put(updateHeaders(headers));
-        yield put(updateLikeSuccess({likedId: data.post.id, count: 0, liked: false}));
+        yield put(updateLikeSuccess({likedId: data.post.id, liked: false, count: 0}));
         yield put(createPostSuccess(payload.clientPostId, data.post));
     } else {
         yield put(createPostError());

@@ -6,6 +6,7 @@ import { UPDATE_LIKE_REQUEST,
     SIGN_OUT_SUCCESS,
     SIGN_OUT_ERROR,
     DELETE_POST_SUCCESS } from '../../constansActions';
+import _ from 'lodash';
 
 const initialState = { byLikedId: {} };
 
