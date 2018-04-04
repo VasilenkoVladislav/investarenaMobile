@@ -13,7 +13,7 @@ export function * updateLike ({payload}) {
         yield put(updateHeaders(headers));
         yield put(updateLikeSuccess({likedId, likedType, count: data.count_likes, liked: data.liked}));
     } else {
-        yield put(updateLikeError());
+        yield put(updateLikeError(likedId));
     }
 }
 

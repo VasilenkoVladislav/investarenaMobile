@@ -5,5 +5,11 @@ export const getFavoritesState = (state) => state.entities.favorites;
 export const makeIsFavoriteState = () => createSelector(
     getFavoritesState,
     (state, props) => props.quoteSecurity,
-    (favorites, quoteSecurity) => favorites.includes(quoteSecurity)
+    (favorites, quoteSecurity) => favorites.allQuotes.includes(quoteSecurity)
+);
+
+export const makeGetFavoriteState = () => createSelector(
+    getFavoritesState,
+    (state, props) => props.quoteSecurity,
+    (favorites, quoteSecurity) => favorites.entities[quoteSecurity]
 );

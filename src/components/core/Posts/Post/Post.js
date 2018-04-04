@@ -3,7 +3,6 @@ import React, { PureComponent } from 'react';
 import { CustomText, CustomTextBold } from '../../CustomText';
 import AvatarUser from '../../AvatarUser';
 import { Bar } from 'react-native-progress';
-import { Icon } from 'react-native-elements';
 import { currentTime } from '../../../../helpers/currentTime';
 import moment from 'moment';
 import Like from '../../../core/Like';
@@ -11,10 +10,10 @@ import PostCounts from './PostCounts';
 import PropTypes from 'prop-types';
 import PostStatistics from './PostStatistics';
 import PostQuoteInfo from './PostQuoteInfo';
+import { Icon } from 'react-native-elements';
 import UserStatus from '../../UserStatus';
 import { styles } from './styles';
-import ModalManagePost from '../../Modals/ModalManagePost/ModalManagePost';
-import ModalSharePost from '../../Modals/ModalSharePost/ModalSharePost';
+import { timeCreate } from '../../../../helpers/diffDateTime';
 
 const propTypes = {
     quote: PropTypes.object,
@@ -51,6 +50,7 @@ class Post extends PureComponent {
     render () {
         let postQuoteInfo;
         let postStatistics;
+        const timeCreateAgo = timeCreate(this.props.post.created_at);
         const isNotSimple = this.props.post.market !== 'Simple' &&
             this.props.quoteSettings &&
             this.props.quote &&
@@ -99,7 +99,7 @@ class Post extends PureComponent {
                             </CustomTextBold>
                             <View style={styles.statusWrap}>
                                 <UserStatus userId={this.props.post.user_id || this.props.currentUserId}/>
-                                <CustomText style={styles.createdText}>Post created: 12 hrs</CustomText>
+                                <CustomText style={styles.createdText}>Post created: {timeCreateAgo}</CustomText>
                             </View>
                         </View>
                     </View>

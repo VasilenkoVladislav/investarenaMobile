@@ -19,8 +19,10 @@ const propTypes = {
 const Like = ({like, likedType, updateLike}) => {
     let view;
     const handleOnPress = () => {
-        view.swing(800);
-        updateLike();
+        if (like && !like.isLoading) {
+            view.swing(800);
+            updateLike();
+        }
     };
     return (
         <React.Fragment>

@@ -11,8 +11,8 @@ export function updateLikeSuccess (data) {
     return { type: UPDATE_LIKE_SUCCESS, payload: data };
 }
 
-export function updateLikeError () {
-    return { type: UPDATE_LIKE_ERROR };
+export function updateLikeError (likedId) {
+    return { type: UPDATE_LIKE_ERROR, payload: { likedId } };
 }
 
 export function updateLikes (data) {

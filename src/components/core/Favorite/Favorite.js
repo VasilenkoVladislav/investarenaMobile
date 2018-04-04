@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 
 const propTypes = {
     size: PropTypes.number,
+    favorite: PropTypes.object,
     isFavorite: PropTypes.bool.isRequired,
     quoteSecurity: PropTypes.string.isRequired
 };
@@ -15,11 +16,13 @@ const defaultProps = {
     size: 24
 };
 
-const Favorite = ({isFavorite, size, quoteSecurity}) => {
+const Favorite = ({isFavorite, favorite, size, quoteSecurity}) => {
     let view;
     const handleOnPress = () => {
-        view.swing(1500);
-        platformService.platform.updateFavorite(quoteSecurity)
+        if ((favorite && !favorite.isLoading) || !favorite) {
+            view.swing(1500);
+            platformService.platform.updateFavorite(quoteSecurity);
+        }
     };
     return <TouchableWithoutFeedback onPress={handleOnPress}>
             <Animatable.View ref={ref => view = ref}>
