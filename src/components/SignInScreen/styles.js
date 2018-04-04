@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
         backgroundColor: '#2D3D54'
     },
     loginContainer: {
-        marginTop: 70,
+        marginTop: 50,
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -17,7 +17,7 @@ export const styles = StyleSheet.create({
     },
     formContainer: {
         width: SCREEN_WIDTH - 30,
-        marginVertical: 30,
+        marginVertical: 25,
         alignItems:'center',
     },
     input: {
@@ -34,7 +34,7 @@ export const styles = StyleSheet.create({
         marginTop: 15,
     },
     loginButtonContainer: {
-        marginVertical: 30,
+        marginVertical: 25,
     },
     loginButton: {
         backgroundColor: '#3a79ee',
@@ -49,7 +49,7 @@ export const styles = StyleSheet.create({
     },
     socialIconContainer: {
         width: 250,
-        marginTop: 30,
+        marginTop: 25,
         flexDirection: 'row',
         justifyContent: 'space-between'
     },
