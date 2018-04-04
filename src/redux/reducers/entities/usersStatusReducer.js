@@ -1,5 +1,7 @@
 import _ from 'lodash';
-import { UPDATE_USERS_STATUS } from '../../constansActions';
+import { UPDATE_USERS_STATUS,
+    SIGN_OUT_SUCCESS,
+    SIGN_OUT_ERROR } from '../../constansActions';
 
 const initialState = {
     entities: {},
@@ -19,6 +21,9 @@ export default function (state = initialState, action) {
             }, state.entities),
             allIds: _.union(state.allIds, _.map(action.payload, 'user_id'))
         };
+    case SIGN_OUT_SUCCESS:
+    case SIGN_OUT_ERROR:
+        return initialState;
     default:
         return state;
     }

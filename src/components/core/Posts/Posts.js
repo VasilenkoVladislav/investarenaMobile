@@ -1,4 +1,4 @@
-import { View, FlatList, TouchableOpacity } from 'react-native';
+import { View, FlatList, TouchableOpacity, NetInfo } from 'react-native';
 import React, { PureComponent } from 'react';
 import AvatarUser from '../AvatarUser';
 import { CustomText } from '../CustomText';
@@ -25,13 +25,15 @@ class Posts extends PureComponent {
         super(props);
         this.state = { viewableItems:[] };
     }
-    onRefresh = () => {
-        if (!this.props.isLoading) {
+    onRefresh = async () => {
+        const { type } = await NetInfo.getConnectionInfo();
+        if (!this.props.isLoading && type !== 'none') {
             this.props.getRefreshPosts();
         }
     };
-    onEndReached = () => {
-        if (!this.props.isLoading) {
+    onEndReached = async () => {
+        const { type } = await NetInfo.getConnectionInfo();
+        if (!this.props.isLoading && type !== 'none') {
             this.props.getNextPosts();
         }
     };
@@ -62,7 +64,7 @@ class Posts extends PureComponent {
         </View>
     );
     onViewableItemsChanged = ({viewableItems}) => {
-        this.setState({viewableItems: viewableItems.map(x => x.key)});
+        this.setState({viewableItems: viewableItems.map(item => item.key)});
     };
     render () {
         return (

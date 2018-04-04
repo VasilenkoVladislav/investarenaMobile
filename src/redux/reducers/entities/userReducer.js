@@ -5,7 +5,9 @@ import { VALIDATE_TOKEN_REQUEST,
     SIGN_IN_ERROR,
     REGISTRATION_REQUEST,
     REGISTRATION_SUCCESS,
-    REGISTRATION_ERROR } from '../../constansActions';
+    REGISTRATION_ERROR,
+    SIGN_OUT_SUCCESS,
+    SIGN_OUT_ERROR } from '../../constansActions';
 
 const initialState = {
     info: {},
@@ -26,6 +28,9 @@ export default function (state = initialState, action) {
     case REGISTRATION_ERROR:
     case REGISTRATION_SUCCESS:
         return { ...state, isLoading: false };
+    case SIGN_OUT_SUCCESS:
+    case SIGN_OUT_ERROR:
+        return initialState;
     default:
         return state;
     }

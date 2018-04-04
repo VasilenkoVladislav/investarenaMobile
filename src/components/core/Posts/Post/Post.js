@@ -80,7 +80,7 @@ class Post extends PureComponent {
                      indeterminate={true}
                      useNativeDriver={true}
                      width={width-40}
-                     style={{alignSelf: 'center', marginBottom: 10}}/>}
+                     style={styles.bar}/>}
                 <View style={styles.postHeaderWrap}>
                     <View style={styles.userInfoWrap}>
                         <AvatarUser
@@ -89,7 +89,7 @@ class Post extends PureComponent {
                             size='small'
                             componentProps={{
                                 rounded: true,
-                                containerStyle: { marginRight: 5 },
+                                containerStyle: styles.avatarUser,
                                 activeOpacity: 0.7 }}/>
                         <View>
                             <CustomTextBold style={styles.userName}>
@@ -99,7 +99,7 @@ class Post extends PureComponent {
                             </CustomTextBold>
                             <View style={styles.statusWrap}>
                                 <UserStatus userId={this.props.post.user_id || this.props.currentUserId}/>
-                                <CustomText style={{fontSize: 10}}>Post created: 12 hrs</CustomText>
+                                <CustomText style={styles.createdText}>Post created: 12 hrs</CustomText>
                             </View>
                         </View>
                     </View>
@@ -119,12 +119,12 @@ class Post extends PureComponent {
                     <TouchableOpacity style={styles.postFooterBlock}
                                       onPress={() => this.props.showModal('ModalComments', { postId: this.props.post.id })}>
                         <Icon name='comment' color='#2c3552' size={26} />
-                        <CustomTextBold style={{marginLeft: 5}}>Comment</CustomTextBold>
+                        <CustomTextBold style={styles.postFooterText}>Comment</CustomTextBold>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.postFooterBlock}
                                       onPress={() => this.props.showModal('ModalSharePost')}>
                         <Icon name='share' color='#2c3552' size={26}/>
-                        <CustomTextBold style={{marginLeft: 5}}>Share</CustomTextBold>
+                        <CustomTextBold style={styles.postFooterText}>Share</CustomTextBold>
                     </TouchableOpacity>
                 </View>
             </View>

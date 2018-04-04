@@ -63,7 +63,8 @@ class CreatePostScreen extends Component {
                     onChangeText={this.handleOnChangeContent}
                     value={this.state.content}/>
                 <View style={styles.imagesWrap}>
-                    {params && params.selectedImage && <Image style={styles.image} source={{uri: params.selectedImage.node.image.uri}}/>}
+                    {params && params.selectedImage && <Image style={styles.image}
+                                                              source={{uri: params.selectedImage.node.image.uri}}/>}
                 </View>
             </ScrollView>
         )

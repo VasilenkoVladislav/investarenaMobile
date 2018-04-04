@@ -20,11 +20,11 @@ const PostCurrentPrice = ({recommend, quote, quoteSettings}) => {
         <View style={styles.container}>
             {quote.state === 'up'
                 ? <View style={[styles.triangle, { borderBottomColor: '#1ebea5' }]}/>
-                : <View style={{marginTop: 6}}/>}
+                : <View style={styles.triangleUp}/>}
             {currentPrice()}
             {quote.state === 'down'
                 ? <View style={[styles.triangle, { borderBottomColor: '#ee5451', transform: [{rotate: '180deg'}] }]}/>
-                : <View style={{marginBottom: 6}}/>}
+                : <View style={styles.triangleDown}/>}
         </View>
     )
 };

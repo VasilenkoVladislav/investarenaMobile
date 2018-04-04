@@ -1,4 +1,11 @@
-import { View, FlatList, TouchableHighlight, Image, CameraRoll, TouchableOpacity, PermissionsAndroid, InteractionManager } from 'react-native';
+import { View,
+    FlatList,
+    TouchableHighlight,
+    Image,
+    CameraRoll,
+    TouchableOpacity,
+    PermissionsAndroid,
+    InteractionManager } from 'react-native';
 import React, { Component } from 'react';
 import { CustomTextBold } from '../core/CustomText';
 import { styles } from './styles';
@@ -37,7 +44,7 @@ class ImagePickerScreen extends Component {
                 }
             );
         } catch (err) {
-            console.warn(err)
+           // empty
         }
     };
     setIndex = (index) => {

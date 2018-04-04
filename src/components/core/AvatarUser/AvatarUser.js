@@ -26,4 +26,6 @@ const AvatarUser = ({currentUserId, currentUserAvatar, userAvatar, userId, size,
     return (<Avatar {...componentProps}/>);
 };
 
+AvatarUser.propTypes = propTypes;
+
 export default AvatarUser;

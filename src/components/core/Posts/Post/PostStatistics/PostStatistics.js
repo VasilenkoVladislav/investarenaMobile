@@ -53,11 +53,11 @@ class PostStatistics extends PureComponent {
                 {this.props.quote && this.props.quoteSettings && this.props.quote.askPrice !== '0.000' ?
                     <View style={styles.container}>
                         <View>
-                            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                <CustomText style={{fontSize: 12}}>
+                            <View style={styles.longShortWrap}>
+                                <CustomText style={styles.longShortText}>
                                     {(this.state.longShort * 100)}%
                                 </CustomText>
-                                <CustomText style={{fontSize: 12}}>
+                                <CustomText style={styles.longShortText}>
                                     {100 - (this.state.longShort * 100)}%
                                 </CustomText>
                             </View>
@@ -68,22 +68,22 @@ class PostStatistics extends PureComponent {
                                  width={120}
                                  height={2}
                                  useNativeDriver={true}/>
-                            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                <CustomText style={{fontSize: 10, marginRight: 5}}>
+                            <View style={styles.longShortWrap}>
+                                <CustomText style={styles.longShortText}>
                                     long
                                 </CustomText>
-                                <CustomText style={{fontSize: 10}}>
+                                <CustomText style={styles.longShortText}>
                                     short
                                 </CustomText>
                             </View>
                         </View>
-                        <View style={{flexDirection: 'row'}}>
-                            <CustomTextBold style={{marginRight: 5}}>Open Deals</CustomTextBold>
-                            <CustomTextBold style={{color: '#3a79ee'}}>{this.props.openDeals.length}</CustomTextBold>
+                        <View style={styles.statisticWrap}>
+                            <CustomTextBold style={styles.statisticText}>Open Deals</CustomTextBold>
+                            <CustomTextBold style={styles.statisticValue}>{this.props.openDeals.length}</CustomTextBold>
                         </View>
-                        <View style={{flexDirection: 'row'}}>
-                            <CustomTextBold style={{marginRight: 5}}>PnL</CustomTextBold>
-                            <CustomTextBold style={{color: '#3a79ee'}}>{currencyFormat(this.state.pnl)}</CustomTextBold>
+                        <View style={styles.statisticWrap}>
+                            <CustomTextBold style={styles.statisticText}>PnL</CustomTextBold>
+                            <CustomTextBold style={styles.statisticValue}>{currencyFormat(this.state.pnl)}</CustomTextBold>
                         </View>
                     </View>
                     : null}

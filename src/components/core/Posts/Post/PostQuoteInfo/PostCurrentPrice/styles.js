@@ -16,5 +16,11 @@ export const styles = StyleSheet.create({
         borderBottomWidth: 6,
         borderLeftColor: 'transparent',
         borderRightColor: 'transparent',
+    },
+    triangleUp: {
+        marginTop: 6
+    },
+    triangleDown: {
+        marginBottom: 6
     }
 });

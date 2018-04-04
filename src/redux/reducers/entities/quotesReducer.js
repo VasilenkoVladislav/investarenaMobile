@@ -1,6 +1,8 @@
 import { UPDATE_QUOTES,
     AUTHORIZE_BROKER_SUCCESS,
-    DISCONNECT_BROKER_SUCCESS } from '../../constansActions';
+    DISCONNECT_BROKER_SUCCESS,
+    SIGN_OUT_SUCCESS,
+    SIGN_OUT_ERROR } from '../../constansActions';
 
 const initialState = { };
 
@@ -10,6 +12,8 @@ export default function (state = initialState, action) {
         return {...state, ...action.payload};
     case AUTHORIZE_BROKER_SUCCESS:
     case DISCONNECT_BROKER_SUCCESS:
+    case SIGN_OUT_SUCCESS:
+    case SIGN_OUT_ERROR:
         return initialState;
     default:
         return state;

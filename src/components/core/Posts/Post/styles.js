@@ -9,6 +9,10 @@ export const styles = StyleSheet.create({
         padding: 10,
         marginTop: 10,
     },
+    bar: {
+        alignSelf: 'center',
+        marginBottom: 10
+    },
     postHeaderWrap: {
         paddingBottom: 5,
         flex: 1,
@@ -21,11 +25,17 @@ export const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
     },
+    avatarUser: {
+        marginRight: 5
+    },
     userName: {
         color: '#3a79ee'
     },
     statusWrap: {
         flexDirection: 'row'
+    },
+    createdText: {
+      fontSize: 10
     },
     status: {
         width: 4,
@@ -51,5 +61,8 @@ export const styles = StyleSheet.create({
     postFooterBlock: {
         flexDirection: 'row',
         alignItems: 'center'
+    },
+    postFooterText: {
+        marginLeft: 5
     }
 });

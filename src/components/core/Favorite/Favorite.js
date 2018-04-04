@@ -12,7 +12,7 @@ const propTypes = {
 };
 
 const defaultProps = {
-    size: 20
+    size: 24
 };
 
 const Favorite = ({isFavorite, size, quoteSecurity}) => {

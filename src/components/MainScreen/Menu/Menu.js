@@ -4,6 +4,7 @@ import AvatarUser from '../../core/AvatarUser';
 import { ListItem } from 'react-native-elements'
 import React from 'react';
 import PropTypes from 'prop-types';
+import { styles } from './styles';
 
 const propTypes = {
     currentUserName: PropTypes.string.isRequired,
@@ -64,26 +65,24 @@ const Menu = ({currentUserName, signOut}) => {
         }
     ];
     return (
-        <ScrollView style={{flex: 1}}>
-            <TouchableOpacity style={{flexDirection: 'row', padding: 10, backgroundColor: 'white', alignItems: 'center'}}>
+        <ScrollView style={styles.container}>
+            <TouchableOpacity style={styles.userInfoWrap}>
                 <AvatarUser
                     size='medium'
                     componentProps={{
                         rounded: true,
-                        containerStyle: { marginRight: 10 },
+                        containerStyle: styles.avatarUserContainer,
                         activeOpacity: 0.7 }}/>
                 <View>
                     <CustomTextBold>{currentUserName}</CustomTextBold>
-                    <CustomText style={{fontSize: 10}}>Your profile</CustomText>
+                    <CustomText style={styles.profileText}>Your profile</CustomText>
                 </View>
             </TouchableOpacity>
-            <View style={{marginTop: 10}}>
+            <View style={styles.listWrap}>
                 {
                     list.map((item, i) => (
                         <ListItem
-                            scaleProps={{
-                                activeScale: 0.95,
-                            }}
+                            scaleProps={{activeScale: 0.95}}
                             key={i}
                             onPress={item.onPress}
                             bottomDivider={true}

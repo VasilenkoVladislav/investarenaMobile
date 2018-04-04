@@ -1,4 +1,8 @@
-import { GET_FAVORITES_SUCCESS, UPDATE_FAVORITE_SUCCESS } from '../../constansActions';
+import { GET_FAVORITES_SUCCESS,
+    UPDATE_FAVORITE_SUCCESS,
+    SIGN_IN_SUCCESS,
+    SIGN_OUT_SUCCESS,
+    SIGN_OUT_ERROR } from '../../constansActions';
 
 const initialState = [];
 
@@ -12,6 +16,10 @@ export default function (state = initialState, action) {
         } else {
             return [...state, action.payload];
         }
+    case SIGN_IN_SUCCESS:
+    case SIGN_OUT_SUCCESS:
+    case SIGN_OUT_ERROR:
+        return initialState;
     default:
         return state;
     }
