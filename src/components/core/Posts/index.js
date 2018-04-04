@@ -2,6 +2,7 @@ import { getCurrentNameState, getCurrentUserIdState } from '../../../redux/selec
 import { getPostsEntitiesState, getPostHasMoreState, getPostsIsLoadingState } from '../../../redux/selectors/entities/postsSelectors';
 import { getNextPostsRequest, getRefreshPostsRequest } from '../../../redux/actions/entities/postsActions';
 import { connect } from 'react-redux';
+import { getRefreshCommentsRequest } from '../../../redux/actions/entities/commentsActions';
 import { getQuotesState } from '../../../redux/selectors/entities/quotesSelectors';
 import { getQuotesSettingsState } from '../../../redux/selectors/entities/quotesSettingsSelectors';
 import { getPostDealsRequest } from '../../../redux/actions/entities/dealsActions';
@@ -27,7 +28,8 @@ function mapDispatchToProps (dispatch) {
         getPostDeals: (postId) => dispatch(getPostDealsRequest(postId)),
         getRefreshPosts: () => dispatch(getRefreshPostsRequest()),
         getNextPosts: () => dispatch(getNextPostsRequest()),
-        goScreen: (screen) => dispatch(push(screen))
+        goScreen: (screen) => dispatch(push(screen)),
+        getRefreshComments: (commentableId) => dispatch(getRefreshCommentsRequest(commentableId, 'Post'))
     };
 }
 

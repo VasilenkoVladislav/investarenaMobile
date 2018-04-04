@@ -17,6 +17,7 @@ const propTypes = {
     getPostDeals: PropTypes.func.isRequired,
     getRefreshPosts: PropTypes.func.isRequired,
     getNextPosts: PropTypes.func.isRequired,
+    getRefreshComments: PropTypes.func.isRequired,
     goScreen: PropTypes.func.isRequired
 };
 
@@ -45,6 +46,7 @@ class Posts extends PureComponent {
               currentUserId={this.props.currentUserId}
               currentUserName={this.props.currentUserName}
               showModal={this.props.showModal}
+              getRefreshComments={this.props.getRefreshComments}
               getPostDeals={this.props.getPostDeals}/>
     );
     renderHeader = () => (

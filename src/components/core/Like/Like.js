@@ -30,7 +30,7 @@ const Like = ({like, likedType, updateLike}) => {
                 ? <TouchableOpacity onPress={handleOnPress}>
                     <Animatable.View ref={ref => view = ref} style={styles.postLikeContainer}>
                         <Icon name='thumb-up' color={ like && like.liked ? '#3a79ee' : '#2c3552'} size={26} />
-                        <CustomTextBold style={[styles.commentLikeText, { color: like && like.liked ? '#3a79ee' : '#2c3552' }]}>Like</CustomTextBold>
+                        <CustomTextBold style={[styles.postLikeText, { color: like && like.liked ? '#3a79ee' : '#2c3552' }]}>Like</CustomTextBold>
                     </Animatable.View>
                 </TouchableOpacity>
                 : <CustomTextBold style={[styles.commentLikeText, { color: like && like.liked ? '#3a79ee' : '#2c3552' }]}>Like</CustomTextBold> }

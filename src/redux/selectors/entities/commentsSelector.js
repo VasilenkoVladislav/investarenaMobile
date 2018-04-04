@@ -6,31 +6,41 @@ const getCommentsState = (state) => state.entities.comments;
 export const makeGetCommentsState = () => createSelector(
     getCommentsState,
     (state, props) => props.commentableId,
-    (comments, commentableId) => comments[commentableId] ? comments[commentableId].comments : null
+    (comments, commentableId) => comments.byCommentableId[commentableId]
+        ? comments.byCommentableId[commentableId].comments
+        : null
 );
 export const makeGetHasMoreCommentsState = () => createSelector(
     getCommentsState,
     (state, props) => props.commentableId,
-    (comments, commentableId) => comments[commentableId] ? comments[commentableId].hasMore : false
+    (comments, commentableId) => comments.byCommentableId[commentableId]
+        ? comments.byCommentableId[commentableId].hasMore
+        : false
 );
 export const makeGetIsLoadingCommentsState = () => createSelector(
     getCommentsState,
     (state, props) => props.commentableId,
-    (comments, commentableId) => comments[commentableId] ? comments[commentableId].isLoading : false
+    (comments, commentableId) => comments.byCommentableId[commentableId]
+        ? comments[commentableId].isLoading
+        : false
 );
 export const makeGetCountCommentsState = () => createSelector(
     getCommentsState,
     (state, props) => props.commentableId,
-    (comments, commentableId) => comments[commentableId] ? comments[commentableId].count : 0
+    (comments, commentableId) => comments.byCommentableId[commentableId]
+        ? comments[commentableId].count
+        : 0
 );
 
 export const getLastCommentCreatedAtState = (state, commentableId) => {
     const comments = getCommentsState(state);
-    const lastComment = _.first(comments[commentableId] ? comments[commentableId].comments : null);
+    const lastComment = _.first(comments.byCommentableId[commentableId] ? comments[commentableId].comments : null);
     return lastComment ? lastComment.created_at : '';
 };
 
 export const getActualSizeCommentsState = (state, commentableId) => {
     const comments = getCommentsState(state);
-    return comments[commentableId] ? comments[commentableId].comments.length : 0;
+    return comments.byCommentableId[commentableId]
+        ? comments.byCommentableId[commentableId].comments.length
+        : 0;
 };

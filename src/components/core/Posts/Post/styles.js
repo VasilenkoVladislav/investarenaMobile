@@ -29,7 +29,8 @@ export const styles = StyleSheet.create({
         marginRight: 5
     },
     userName: {
-        color: '#3a79ee'
+        color: '#3a79ee',
+        maxWidth: width - 80
     },
     statusWrap: {
         flexDirection: 'row'

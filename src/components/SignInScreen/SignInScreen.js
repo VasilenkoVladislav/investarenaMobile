@@ -144,8 +144,7 @@ class SignInScreen extends Component {
                             title="Create an Account"
                             clear
                             activeOpacity={0.5}
-                            titleStyle={styles.SignUpTextButton}
-                            containerStyle={styles.SignUpButtonContainer}
+                            titleStyle={styles.signUpTextButton}
                             onPress={() => this.props.pushScreen('Registration')}
                         />
                     </View>

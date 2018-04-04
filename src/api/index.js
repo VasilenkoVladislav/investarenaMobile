@@ -1,5 +1,6 @@
 import ApiClient from './ApiClient';
 import Authentications from './Authentications';
+import Comments from './Comments';
 import Deals from './Deals';
 import Favorites from './Favorites';
 import Likes from './Likes';
@@ -10,6 +11,7 @@ export default function ({ apiPrefix } = {}) {
     const api = new ApiClient({ prefix: apiPrefix});
     return {
         authentications: new Authentications({apiClient: api}),
+        comments: new Comments({apiClient: api}),
         deals: new Deals({apiClient: api}),
         favorites: new Favorites({apiClient: api}),
         likes: new Likes({apiClient: api}),

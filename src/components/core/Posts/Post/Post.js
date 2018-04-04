@@ -23,6 +23,7 @@ const propTypes = {
     currentUserId: PropTypes.string.isRequired,
     currentUserName: PropTypes.string.isRequired,
     showModal: PropTypes.func.isRequired,
+    getRefreshComments: PropTypes.func.isRequired,
     getPostDeals: PropTypes.func.isRequired
 };
 
@@ -40,7 +41,7 @@ class Post extends PureComponent {
     componentDidMount () {
         if (moment(this.props.post.created_at).add(10, 'seconds') < moment(currentTime.getTime())) {
             if (this.props.post.comments_count > 0) {
-                // this.props.getComments(this.props.post.id);
+                this.props.getRefreshComments(this.props.post.id);
             }
             if (this.props.post.market !== 'Simple' && this.props.post.deals_count > 0) {
                 this.props.getPostDeals(this.props.post.id);
