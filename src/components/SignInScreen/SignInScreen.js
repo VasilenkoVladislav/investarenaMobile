@@ -68,6 +68,7 @@ class SignInScreen extends Component {
                             placeholder='Email'
                             containerStyle={styles.inputContainerEmail}
                             onSubmitEditing={() => this.passwordInput.focus()}
+                            errorStyle={{ marginTop: 5, margin: 0 }}
                             onChangeText={email => this.setState({ email })}
                             errorMessage={!this.state.emailValid ? 'Please enter a valid email address' : null}/>
                         <Input
@@ -91,6 +92,7 @@ class SignInScreen extends Component {
                             blurOnSubmit={true}
                             containerStyle={styles.inputContainerPassword}
                             placeholder={'Password'}
+                            errorStyle={{ marginTop: 5, margin: 0 }}
                             onSubmitEditing={() => this.signInOnClick()}
                             onChangeText={(password) => this.setState({password})}
                             errorMessage={!this.state.passwordValid ? 'Please enter at least 5 characters' : null}/>
