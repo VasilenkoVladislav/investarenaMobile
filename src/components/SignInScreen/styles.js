@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
         backgroundColor: '#2D3D54'
     },
     loginContainer: {
-        height: SCREEN_HEIGHT,
+        flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -20,13 +20,17 @@ export const styles = StyleSheet.create({
     },
     formContainer: {
         flex: 2,
-        width: SCREEN_WIDTH - 70,
         alignItems:'center',
     },
     input: {
         fontFamily: 'OpenSans-Regular',
         color: '#CED7E0',
-        padding: 0,
+        padding: 0
+    },
+    errorInput: {
+        position: 'absolute',
+        margin: 0,
+        top: 40
     },
     leftIconInputContainer: {
         marginLeft: 0
@@ -39,7 +43,7 @@ export const styles = StyleSheet.create({
         width: SCREEN_WIDTH - 70,
     },
     loginButtonContainer: {
-        marginVertical: 25,
+        marginVertical: 30,
         width: SCREEN_WIDTH - 70,
     },
     loginButton: {
@@ -54,7 +58,7 @@ export const styles = StyleSheet.create({
     },
     socialIconContainer: {
         width: SCREEN_WIDTH - 70,
-        marginTop: 25,
+        marginTop: 30,
         flexDirection: 'row',
         justifyContent: 'space-between'
     },
@@ -94,13 +98,14 @@ export const styles = StyleSheet.create({
         color: '#8C96AF'
     },
     footerContainer: {
+        flex: 1,
+        flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        flex: 1,
     },
     signUpTextButton: {
-        fontFamily: 'OpenSans-Bold',
         fontSize: 16,
+        fontFamily: 'OpenSans-Bold',
         color: 'white'
     },
 });

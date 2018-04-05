@@ -43,7 +43,7 @@ class SignInScreen extends Component {
                 <StatusBar backgroundColor="#2D3D54"/>
                 <View style={styles.loginContainer}>
                     <View style={styles.logoContainer}>
-                        <Image style={styles.logo} source={images.investArenaLogo}/>
+                        <Image source={images.investArenaLogo}/>
                     </View>
                     <View style={styles.formContainer}>
                         <Input
@@ -68,7 +68,7 @@ class SignInScreen extends Component {
                             placeholder='Email'
                             containerStyle={styles.inputContainerEmail}
                             onSubmitEditing={() => this.passwordInput.focus()}
-                            errorStyle={{ marginTop: 5, margin: 0 }}
+                            errorStyle={styles.errorInput}
                             onChangeText={email => this.setState({ email })}
                             errorMessage={!this.state.emailValid ? 'Please enter a valid email address' : null}/>
                         <Input
@@ -91,8 +91,8 @@ class SignInScreen extends Component {
                             returnKeyType='done'
                             blurOnSubmit={true}
                             containerStyle={styles.inputContainerPassword}
-                            placeholder={'Password'}
-                            errorStyle={{ marginTop: 5, margin: 0 }}
+                            placeholder='Password'
+                            errorStyle={styles.errorInput}
                             onSubmitEditing={() => this.signInOnClick()}
                             onChangeText={(password) => this.setState({password})}
                             errorMessage={!this.state.passwordValid ? 'Please enter at least 5 characters' : null}/>
@@ -143,7 +143,7 @@ class SignInScreen extends Component {
                             New here?
                         </CustomText>
                         <Button
-                            title="Create an Account"
+                            title="Create Account"
                             clear
                             activeOpacity={0.5}
                             titleStyle={styles.signUpTextButton}
