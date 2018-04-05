@@ -7,8 +7,8 @@ import _ from 'lodash';
 import config from '../configApi/config';
 import { updateQuotes } from '../redux/actions/entities/quotesActions';
 import { updateQuotesSettings } from '../redux/actions/entities/quotesSettingsActions';
-import SockJS from 'sockjs-client/dist/sockjs.min.js';
-import { Stomp } from 'stompjs/lib/stomp.js';
+import SockJS from './SockJS/sockjs.min';
+import { Stomp } from './Stomp/stomp.min';
 
 export default class Umarkets {
     constructor ({dispatch, getState}) {
