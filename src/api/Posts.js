@@ -2,7 +2,8 @@ import Base from './Base';
 import config from '../configApi/config';
 
 export default class Posts extends Base {
-    getPosts = async (params, headers) => {
+    getPosts = async (lastCreateAt = '', headers) => {
+        const params = { last_created_at: lastCreateAt };
         const response = await this.apiClient.get(config.posts.posts, {}, params, headers);
         const data = {};
         if (response.data) {

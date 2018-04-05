@@ -3,7 +3,8 @@ import { CONNECT_PLATFORM_REQUEST,
     CONNECT_PLATFORM_ERROR,
     DISCONNECT_PLATFORM_REQUEST,
     DISCONNECT_PLATFORM_SUCCESS,
-    DISCONNECT_PLATFORM_ERROR } from '../../constansActions';
+    DISCONNECT_PLATFORM_ERROR,
+    UPDATE_USER_STATISTICS } from '../../constansActions';
 
 export function connectPlatformRequest () {
     return { type: CONNECT_PLATFORM_REQUEST };
@@ -27,4 +28,7 @@ export function disconnectPlatformSuccess (platformName) {
 
 export function disconnectPlatformError (platformName) {
     return { type: DISCONNECT_PLATFORM_ERROR, payload: platformName };
+}
+export function updateUserStatistics (balance) {
+    return { type: UPDATE_USER_STATISTICS, payload: balance };
 }

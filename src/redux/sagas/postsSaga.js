@@ -22,7 +22,7 @@ import { updateUsersStatus } from '../actions/entities/usersStatusActions';
 
 export function * getRefreshPosts () {
     const headersForRequest = yield select(getHeadersState);
-    const { data, headers } = yield call(api.posts.getPosts, {}, headersForRequest);
+    const { data, headers } = yield call(api.posts.getPosts, '', headersForRequest);
     if (data && data.posts && headers) {
         const usersStatus = _.map(data.posts, _.partialRight(_.pick, ['user_id', 'status_user']));
         const likes = _.map(data.posts, _.partialRight(_.pick, ['id', 'liked', 'likes_count']));
@@ -38,8 +38,7 @@ export function * getRefreshPosts () {
 export function * getNextPosts () {
     const headersForRequest = yield select(getHeadersState);
     const lastCreateAt = yield select(getLastPostCreatedAtState);
-    const params = { last_created_at: lastCreateAt };
-    const { data, headers } = yield call(api.posts.getPosts, params, headersForRequest);
+    const { data, headers } = yield call(api.posts.getPosts, lastCreateAt, headersForRequest);
     if (data && data.posts && headers) {
         const usersStatus = _.map(data.posts, _.partialRight(_.pick, ['user_id', 'status_user']));
         const likes = _.map(data.posts, _.partialRight(_.pick, ['id', 'liked', 'likes_count']));

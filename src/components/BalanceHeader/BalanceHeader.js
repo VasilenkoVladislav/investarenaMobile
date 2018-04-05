@@ -1,5 +1,6 @@
 import { StatusBar, View } from 'react-native';
 import { CustomText, CustomTextBold } from '../core/CustomText';
+import Balance from './Balance';
 import { Icon } from 'react-native-elements'
 import React from 'react';
 import { styles } from './styles';
@@ -8,18 +9,17 @@ const BalanceHeader = () => {
     return (
         <View style={styles.container}>
             <StatusBar backgroundColor='#16254c'/>
-            <Icon name='search' color='#999' containerStyle={{flex: 1}} iconStyle={{alignSelf: 'flex-start'}}/>
-            <View style={{flex: 2, paddingHorizontal: 10}}>
+            <View style={{flex: 1, paddingRight: 10}}>
                 <CustomText style={{fontSize: 10, color: '#999'}}>Free Balance:</CustomText>
-                <CustomTextBold style={{color: 'white'}}>$300</CustomTextBold>
+                <Balance balanceType="freeBalance" />
             </View>
-            <View style={{flex: 2, paddingHorizontal: 10, borderLeftWidth: 1, borderLeftColor: '#999'}}>
+            <View style={{flex: 1, paddingHorizontal: 10, borderLeftWidth: 1, borderLeftColor: '#999'}}>
                 <CustomText style={{fontSize: 10, color: '#999'}}>Open P&L:</CustomText>
-                <CustomTextBold style={{color: 'white'}}>$300</CustomTextBold>
+                <Balance balanceType="unrealizedPnl" />
             </View>
-            <View style={{flex: 2, paddingHorizontal: 10, borderLeftWidth: 1, borderLeftColor: '#999'}}>
+            <View style={{flex: 1, paddingLeft: 10, borderLeftWidth: 1, borderLeftColor: '#999'}}>
                 <CustomText style={{fontSize: 10, color: '#999'}}>Balance</CustomText>
-                <CustomTextBold style={{color: 'white'}}>$300</CustomTextBold>
+                <Balance balanceType="balance" />
             </View>
         </View>
     );

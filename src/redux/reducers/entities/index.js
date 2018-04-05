@@ -4,6 +4,7 @@ import dealsReducer from './dealsReducer';
 import favoritesReducer from './favoritesReducer';
 import headersReducer from './headersReducer';
 import likesReducer from './likesReducer';
+import platformReducer from './platformReducer';
 import postsReducer from './postsReducer';
 import quotesReducer from './quotesReducer';
 import quotesSettingsReducer from './quotesSettingsReducer';
@@ -14,6 +15,7 @@ export default combineReducers({
     comments: commentsReducer,
     deals: dealsReducer,
     favorites: favoritesReducer,
+    platform: platformReducer,
     headers: headersReducer,
     likes: likesReducer,
     posts: postsReducer,

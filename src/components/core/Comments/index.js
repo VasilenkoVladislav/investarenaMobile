@@ -2,6 +2,7 @@ import { makeGetCommentsState,
     makeGetHasMoreCommentsState,
     makeGetIsLoadingCommentsState } from '../../../redux/selectors/entities/commentsSelector';
 import { getCurrentUserIdState, getCurrentNameState } from '../../../redux/selectors/entities/userSelectors';
+import { getRefreshCommentsRequest, getNextCommentsRequest } from '../../../redux/actions/entities/commentsActions';
 import { connect } from 'react-redux';
 import Comments from './Comments';
 
@@ -20,10 +21,10 @@ const mapState = () => {
     };
 };
 
-function mapDispatchTopProps (dispatch) {
+function mapDispatchTopProps (dispatch, ownProps) {
     return {
-        getRefreshComments: () => ({}),
-        getNextComments: () => ({})
+        getRefreshComments: () => dispatch(getRefreshCommentsRequest(ownProps.commentableId, ownProps.commentableType)),
+        getNextComments: () => dispatch(getNextCommentsRequest(ownProps.commentableId, ownProps.commentableType))
     }
 }
 

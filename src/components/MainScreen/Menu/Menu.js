@@ -12,7 +12,7 @@ const propTypes = {
     signOut: PropTypes.func.isRequired
 };
 
-const Menu = ({currentUserName, signOut}) => {
+const Menu = ({currentUserName, signOut, authorizeBrokerRequest}) => {
     list = [
         {
             title: 'News Feed',
@@ -24,7 +24,8 @@ const Menu = ({currentUserName, signOut}) => {
             title: 'Broker',
             titleStyle: { fontFamily: 'OpenSans-Regular', color: 'black' },
             icon: {name: 'monetization-on', color: '#2c3552', size: 26},
-            chevron: true
+            chevron: true,
+            onPress: () => authorizeBrokerRequest('antonki@123software.ru', 'aa123456', 'umarkets')
         },
         {
             title: 'Groups',

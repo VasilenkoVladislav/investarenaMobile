@@ -1,4 +1,5 @@
 import Widgets from './widgets';
+import Umarkets from './umarkets';
 
 class PlatformService {
     constructor () {
@@ -12,8 +13,9 @@ class PlatformService {
         return this._platform;
     }
     set platform (value) {
-        if (value === 'umarkets' || 'maximarkets') {
-            this._platform = new Widgets(this._store);
+        this._platform && this._platform.closeWebSocketConnection();
+        if (value === 'umarkets' || value === 'maximarkets') {
+            this._platform = new Umarkets(this._store);
         } else {
             this._platform = new Widgets(this._store);
         }

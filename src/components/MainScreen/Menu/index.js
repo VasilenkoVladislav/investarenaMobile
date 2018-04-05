@@ -1,3 +1,4 @@
+import { authorizeBrokerRequest } from '../../../redux/actions/entities/brokersActions';
 import { connect } from 'react-redux';
 import { getCurrentNameState } from '../../../redux/selectors/entities/userSelectors';
 import { signOutRequest } from '../../../redux/actions/entities/authenticateActions';
@@ -12,6 +13,7 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch) {
     return {
+        authorizeBrokerRequest: (email, password, brokerName) => dispatch(authorizeBrokerRequest(email, password, brokerName)),
         goScreen: (screen) => dispatch(push(screen)),
         signOut: () => dispatch(signOutRequest())
     };

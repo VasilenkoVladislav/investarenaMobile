@@ -30,7 +30,9 @@
     "redux": "3.7.2",
     "redux-persist": "5.9.1",
     "redux-saga": "0.16.0",
-    "reselect": "3.0.1"
+    "reselect": "3.0.1",
+    "sockjs-client": "1.1.4",
+    "stompjs": "2.3.3"
   },
   "devDependencies": {
     "babel-jest": "22.4.3",

@@ -4,7 +4,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const propTypes = {
-    comments: PropTypes.array.isRequired
+    isLoading: PropTypes.bool.isRequired,
+    hasMore: PropTypes.bool.isRequired,
+    comments: PropTypes.array.isRequired,
+    currentUserId: PropTypes.string.isRequired,
+    currentUserName: PropTypes.string.isRequired,
+    getRefreshComments: PropTypes.func.isRequired,
+    getNextComments: PropTypes.func.isRequired
 };
 
 const Comments = ({comments, isLoading, getRefreshComments, getNextComments}) => {

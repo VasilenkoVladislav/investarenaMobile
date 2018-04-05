@@ -17,7 +17,7 @@ export function * connectPlatform () {
 
 export function * disconnectPlatform () {
     yield AsyncStorage.multiRemove(['platformName', 'stompUser', 'stompPassword', 'sid', 'umSession', 'websrv']);
-    platformService.platform.closeWebSocketConnection();
+    platformService.platform = 'widgets';
 }
 
 export function * watchConnectPlatform () {
