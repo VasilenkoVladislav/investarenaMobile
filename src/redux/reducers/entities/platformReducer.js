@@ -7,7 +7,6 @@ import { AUTHORIZE_BROKER_REQUEST,
     FORGOT_PASS_BROKER_REQUEST,
     FORGOT_PASS_BROKER_SUCCESS,
     FORGOT_PASS_BROKER_ERROR,
-    CONNECT_PLATFORM_REQUEST,
     CONNECT_PLATFORM_SUCCESS,
     CONNECT_PLATFORM_ERROR,
     UPDATE_USER_STATISTICS,
@@ -23,8 +22,6 @@ const initialState = {
 
 export default function (state = initialState, action) {
     switch (action.type) {
-    case CONNECT_PLATFORM_REQUEST:
-        return { ...state, connect: false, isLoading: true, platformName: 'widgets' };
     case CONNECT_PLATFORM_SUCCESS:
         return { ...state, connect: true, isLoading: false, platformName: action.payload};
     case CONNECT_PLATFORM_ERROR:

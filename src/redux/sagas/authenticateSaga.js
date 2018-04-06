@@ -1,6 +1,5 @@
 import { put, call, takeLatest, takeEvery ,select } from 'redux-saga/effects';
 import { VALIDATE_TOKEN_REQUEST, OAUTHENTICATE_REQUEST, SIGN_IN_REQUEST, SIGN_OUT_REQUEST } from '../constansActions';
-import { connectPlatformRequest, disconnectPlatformRequest } from '../actions/entities/platformActions';
 import { signInSuccess, signInError, signOutSuccess, signOutError, validateTokenError } from '../actions/entities/authenticateActions';
 import { Alert, NetInfo } from 'react-native';
 import api from '../../configApi/apiAuth';
@@ -9,6 +8,7 @@ import { getItemAsyncStorage } from '../utils/asyncStorageHelper';
 import { getRefreshPostsRequest } from '../actions/entities/postsActions';
 import { getHeadersState } from '../selectors/entities/headersSelectors';
 import { oAuth } from '../../oAuth';
+import { platformService } from '../../platform/platformService';
 import { updateHeaders } from '../actions/entities/headersActions';
 import { push } from '../actions/nav';
 
@@ -18,9 +18,10 @@ export function * validateToken () {
         const { type } = yield call(NetInfo.getConnectionInfo);
         const { data, headers } = yield call(api.authentications.validateToken, result);
         if (data && headers) {
+            platformService.platform = 'widget';
+            platformService.platform.createWebSocketConnection();
             yield put(updateHeaders(headers));
             yield put(signInSuccess(data));
-            yield put(connectPlatformRequest());
             yield put(getRefreshPostsRequest());
             yield put(push('App'));
         } else if (type === 'none'){
@@ -41,9 +42,10 @@ export function * oAuthSignIn ({payload}) {
     if (accessToken) {
         const { data, headers, error } = yield call(api.authentications.oAuthSignIn, payload, { access_token: accessToken });
         if (data && headers) {
+            platformService.platform = 'widget';
+            platformService.platform.createWebSocketConnection();
             yield put(updateHeaders(headers));
             yield put(signInSuccess(data));
-            yield put(connectPlatformRequest());
             yield put(getRefreshPostsRequest());
             yield put(push('App'));
         } else {
@@ -57,9 +59,10 @@ export function * signIn ({payload}) {
     const { email, password } = payload;
     const { data, headers, error } = yield call(api.authentications.signIn, email, password);
     if (data && headers) {
+        platformService.platform = 'widget';
+        platformService.platform.createWebSocketConnection();
         yield put(updateHeaders(headers));
         yield put(signInSuccess(data));
-        yield put(connectPlatformRequest());
         yield put(getRefreshPostsRequest());
         yield put(push('App'));
     } else {
@@ -72,14 +75,16 @@ export function * signOut () {
     const headers = yield select(getHeadersState);
     const { error } = yield call(api.authentications.signOut, headers);
     if (!error) {
+        platformService.platform.closeWebSocketConnection();
+        platformService.platform = 'widget';
         yield call(clearPersistStore);
         yield put(push('Auth'));
-        yield put(disconnectPlatformRequest());
         yield put(signOutSuccess());
     } else {
+        platformService.platform.closeWebSocketConnection();
+        platformService.platform = 'widget';
         yield call(clearPersistStore);
         yield put(push('Auth'));
-        yield put(disconnectPlatformRequest());
         yield put(signOutError());
     }
 }

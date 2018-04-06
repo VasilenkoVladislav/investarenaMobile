@@ -1,4 +1,3 @@
-import { AsyncStorage } from 'react-native';
 import Base from './Base';
 import config from '../configApi/config';
 
@@ -12,14 +11,6 @@ export default class Brokers extends Base {
             switch (response.data.broker.code) {
             case 1:
                 status = 'success';
-                await AsyncStorage.multiSet([
-                    ['platformName', response.data.broker.broker_name],
-                    ['stompUser', response.data.broker.stompUser],
-                    ['stompPassword', response.data.broker.stompPassword],
-                    ['sid', response.data.broker.sid],
-                    ['umSession', response.data.broker.um_session],
-                    ['websrv', response.data.broker.websrv || '']
-                ]);
                 break;
             case 2:
                 break;
@@ -40,11 +31,6 @@ export default class Brokers extends Base {
         if (response.data && response.data.broker) {
             if (response.data.broker.code === 1) {
                 status = 'success';
-                await AsyncStorage.multiSet([
-                    ['stompUser', response.data.broker.stompUser],
-                    ['stompPassword', response.data.broker.stompPassword],
-                    ['sid', response.data.broker.sid]
-                ]);
             } else {
 
             }

@@ -2,17 +2,13 @@ import { call, put, select, takeLatest } from 'redux-saga/es/effects';
 import { authorizeBrokerSuccess,
     authorizeBrokerError,
     reconnectBrokerSuccess,
-    reconnectBrokerError,
-    disconnectBrokerRequest } from '../actions/entities/brokersActions';
+    reconnectBrokerError } from '../actions/entities/brokersActions';
 import { AUTHORIZE_BROKER_REQUEST,
-    RECONNECT_BROKER_REQUEST,
-    DISCONNECT_BROKER_REQUEST, } from '../constansActions';
+    RECONNECT_BROKER_REQUEST } from '../constansActions';
 import api from '../../configApi/apiResources';
-import { connectPlatformRequest } from '../actions/entities/platformActions';
 import { getHeadersState } from '../selectors/entities/headersSelectors';
 import { updateHeaders } from '../actions/entities/headersActions';
-import {platformService} from "../../platform/platformService";
-import {AsyncStorage} from "react-native";
+import { platformService } from '../../platform/platformService';
 
 export function * authorizeBroker ({payload}) {
     const headersForRequest = yield select(getHeadersState);
@@ -20,7 +16,8 @@ export function * authorizeBroker ({payload}) {
     if (data && headers && status) {
         yield put(updateHeaders(headers));
         if (status === 'success') {
-            yield put(connectPlatformRequest());
+            platformService.platform = 'umarkets';
+            platformService.platform.createWebSocketConnection(data.broker);
             yield put(authorizeBrokerSuccess(payload.brokerName));
         } else {
             yield put(authorizeBrokerError(payload.brokerName));
@@ -37,20 +34,16 @@ export function * reconnectBroker ({payload}) {
         yield put(updateHeaders(headers));
         if (status === 'success') {
             yield put(reconnectBrokerSuccess());
-            yield put(connectPlatformRequest());
+            platformService.platform = 'umarkets';
+            platformService.platform.createWebSocketConnection(data.broker);
         } else {
+            platformService.platform = 'widgets';
+            platformService.platform.createWebSocketConnection(data.broker);
             yield put(reconnectBrokerError());
-            yield put(disconnectBrokerRequest());
         }
     } else {
         yield put(reconnectBrokerError());
     }
-}
-
-export function * disconnectBroker () {
-    yield AsyncStorage.multiRemove(['platformName', 'stompUser', 'stompPassword', 'sid', 'umSession', 'websrv']);
-    platformService.platform = 'widgets';
-    platformService.platform.createWebSocketConnection();
 }
 
 export function * watchAuthorizeBroker () {
@@ -61,12 +54,8 @@ export function  * watchReconnectBroker () {
     yield takeLatest(RECONNECT_BROKER_REQUEST, reconnectBroker);
 }
 
-export function * watchDisconnectBroker () {
-    yield takeLatest(DISCONNECT_BROKER_REQUEST, disconnectBroker)
-}
 
 export const brokersSagas = [
     watchAuthorizeBroker(),
-    watchReconnectBroker(),
-    watchDisconnectBroker()
+    watchReconnectBroker()
 ];

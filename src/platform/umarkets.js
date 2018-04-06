@@ -55,11 +55,12 @@ export default class Umarkets {
         };
     }
     createWebSocketConnection  (params) {
+        console.log(params);
         this.stompUser = params.stompUser;
         this.stompPassword = params.stompPassword;
         this.sid = params.sid;
-        this.umSession = params.umSession;
-        this.platformName = params.platformName;
+        this.umSession = params.um_session;
+        this.platformName = params.broker_name;
         this.websrv = params.websrv;
         this.websocket = this.createSockJS(params);
         this.stompClient = Stomp.over(this.websocket);
