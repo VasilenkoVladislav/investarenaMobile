@@ -54,7 +54,7 @@ export default class Umarkets {
             'MONTH': 60 * 24 * 31
         };
     }
-    createWebSocketConnection  (params) {
+    createWebSocketConnection (params) {
         console.log(params);
         this.stompUser = params.stompUser;
         this.stompPassword = params.stompPassword;
@@ -64,7 +64,7 @@ export default class Umarkets {
         this.websrv = params.websrv;
         this.websocket = this.createSockJS(params);
         this.stompClient = Stomp.over(this.websocket);
-        this.stompClient.debug = (str) => console.log(str);
+        this.stompClient.debug = null;
         this.stompClient.heartbeat.outgoing = 0;
         this.stompClient.heartbeat.incoming = 0;
         this.stompClient.connect(this.stompUser, this.stompPassword, this.onConnect.bind(this), this.onError.bind(this), 'trading');

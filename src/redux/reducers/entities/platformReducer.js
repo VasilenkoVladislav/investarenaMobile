@@ -23,9 +23,9 @@ const initialState = {
 export default function (state = initialState, action) {
     switch (action.type) {
     case CONNECT_PLATFORM_SUCCESS:
-        return { ...state, connect: true, isLoading: false, platformName: action.payload};
+        return { ...state, connect: true, platformName: action.payload};
     case CONNECT_PLATFORM_ERROR:
-        return { ...state, connect: false, isLoading: false, platformName: 'widgets' };
+        return { ...state, connect: false, platformName: 'widgets' };
     case UPDATE_USER_STATISTICS:
         return { ...state, userStatistics: action.payload };
     case AUTHORIZE_BROKER_REQUEST:

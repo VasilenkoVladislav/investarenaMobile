@@ -6,10 +6,6 @@ export const getIsConnectPlatformState = createSelector(
     [ getPlatformState ],
     (platform) => platform.connect
 );
-export const getIsLoadingPlatformState = createSelector(
-    [ getPlatformState ],
-    (platform) => platform.isLoading
-);
 export const getPlatformNameState = createSelector(
     [ getPlatformState ],
     (platform) => platform.platformName

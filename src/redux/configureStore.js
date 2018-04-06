@@ -13,7 +13,7 @@ let store ;
 export default function configureStore() {
     const sagaMiddleware = createSagaMiddleware();
     const composeEnhancers = composeWithDevTools({ realtime: true, port: 8000 });
-    if (!__DEV__) {
+    if (__DEV__) {
         store = createStore(rootReducer, composeEnhancers(applyMiddleware(sagaMiddleware, reactNavigationMiddleware, logger)));
     } else {
         store = createStore(rootReducer, applyMiddleware(sagaMiddleware, reactNavigationMiddleware));
