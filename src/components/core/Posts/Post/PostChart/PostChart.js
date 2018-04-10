@@ -1,12 +1,13 @@
 import ChartUtils from './chartUtils';
-import { View, ART, Dimensions } from 'react-native';
+import { View, Dimensions } from 'react-native';
 import React, { Component } from 'react';
 import { CustomText } from '../../../../core/CustomText';
 import moment from 'moment';
 import { currentTime } from '../../../../../helpers/currentTime';
 import { styles } from './styles';
+import Grid from './Grid';
+import Svg, { G, Line, Path, Polyline } from 'react-native-svg';
 
-const { Surface, Group, Shape } = ART;
 
 const width = Dimensions.get('window').width - 20;
 const height = 250;
@@ -77,14 +78,14 @@ class PostChart extends Component {
         const { linePath, ticks } = this.state;
         return(
             <View style={styles.container}>
-                <Surface width={width} height={height}>
-                    <Group x={0} y={0}>
-                        <Shape d={linePath}
-                               stroke='#3a79ee'
-                               fill='94A1EE'
-                               strokeWidth={1} />
-                    </Group>
-                </Surface>
+                <Svg width={width} height={height}>
+                    <G x={0} y={0}>
+                        <Path d={linePath}
+                            stroke='#3a79ee'
+                            fill='#94A1EE'/>
+                    </G>
+                    {/*<Grid/>*/}
+                </Svg>
                 {/*<View key={'ticksX'}>*/}
                     {/*{ticks.map((tick, index) => {*/}
                         {/*return (*/}
@@ -94,17 +95,17 @@ class PostChart extends Component {
                         {/*);*/}
                     {/*})}*/}
                 {/*</View>*/}
-                <View key={'ticksY'} style={{position: 'absolute', top: 0, right: 80}}>
-                    {ticks.map((tick, index) => {
-                        return (
-                            tick.x > 0
-                                ? <CustomText key={index} style={{top: tick.y, position: 'absolute'}}>
-                                {ChartUtils.yAccessor(tick.d, this.props.recommend)}
-                            </CustomText>
-                                : null
-                        );
-                    })}
-                </View>
+                {/*<View key={'ticksY'} style={{position: 'absolute', top: 0, right: 80}}>*/}
+                    {/*{ticks.map((tick, index) => {*/}
+                        {/*return (*/}
+                            {/*tick.x > 0*/}
+                                {/*? <CustomText key={index} style={{top: tick.y, position: 'absolute'}}>*/}
+                                {/*{ChartUtils.yAccessor(tick.d, this.props.recommend)}*/}
+                            {/*</CustomText>*/}
+                                {/*: null*/}
+                        {/*);*/}
+                    {/*})}*/}
+                {/*</View>*/}
             </View>
         )
     }

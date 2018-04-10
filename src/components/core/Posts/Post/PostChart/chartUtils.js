@@ -39,13 +39,14 @@ export default class ChartUtils {
     static createScaleY (minY, maxY, height) {
         return d3.scale.scaleLinear()
             .domain([maxY, minY])
-            .range([0, height]);
+            .range([0, height / 2]);
     }
     static xAccessor = d => new Date(d.time);
     static yAccessor = (d, recommend) => recommend === 'Buy' ? d.closeAsk : d.closeBid;
 
     static createLineChart ({data, quote, timeScale, recommend, createdAt, forecast, width, height}) {
         const timeNow = currentTime.getTime();
+        const bars = [...data];
         const lastBar = {
             closeAsk: Math.round(quote.askPrice * 1000000),
             closeBid: Math.round(quote.bidPrice * 1000000),
@@ -53,26 +54,25 @@ export default class ChartUtils {
             highBid: Math.round(quote.bidPrice * 1000000),
             lowAsk: Math.round(quote.askPrice * 1000000),
             lowBid: Math.round(quote.bidPrice * 1000000),
-            openAsk: data[data.length - 2].closeAsk,
-            openBid: data[data.length - 2].closeBid,
+            openAsk: bars[bars.length - 2].closeAsk,
+            openBid: bars[bars.length - 2].closeBid,
             time: timeNow
         };
-        if (timeNow > data[data.length - 1].time) {
-            data.push(lastBar);
+        if (timeNow > bars[bars.length - 1].time) {
+            bars.push(lastBar);
         } else {
-            data[data.length - 1] = lastBar;
+            bars[bars.length - 1] = lastBar;
         }
-
         const scaleX = ChartUtils.createScaleX(createdAt, forecast, width);
-        const extentY = d3Array.extent(data.map(x => ChartUtils.yAccessor(x, recommend)));
+        const extentY = d3Array.extent(bars.map(x => ChartUtils.yAccessor(x, recommend)));
         const scaleY = ChartUtils.createScaleY(extentY[0], extentY[1], height);
         const lineShape = d3.shape.area()
             .x(d => scaleX(ChartUtils.xAccessor(d)))
             .y0(height)
             .y1(d => scaleY(ChartUtils.yAccessor(d, recommend)));
         return {
-            path: lineShape(data),
-            ticks: data.map((d) => {
+            path: lineShape(bars),
+            ticks: bars.map((d) => {
                 const time = d.time;
                 const value = recommend === 'Buy' ? d.closeAsk : d.closeBid;
                 return {
