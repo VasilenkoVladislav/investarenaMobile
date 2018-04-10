@@ -21,11 +21,11 @@ export function * createOpenDeal () {
 
 }
 
-export function * watchGetPostDeals() {
+export function * watchGetPostDeals () {
     yield takeEvery(GET_POST_DEALS_REQUEST, getPostDeals);
 }
 
-export function * watchCreateOpenDeal() {
+export function * watchCreateOpenDeal () {
     yield takeEvery(CREATE_OPEN_DEAL_REQUEST, createOpenDeal);
 }
 

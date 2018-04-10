@@ -2,6 +2,7 @@ import { connectPlatformSuccess, connectPlatformError } from '../redux/actions/e
 import { getFavoritesRequest, updateFavoriteRequest } from '../redux/actions/entities/favoritesActions';
 import _ from 'lodash';
 import config from '../configApi/config';
+import { getChartDataSuccess } from '../redux/actions/entities/chartsActions';
 import { getNav } from '../redux/selectors/nav';
 import { updateQuotes } from '../redux/actions/entities/quotesActions';
 import { updateQuotesSettings } from '../redux/actions/entities/quotesSettingsActions';
@@ -31,7 +32,7 @@ export default class Widgets {
     }
     closeWebSocketConnection () {
         if (this.websocket) {
-            this.websocket.close();
+            this.websocket.close(1000, 'reason');
         }
     }
     onConnect () {
@@ -157,7 +158,7 @@ export default class Widgets {
                 });
             });
             bars = _.sortBy(bars, 'time');
-            // this.dispatch(getChartDataSuccess({quoteSecurity, timeScale, bars }));
+            this.dispatch(getChartDataSuccess(quoteSecurity, timeScale, bars));
         }
     }
     getStateQuote (security, quote, oldQuote) {

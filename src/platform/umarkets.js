@@ -55,7 +55,6 @@ export default class Umarkets {
         };
     }
     createWebSocketConnection (params) {
-        console.log(params);
         this.stompUser = params.stompUser;
         this.stompPassword = params.stompPassword;
         this.sid = params.sid;

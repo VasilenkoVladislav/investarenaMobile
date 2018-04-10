@@ -6,6 +6,7 @@ import { Bar } from 'react-native-progress';
 import { currentTime } from '../../../../helpers/currentTime';
 import moment from 'moment';
 import Like from '../../../core/Like';
+import PostChart from './PostChart';
 import PostCounts from './PostCounts';
 import PropTypes from 'prop-types';
 import PostStatistics from './PostStatistics';
@@ -51,6 +52,7 @@ class Post extends PureComponent {
     render () {
         let postQuoteInfo;
         let postStatistics;
+        let postChart;
         const timeCreateAgo = timeCreate(this.props.post.created_at);
         const isNotSimple = this.props.post.market !== 'Simple' &&
             this.props.quoteSettings &&
@@ -66,6 +68,14 @@ class Post extends PureComponent {
                                  profitability={this.props.post.profitability}
                                  isExpired={this.state.isExpired}/>
                 : <View style={{height: 80}}/>;
+            postChart = this.props.visible
+                    ? <PostChart quote={this.props.quote}
+                                 expiredBars = {this.props.post.expired_bars || []}
+                                 quoteSecurity={this.props.post.quote}
+                                 createdAt = {this.props.post.created_at}
+                                 forecast = {this.props.post.forecast}
+                                 recommend={this.props.post.recommend}/>
+                    : <View style={{height: 150}}/>;
             postStatistics = this.props.visible
                 ? <PostStatistics quote={this.props.quote}
                                   quoteSettings={this.props.quoteSettings}
@@ -111,6 +121,7 @@ class Post extends PureComponent {
                 <View>
                     {postQuoteInfo}
                     <CustomText style={styles.postContent}>{this.props.post.content}</CustomText>
+                    {postChart}
                     {this.props.post.image_medium && <Image style={styles.image} source={{uri: this.props.post.image_medium}} resizeMode="stretch"/>}
                     {postStatistics}
                     <PostCounts likedId={this.props.post.id || this.props.post.client_id}/>
