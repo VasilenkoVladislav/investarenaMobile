@@ -2,11 +2,11 @@ import { G, Line } from 'react-native-svg';
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Horizontal = ({ ticks = [], y, gridProps = {} }) => {
+const Horizontal = ({ ticksY = [], y, gridProps = {} }) => {
     return (
         <G>
             {
-                ticks.map(tick => (
+                ticksY.map(tick => (
                     <Line
                         key={ tick }
                         x1={ '0%' }
@@ -15,8 +15,7 @@ const Horizontal = ({ ticks = [], y, gridProps = {} }) => {
                         y2={ y(tick) }
                         strokeWidth={ 1 }
                         stroke={ 'rgba(0,0,0,0.2)' }
-                        { ...gridProps }
-                    />
+                        { ...gridProps }/>
                 ))
 
             }
@@ -24,11 +23,11 @@ const Horizontal = ({ ticks = [], y, gridProps = {} }) => {
     )
 };
 
-const Vertical = ({ ticks = [], x, gridProps = {} }) => {
+const Vertical = ({ ticksX = [], x, gridProps = {} }) => {
     return (
         <G>
             {
-                ticks.map((tick, index) => (
+                ticksX.map((tick, index) => (
                     <Line
                         key={ index }
                         y1={ '0%' }
@@ -37,8 +36,7 @@ const Vertical = ({ ticks = [], x, gridProps = {} }) => {
                         x2={ x(tick) }
                         strokeWidth={ 1 }
                         stroke={ 'rgba(0,0,0,0.2)' }
-                        { ...gridProps }
-                    />
+                        { ...gridProps }/>
                 ))
 
             }
@@ -57,13 +55,13 @@ const Both = (props) => {
 
 Vertical.propTypes = {
     x: PropTypes.func.isRequired,
-    dataPoints: PropTypes.array.isRequired,
+    ticksY: PropTypes.array.isRequired,
     gridProps: PropTypes.object,
 };
 
 Horizontal.propTypes = {
     y: PropTypes.func.isRequired,
-    ticks: PropTypes.array.isRequired,
+    ticksX: PropTypes.array.isRequired,
     gridProps: PropTypes.object,
 };
 
