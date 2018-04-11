@@ -4,9 +4,11 @@ import * as d3Array from 'd3-array'
 import Svg, { G,  Path } from 'react-native-svg';
 import { View, Dimensions } from 'react-native';
 import React, { Component } from 'react';
+import _ from 'lodash';
 import ChartUtils from './chartUtils';
 import { currentTime } from '../../../../../helpers/currentTime';
 import Grid from './Grid';
+import YAxis from './YAxis';
 import moment from 'moment';
 import { styles } from './styles';
 
@@ -19,9 +21,9 @@ class PostChart extends Component {
         super(props);
         this.state = {
             linePath: '',
-            grid: null,
-            scaleX: null,
-            scaleY: null,
+            bars: [],
+            x: null,
+            y: null,
             expired: currentTime.getTime() > (moment(this.props.forecast).valueOf()),
             timeScale: ChartUtils.getTimeScale(this.props.createdAt, this.props.forecast)};
     };
@@ -39,17 +41,36 @@ class PostChart extends Component {
     }
 
     xAccessor = d => new Date(d.time);
-    yAccessor = (d, recommend) => recommend === 'Buy' ? d.closeAsk : d.closeBid;
+    yAccessor = d => this.props.recommend === 'Buy' ? d.closeAsk : d.closeBid;
 
-    createScaleX = (start, end, width) => {
-        return d3.scale.scaleTime()
-            .domain([moment(start).valueOf(), moment(end).valueOf()])
-            .range([0, width]);
-    };
-    createScaleY = (minY, maxY, height) => {
-        return d3.scale.scaleLinear()
-            .domain([minY, maxY])
+    createChart = ({data, recommend, forecast}) => {
+
+        const mappedData = data.map((item) => ({
+            x: this.xAccessor(item),
+            y: this.yAccessor(item),
+        }));
+
+        const yValues = mappedData.map(item => item.y);
+
+        const yExtent = d3Array.extent([ ...yValues]);
+        const xExtent = d3Array.extent([moment(data[0].time).valueOf(), moment(forecast).valueOf()]);
+
+        const y = d3.scale.scaleLinear()
+            .domain(yExtent)
             .range([height, 0]);
+
+        const x = d3.scale.scaleTime()
+            .domain(xExtent)
+            .range([0, width]);
+
+        const linePath = d3.shape.area()
+            .x(d => x(d.x))
+            .y0(y(0))
+            .y1(d => y(d.y))
+            .curve(shape.curveLinear)
+            (mappedData);
+
+        this.setState({bars: data, linePath, x, y});
     };
 
     createLineChart = ({data, quote, recommend, createdAt, forecast}) => {
@@ -78,36 +99,20 @@ class PostChart extends Component {
         } else {
             bars[bars.length - 1] = lastBar;
         }
-        const scaleX = this.createScaleX(bars[0].time, forecast, width);
-        const extentY = d3Array.extent(bars.map(x => this.yAccessor(x, recommend)));
-        const scaleY = this.createScaleY(extentY[0], extentY[1], height);
-        const lineShape = d3.shape.area()
-            .x(d => scaleX(this.xAccessor(d)))
-            .y0(height)
-            .y1(d => scaleY(this.yAccessor(d, recommend)));
 
-        this.setState({
-            linePath: lineShape(bars),
-            scaleX,
-            scaleY
-        });
+        this.createChart({data: bars, recommend, forecast})
     };
 
-    createLineExpiredChart = ({data, recommend, createdAt, forecast, width, height}) => {
-        const scaleX = this.createScaleX(createdAt, forecast, width);
-        const extentY = d3Array.extent(data.map(x => this.yAccessor(x, recommend)));
-        const scaleY = this.createScaleY(extentY[0], extentY[1], height);
-
-        const lineShape = d3.shape.area()
-            .x(d => scaleX(this.xAccessor(d)))
-            .y0(height)
-            .y1(d => scaleY(this.yAccessor(d, recommend)));
-
-        this.setState({
-            linePath: lineShape(data),
-            scaleX,
-            scaleY
-        });
+    createLineExpiredChart = ({data, recommend, createdAt, forecast}) => {
+        const strict = ChartUtils.getStrictTimescale(createdAt, forecast);
+        const index = data.findIndex(d => d.time > (moment(createdAt).valueOf() - strict));
+        let bars = [];
+        if (index === -1) {
+            bars = data.slice(data.length - 5, data.length);
+        } else {
+            bars = data.slice(index, data.length);
+        }
+        this.createChart({data: bars, recommend, forecast})
     };
 
     computeNextState (nextProps) {
@@ -120,30 +125,43 @@ class PostChart extends Component {
                     && nextProps.charts
                     && nextProps.charts[this.state.timeScale]
                     && nextProps.charts[this.state.timeScale].bars.length > 0) {
-                    this.createLineChart({
-                        data: nextProps.charts[this.state.timeScale].bars,
-                        recommend: nextProps.recommend,
-                        quote: nextProps.quote,
-                        createdAt: nextProps.createdAt,
-                        forecast: nextProps.forecast,
-                    });
+                    const timeNow = currentTime.getTime();
+                    let timeOfBeforeLastElementFromArray = _.last(nextProps.charts[this.state.timeScale].bars).time;
+                    const coefficient = 1000 * 60 * ChartUtils.hours[this.state.timeScale];
+                    if (((timeNow - timeOfBeforeLastElementFromArray) - coefficient) > coefficient) {
+                        while ((timeNow - timeOfBeforeLastElementFromArray) > coefficient) {
+                            timeOfBeforeLastElementFromArray += coefficient;
+                        }
+                    }
+                    const timeDiff = (timeNow - timeOfBeforeLastElementFromArray) / 1000 / 60;
+                    const maxDiff = ChartUtils.hours[this.state.timeScale];
+                    if (nextProps.connect && (timeDiff > maxDiff)) {
+                        this.props.getChartData(this.state.timeScale);
+                    } else {
+                        this.createLineChart({
+                            data: nextProps.charts[this.state.timeScale].bars,
+                            recommend: nextProps.recommend,
+                            quote: nextProps.quote,
+                            createdAt: nextProps.createdAt,
+                            forecast: nextProps.forecast,
+                        });
+                    }
                 } else {
                     this.props.getChartData(this.state.timeScale);
                 }
-
             }
         } else {
-            // this.createLineExpiredChart({
-            //     data: nextProps.expiredBars,
-            //     recommend: nextProps.recommend,
-            //     createdAt: nextProps.createdAt,
-            //     forecast: nextProps.forecast,
-            // });
+            this.createLineExpiredChart({
+                data: nextProps.expiredBars,
+                recommend: nextProps.recommend,
+                createdAt: nextProps.createdAt,
+                forecast: nextProps.forecast,
+            });
         }
     }
 
     render () {
-        const { linePath, scaleX, scaleY } = this.state;
+        const { linePath, x, y, bars } = this.state;
         return(
             <View style={styles.container}>
                 <Svg width={width} height={height}>
@@ -152,30 +170,23 @@ class PostChart extends Component {
                             stroke='#3a79ee'
                             fill='#94A1EE'/>
                     </G>
-                    { scaleX && scaleY
-                        ? <Grid ticksY={scaleY.ticks(7)} ticksX={scaleX.ticks(5)} x={scaleX} y={scaleY}/>
+                    { x && y
+                        ? <Grid ticksY={y.ticks(5)} ticksX={x.ticks(5)} x={x} y={y}/>
                         : null }
+                    {bars.length > 0
+                        ? <YAxis data={bars}
+                                 numberOfTicks={5}
+                                 width={width}
+                                 height={height}
+                                 yAccessor={this.yAccessor}
+                                 contentInset={{ top: 20, bottom: 20 }}
+                                 svg={{
+                                     fill: 'grey',
+                                     fontSize: 10
+                                 }}
+                                 formatLabel={ value => `${value / 1000000}` }/>
+                        : null}
                 </Svg>
-                {/*<View key={'ticksX'}>*/}
-                    {/*{ticks.map((tick, index) => {*/}
-                        {/*return (*/}
-                            {/*<CustomText key={index}>*/}
-                                {/*{(new Date(tick.d.time * 1000)).toString()}*/}
-                            {/*</CustomText>*/}
-                        {/*);*/}
-                    {/*})}*/}
-                {/*</View>*/}
-                {/*<View key={'ticksY'} style={{position: 'absolute', top: 0, right: 80}}>*/}
-                    {/*{ticks.map((tick, index) => {*/}
-                        {/*return (*/}
-                            {/*tick.x > 0*/}
-                                {/*? <CustomText key={index} style={{top: tick.y, position: 'absolute'}}>*/}
-                                {/*{ChartUtils.yAccessor(tick.d, this.props.recommend)}*/}
-                            {/*</CustomText>*/}
-                                {/*: null*/}
-                        {/*);*/}
-                    {/*})}*/}
-                {/*</View>*/}
             </View>
         )
     }

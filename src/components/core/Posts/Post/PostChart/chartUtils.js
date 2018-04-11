@@ -1,6 +1,27 @@
 import moment from 'moment';
 
 export default class ChartUtils {
+    static hours = {'Minute': 1,
+        'Minute5': 5,
+        'Minute1': 15,
+        'Minute30': 30,
+        'Hour': 60,
+        'Hour4': 60 * 4,
+        'Hour8': 60 * 8,
+        'Day': 60 * 24,
+        'Week': 60 * 24 * 7,
+        'Month': 60 * 24 * 31,
+        'MINUTE': 1,
+        'MINUTE5': 5,
+        'MINUTE15': 15,
+        'MINUTE30': 30,
+        'HOUR': 60,
+        'HOUR4': 60 * 4,
+        'HOUR8': 60 * 8,
+        'DAY': 60 * 24,
+        'WEEK': 60 * 24 * 7,
+        'MONTH': 60 * 24 * 31
+    };
     static getStrictTimescale (createdAt, forecast) {
         const timeScale = moment.utc(moment(forecast).diff(moment(createdAt))) / 1000 / 60;
         const minBars = 50; // default 240

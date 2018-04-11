@@ -1,20 +1,13 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { StyleSheet, Text, View } from 'react-native'
-import { Svg, Text as SVGText } from 'react-native-svg'
+import { G, Text as SVGText } from 'react-native-svg'
 import * as d3Scale from 'd3-scale'
 import * as array from 'd3-array'
 
 class YAxis extends PureComponent {
-
     constructor (props) {
         super (props);
-        this.state = { height: 0 };
-    }
-
-    _onLayout (event) {
-        const { nativeEvent: { layout: { height } } } = event;
-        this.setState({ height })
     }
 
     getY (domain) {
@@ -22,13 +15,12 @@ class YAxis extends PureComponent {
             scale,
             spacingInner,
             spacingOuter,
+            height,
             contentInset: {
                 top = 0,
                 bottom = 0,
             },
         } = this.props;
-
-        const { height } = this.state;
 
         const y = scale()
             .domain(domain)
@@ -63,17 +55,17 @@ class YAxis extends PureComponent {
             min,
             max,
             svg,
+            height,
         } = this.props;
-
-        const { height } = this.state;
 
         if (data.length === 0) {
             return <View style={ style }/>
         }
 
-        const values = data.map((item, index) => yAccessor({ item, index }));
+        const values = data.map((item) => yAccessor(item));
 
-        const extent = array.extent([ ...values, min, max ]);
+        const extent = array.extent([ ...values]);
+        console.log(extent)
         const ticks = scale === d3Scale.scaleBand ?
             values :
             array.ticks(extent[ 0 ], extent[ 1 ], numberOfTicks);
@@ -87,39 +79,31 @@ class YAxis extends PureComponent {
             .map((value, index) => formatLabel(value, index))
             .reduce((prev, curr) => prev.toString().length > curr.toString().length ? prev : curr, 0);
 
+        ticks.map((value) => {
+            console.log(y(value))
+        })
         return (
-            <View style={ [ style ] }>
-                <View
-                    style={{ flexGrow: 1 }}
-                    onLayout={ event => this._onLayout(event) }>
-                    {/*invisible text to allow for parent resizing*/}
-                    <Text
-                        style={{ color: 'transparent', fontSize: svg.fontSize }}>
-                        {longestValue}
-                    </Text>
-                    <Svg style={ StyleSheet.absoluteFill }>
-                        {
-                            // don't render labels if width isn't measured yet,
-                            // causes rendering issues
-                            height > 0 &&
-                            ticks.map((value, index) => {
-                                return (
-                                    <SVGText
-                                        originY={ y(value) }
-                                        textAnchor={ 'middle' }
-                                        x={ '50%' }
-                                        alignmentBaseline={ 'middle' }
-                                        { ...svg }
-                                        key={ index }
-                                        y={ y(value) }>
-                                        {formatLabel(value, index)}
-                                    </SVGText>
-                                )
-                            })
-                        }
-                    </Svg>
-                </View>
-            </View>
+            <G>
+                {
+                    // don't render labels if width isn't measured yet,
+                    // causes rendering issues
+                    height > 0 &&
+                    ticks.map((value, index) => {
+                        return (
+                            <SVGText
+                                originY={ y(value) }
+                                textAnchor={ 'middle' }
+                                x={ '80%' }
+                                alignmentBaseline={ 'middle' }
+                                { ...svg }
+                                key={ index }
+                                y={ y(value) }>
+                                {formatLabel(value, index)}
+                            </SVGText>
+                        )
+                    })
+                }
+            </G>
         )
     }
 }
@@ -146,7 +130,7 @@ YAxis.propTypes = {
 };
 
 YAxis.defaultProps = {
-    numberOfTicks: 10,
+    numberOfTicks: 5,
     spacingInner: 0.05,
     spacingOuter: 0.05,
     contentInset: {},
