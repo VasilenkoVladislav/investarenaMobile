@@ -176,7 +176,7 @@ class PostChart extends Component {
                             fill='#94A1EE'/>
                     </G>
                     {bars.length > 0 && yExtent
-                        ? <XAxis ticks={5}
+                        ? <XAxis ticks={4}
                                  minVal={xExtent[0]}
                                  maxVal={xExtent[1] }
                                  height={height}
