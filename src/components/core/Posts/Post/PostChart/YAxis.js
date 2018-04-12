@@ -1,143 +1,63 @@
-import React, { PureComponent } from 'react'
-import PropTypes from 'prop-types'
-import { StyleSheet, Text, View } from 'react-native'
-import { G, Text as SVGText } from 'react-native-svg'
-import * as d3Scale from 'd3-scale'
-import * as array from 'd3-array'
+import React, { Component } from 'react'
+import { G, Line, Text } from 'react-native-svg'
+import * as d3scale from 'd3-scale';
+import PropTypes from 'prop-types';
 
-class YAxis extends PureComponent {
-    constructor (props) {
-        super (props);
+export default class Axis extends Component {
+    static propTypes = {
+        width: PropTypes.number.isRequired,
+        height: PropTypes.number.isRequired,
+        ticks: PropTypes.number.isRequired,
+        minVal: PropTypes.number.isRequired,
+        maxVal: PropTypes.number.isRequired
+    };
+
+    getTickPoints () {
+        const { height, ticks } = this.props;
+        let res = [];
+        let ticksEvery = Math.floor((height - 20) / (ticks));
+        for (let cur = 20; cur <= height - 20; cur += ticksEvery) {
+            res.push(cur)
+        }
+        return res
     }
 
-    getY (domain) {
-        const {
-            scale,
-            spacingInner,
-            spacingOuter,
-            height,
-            contentInset: {
-                top = 0,
-                bottom = 0,
-            },
-        } = this.props;
-
-        const y = scale()
-            .domain(domain)
-            .range([ height - bottom, top ]);
-
-        if (scale === d3Scale.scaleBand) {
-
-            // use index as domain identifier instead of value since
-            // same value can occur at several places in dataPoints
-            y
-            // set range top to bottom - we are not sorting on values in scaleBand
-                .range([ top, height - bottom ])
-                .paddingInner([ spacingInner ])
-                .paddingOuter([ spacingOuter ]);
-
-            //add half a bar to center label
-            return (value) => y(value) + (y.bandwidth() / 2)
+    formatQuote = (quotePrice) => {
+        const countBefore = (quotePrice.toString()).split('.')[0].length;
+        let countAfter = (quotePrice.toString()).split('.')[1] ? (quotePrice.toString()).split('.')[1].length : countBefore;
+        while (countBefore + countAfter > 6) {
+            countAfter = countAfter - 1;
         }
+        return quotePrice.toFixed(countAfter);
+    };
 
-        return y
-    }
-
-    render () {
-
-        const {
-            style,
-            data,
-            scale,
-            yAccessor,
-            numberOfTicks,
-            formatLabel,
-            min,
-            max,
-            svg,
-            height,
-        } = this.props;
-
-        if (data.length === 0) {
-            return <View style={ style }/>
-        }
-
-        const values = data.map((item) => yAccessor(item));
-
-        const extent = array.extent([ ...values]);
-        console.log(extent)
-        const ticks = scale === d3Scale.scaleBand ?
-            values :
-            array.ticks(extent[ 0 ], extent[ 1 ], numberOfTicks);
-
-        const domain = scale === d3Scale.scaleBand ? values : extent;
-
-        //invert range to support svg coordinate system
-        const y = this.getY(domain);
-
-        const longestValue = ticks
-            .map((value, index) => formatLabel(value, index))
-            .reduce((prev, curr) => prev.toString().length > curr.toString().length ? prev : curr, 0);
-
-        ticks.map((value) => {
-            console.log(y(value))
-        })
+    render() {
+        const { width, height, minVal, maxVal } = this.props;
+        const tickPoints = this.getTickPoints();
+        const scale = d3scale.scaleLinear();
+        scale.domain([height - 20, 20]).range([minVal, maxVal]);
         return (
-            <G>
-                {
-                    // don't render labels if width isn't measured yet,
-                    // causes rendering issues
-                    height > 0 &&
-                    ticks.map((value, index) => {
-                        return (
-                            <SVGText
-                                originY={ y(value) }
-                                textAnchor={ 'middle' }
-                                x={ '80%' }
-                                alignmentBaseline={ 'middle' }
-                                { ...svg }
-                                key={ index }
-                                y={ y(value) }>
-                                {formatLabel(value, index)}
-                            </SVGText>
-                        )
-                    })
-                }
+            <G fill='none' x={0} y={0}>
+                {tickPoints.map(
+                    pos => <Line
+                        key={pos}
+                        stroke='#ddd'
+                        strokeWidth={0.5}
+                        x1='0%'
+                        y1={pos}
+                        x2='86%'
+                        y2={pos}/>
+                )}
+                {tickPoints.map(
+                    pos => <Text
+                        key={pos}
+                        fontSize='10'
+                        x={width - 45}
+                        y={pos + 5}>
+                        {this.formatQuote(scale(pos) / 1000000)}
+                    </Text>
+                )}
             </G>
         )
     }
 }
-
-YAxis.propTypes = {
-    data: PropTypes.oneOfType([
-        PropTypes.arrayOf(PropTypes.object),
-        PropTypes.arrayOf(PropTypes.number),
-    ]).isRequired,
-    svg: PropTypes.object,
-    style: PropTypes.any,
-    numberOfTicks: PropTypes.number,
-    formatLabel: PropTypes.func,
-    contentInset: PropTypes.shape({
-        top: PropTypes.number,
-        bottom: PropTypes.number,
-    }),
-    min: PropTypes.number,
-    max: PropTypes.number,
-    yAccessor: PropTypes.func,
-    scale: PropTypes.func,
-    spacingInner: PropTypes.number,
-    spacingOuter: PropTypes.number,
-};
-
-YAxis.defaultProps = {
-    numberOfTicks: 5,
-    spacingInner: 0.05,
-    spacingOuter: 0.05,
-    contentInset: {},
-    svg: {},
-    scale: d3Scale.scaleLinear,
-    formatLabel: value => value && value.toString(),
-    yAccessor: ({ item }) => item,
-};
-
-export default YAxis

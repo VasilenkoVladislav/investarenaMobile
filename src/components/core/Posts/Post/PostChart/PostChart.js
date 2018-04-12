@@ -1,20 +1,21 @@
 import * as scale from 'd3-scale';
 import * as shape from 'd3-shape';
 import * as d3Array from 'd3-array'
+import * as axis from 'd3-axis';
 import Svg, { G,  Path } from 'react-native-svg';
 import { View, Dimensions } from 'react-native';
 import React, { Component } from 'react';
 import _ from 'lodash';
 import ChartUtils from './chartUtils';
 import { currentTime } from '../../../../../helpers/currentTime';
-import Grid from './Grid';
 import YAxis from './YAxis';
+import XAxis from './XAxis';
 import moment from 'moment';
 import { styles } from './styles';
 
-const d3 = { scale, shape };
+const d3 = { scale, shape, axis };
 const width = Dimensions.get('window').width - 20;
-const height = 250;
+const height = 270;
 
 class PostChart extends Component {
     constructor(props) {
@@ -24,6 +25,8 @@ class PostChart extends Component {
             bars: [],
             x: null,
             y: null,
+            yExtent: null,
+            xExtent: null,
             expired: currentTime.getTime() > (moment(this.props.forecast).valueOf()),
             timeScale: ChartUtils.getTimeScale(this.props.createdAt, this.props.forecast)};
     };
@@ -44,7 +47,6 @@ class PostChart extends Component {
     yAccessor = d => this.props.recommend === 'Buy' ? d.closeAsk : d.closeBid;
 
     createChart = ({data, recommend, forecast}) => {
-
         const mappedData = data.map((item) => ({
             x: this.xAccessor(item),
             y: this.yAccessor(item),
@@ -57,20 +59,21 @@ class PostChart extends Component {
 
         const y = d3.scale.scaleLinear()
             .domain(yExtent)
-            .range([height, 0]);
+            .range([height - 20, 20]);
+
 
         const x = d3.scale.scaleTime()
             .domain(xExtent)
-            .range([0, width]);
+            .range([0, width - 45]);
 
         const linePath = d3.shape.area()
             .x(d => x(d.x))
-            .y0(y(0))
+            .y0(y(20))
             .y1(d => y(d.y))
             .curve(shape.curveLinear)
             (mappedData);
 
-        this.setState({bars: data, linePath, x, y});
+        this.setState({bars: data, linePath, x, y, yExtent, xExtent});
     };
 
     createLineChart = ({data, quote, recommend, createdAt, forecast}) => {
@@ -83,21 +86,23 @@ class PostChart extends Component {
         } else {
             bars = data.slice(index, data.length);
         }
-        const lastBar = {
-            closeAsk: Math.round(quote.askPrice * 1000000),
-            closeBid: Math.round(quote.bidPrice * 1000000),
-            highAsk: Math.round(quote.askPrice * 1000000),
-            highBid: Math.round(quote.bidPrice * 1000000),
-            lowAsk: Math.round(quote.askPrice * 1000000),
-            lowBid: Math.round(quote.bidPrice * 1000000),
-            openAsk: bars[bars.length - 2].closeAsk,
-            openBid: bars[bars.length - 2].closeBid,
-            time: timeNow
-        };
-        if (timeNow > bars[bars.length - 1].time) {
-            bars.push(lastBar);
-        } else {
-            bars[bars.length - 1] = lastBar;
+        if (bars[bars.length - 2]) {
+            const lastBar = {
+                closeAsk: Math.round(quote.askPrice * 1000000),
+                closeBid: Math.round(quote.bidPrice * 1000000),
+                highAsk: Math.round(quote.askPrice * 1000000),
+                highBid: Math.round(quote.bidPrice * 1000000),
+                lowAsk: Math.round(quote.askPrice * 1000000),
+                lowBid: Math.round(quote.bidPrice * 1000000),
+                openAsk: bars[bars.length - 2].closeAsk,
+                openBid: bars[bars.length - 2].closeBid,
+                time: timeNow
+            };
+            if (timeNow > bars[bars.length - 1].time) {
+                bars.push(lastBar);
+            } else {
+                bars[bars.length - 1] = lastBar;
+            }
         }
 
         this.createChart({data: bars, recommend, forecast})
@@ -161,7 +166,7 @@ class PostChart extends Component {
     }
 
     render () {
-        const { linePath, x, y, bars } = this.state;
+        const { linePath, bars, yExtent, xExtent } = this.state;
         return(
             <View style={styles.container}>
                 <Svg width={width} height={height}>
@@ -170,21 +175,19 @@ class PostChart extends Component {
                             stroke='#3a79ee'
                             fill='#94A1EE'/>
                     </G>
-                    { x && y
-                        ? <Grid ticksY={y.ticks(5)} ticksX={x.ticks(5)} x={x} y={y}/>
-                        : null }
-                    {bars.length > 0
-                        ? <YAxis data={bars}
-                                 numberOfTicks={5}
-                                 width={width}
+                    {bars.length > 0 && yExtent
+                        ? <XAxis ticks={5}
+                                 minVal={xExtent[0]}
+                                 maxVal={xExtent[1] }
                                  height={height}
-                                 yAccessor={this.yAccessor}
-                                 contentInset={{ top: 20, bottom: 20 }}
-                                 svg={{
-                                     fill: 'grey',
-                                     fontSize: 10
-                                 }}
-                                 formatLabel={ value => `${value / 1000000}` }/>
+                                 width={width}/>
+                        : null}
+                    {bars.length > 0 && yExtent
+                        ? <YAxis ticks={5}
+                                 minVal={yExtent[0]}
+                                 maxVal={yExtent[1] }
+                                 height={height}
+                                 width={width}/>
                         : null}
                 </Svg>
             </View>

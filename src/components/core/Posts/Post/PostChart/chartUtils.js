@@ -24,7 +24,7 @@ export default class ChartUtils {
     };
     static getStrictTimescale (createdAt, forecast) {
         const timeScale = moment.utc(moment(forecast).diff(moment(createdAt))) / 1000 / 60;
-        const minBars = 50; // default 240
+        const minBars = 45; // default 240
         if (timeScale < 0) return undefined;
         else if (timeScale < minBars) return 1 * 60 * 1000 * 5;
         else if (timeScale < minBars * 5) return 5 * 60 * 1000 * 5;
@@ -40,7 +40,7 @@ export default class ChartUtils {
 
     static getTimeScale (createdAt, forecast) {
         const timeScale = moment.utc(moment(forecast).diff(moment(createdAt))) / 1000 / 60;
-        const minBars = 50; // default 240
+        const minBars = 45; // default 240
         if (timeScale < 0) return undefined;
         else if (timeScale < minBars) return 'MINUTE';
         else if (timeScale < minBars * 5) return 'MINUTE5';
